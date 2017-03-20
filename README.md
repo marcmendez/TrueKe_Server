@@ -2,10 +2,18 @@
 
 Server to manage queries from TrueKe application.
 
+## Prerequisites
+
+1. You must have installed the v6.10.0 LTS stable version of [NodeJS](https://nodejs.org/en/).
+2. You must have installed [MySql 5.7.17](https://dev.mysql.com/doc/mysql-startstop-excerpt/5.7/en/), setted your user and started the MySql server.
+3. You must have gitbash or git installed in order to run the following commands.
+
 ## Installation
 
 	$ git clone https://github.com/jordiestape/TrueKe_Server
 	$ cd TrueKe_Server
+    $ mysql -u <user> -p < database.sql
+    $ <password>
 	$ npm install
 
 ## Usage
