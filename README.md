@@ -51,3 +51,10 @@ To test this API you can use apps like [Postman](https://www.getpostman.com/). W
 #### Delete
 
 ![Delete image](https://s18.postimg.org/4x5knqzbd/Capture4.png)
+
+## MySQL considerations
+
+### Use ` and '
+
+ - Use `` ` `` when you need to indicate a **database, table or column names.**
+ - Use `'` when you need to **delimite a string.**
