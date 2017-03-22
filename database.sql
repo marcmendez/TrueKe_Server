@@ -3,8 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 CREATE SCHEMA IF NOT EXISTS `restful_api` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-USE 'restful_api';
-
+USE `restful_api`;
 -- -----------------------------------------------------
 -- Table `restful_api`.`user`
 -- -----------------------------------------------------
@@ -21,10 +20,10 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
   `products` INT(10) DEFAULT 0,
   `truekes` INT(10) DEFAULT 0,
   `rating` FLOAT(3, 2) DEFAULT 0.0,
+
   PRIMARY KEY (`id`),
   UNIQUE INDEX `phone_UNIQUE` (`phone` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
-
 ) ENGINE = InnoDB;
 
 -- Example of insert (user)
@@ -51,13 +50,13 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
 
   CONSTRAINT Pk_payment_method PRIMARY KEY (`user_id`, `number`),
   CONSTRAINT Fk_user_id FOREIGN KEY (`user_id`) REFERENCES user(`id`)
-
+  ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 -- Example of insert (payment_method)
 
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
--- INSERT INTO `payment_method`(`user_id`, `type`, `number`, `expireData`, `name`, `country`, `province`, `city`, `postalCode`, `adress`, `phone`) VALUES ('1', 'MasterCard/4B/Euro6000','1234123412341234', '2020-02-01', 'Homer', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', '619703921');
+-- INSERT INTO `payment_method`(`user_id`, `type`, `number`, `expireDate`, `name`, `country`, `province`, `city`, `postalCode`, `adress`, `phone`) VALUES ('1', 'MasterCard/4B/Euro6000','1234123412341234', '2020-02-01', 'Homer', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', '619703921');
 
 -- -----------------------------------------------------
 -- Table `restful_api`.`shipment_method`
@@ -78,34 +77,13 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
 
   CONSTRAINT Pk_shipment_method PRIMARY KEY (`user_id`, `postalCode`, `adress`),
   CONSTRAINT Fk_user_id_shipment_method FOREIGN KEY (`user_id`) REFERENCES user(`id`)
-
+  ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 -- Example of insert (payment_method)
 
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
--- INSERT INTO 'ship_method'(`user_id`, `country`, `province`, `city`, `postalCode`, `adress`, `name`, `idCard`, `phone`) VALUES ('1', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', 'Homer', '12931230', '619703921');
-
--- -----------------------------------------------------
--- Trigger del `resful_api`.`delete_user` -> shipment + paymentmethod
--- -----------------------------------------------------
-delimiter $$
-CREATE TRIGGER `restful_api`.`delete_user`
-AFTER DELETE
-  ON `restful_api`.`user`
-FOR EACH ROW
-
-BEGIN
-
-DELETE FROM `restful_api`.`payment_method`
-WHERE OLD.`user`.`id` = `payment_method`.`user_id`;
-
-DELETE FROM `restful_api`.`shipment_method`
-WHERE OLD.`user`.`id` = `shipment_method`.`user_id`;
-
-END
-$$
-delimiter ;
+-- INSERT INTO `shipment_method`(`user_id`, `country`, `province`, `city`, `postalCode`, `adress`, `name`, `idCard`, `phone`) VALUES ('1', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', 'Homer', '12931230', '619703921');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

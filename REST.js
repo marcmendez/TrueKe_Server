@@ -114,21 +114,22 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-    // Insert a payment data of an specific user.
+    // Insert a payment info of an specific user.
     router.post("/paymentinfo", function(req, res) {
-        var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         var table = ["payment_method", "user_id", "type", "number",
-                     "expireData", "country", "province", "city",
+                     "expireDate", "name", "country", "province", "city",
                      "postalCode", "adress", "phone", req.body.user_id,
-                     req.body.type, req.body.number, req.body.expireData, 
+                     req.body.type, req.body.number, req.body.expireDate, req.body.name, 
                      req.body.country, req.body.province, req.body.city,
                      req.body.postalCode, req.body.adress, req.body.phone];
         query = mysql.format(query, table);
+        console.log(query);
         connection.query(query, function(err, rows) {
             if (err) {
-                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+                res.json({ "Error": true, "Message": err });
             } else {
-                res.json({ "Error": false, "Message": "User Added !" });
+                res.json({ "Error": false, "Message": "User Payment Information Added !" });
             }
         });
     });
