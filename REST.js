@@ -11,6 +11,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         res.json({ "Message": "We are working hard on TrueKe!" });
     });
 
+    // USER TABLE
+    // ----- ----- ----- -----
+
     // Get all the db users.
     router.get("/users", function(req, res) {
         var query = "SELECT * FROM ??";
@@ -69,7 +72,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     // Modify an user with a specific id.
     router.put("/users/:id", function(req, res) {
-        var query = "UPDATE ?? SET ?? = ? WHERE ?? = ?";
+        var query = "UPDATE ?? SET ??=? WHERE ??=?";
         if (req.body.field === "password") {
             var table = ["user", req.body.field, md5(req.body.value), "id", req.params.id];
         }
@@ -100,16 +103,20 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
+
+    // PAYMENT_METHOD TABLE
+    // ----- ----- ----- -----
+
     // Get the user payment data of a specific user.
     router.get("/paymentinfo/:user_id", function(req, res) {
-        var query = "SELECT * FROM ??";
-        var table = ["payment_method"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["payment_method", "user_id", req.params.user_id];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
                 res.json({ "Error": true, "Message": "Error executing MySQL query" });
             } else {
-                res.json({ "Error": false, "Message": "Success", "PaymentData": rows });
+                res.json({ "Error": false, "Message": "Success", "Payment Information": rows });
             }
         });
     });
@@ -124,7 +131,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                      req.body.country, req.body.province, req.body.city,
                      req.body.postalCode, req.body.adress, req.body.phone];
         query = mysql.format(query, table);
-        console.log(query);
         connection.query(query, function(err, rows) {
             if (err) {
                 res.json({ "Error": true, "Message": err });
@@ -133,6 +139,42 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             }
         });
     });
+
+
+    // SHIPMENT_METHOD TABLE
+    // ----- ----- ----- -----
+
+    // Get the user shipment data of a specific user.
+    router.get("/shipmentinfo/:user_id", function(req, res) {
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["shipment_method", "user_id", req.params.user_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            } else {
+                res.json({ "Error": false, "Message": "Success", "Shipment Information": rows });
+            }
+        });
+    });
+
+    // Insert a payment info of an specific user.
+    router.post("/shipmentinfo", function(req, res) {
+        var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)";
+        var table = ["shipment_method", "user_id", "country", "province", "city",
+                     "postalCode", "adress", "name", "idCard", "phone", req.body.user_id,
+                     req.body.country, req.body.province, req.body.city, req.body.postalCode,
+                     req.body.adress, req.body.name, req.body.idCard, req.body.phone];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({ "Error": true, "Message": err });
+            } else {
+                res.json({ "Error": false, "Message": "User Shipment Information Added !" });
+            }
+        });
+    });
+
 }
 
 module.exports = REST_ROUTER;
