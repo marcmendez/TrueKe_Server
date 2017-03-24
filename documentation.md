@@ -40,7 +40,7 @@ Returns the shipment methods of an user given its user_id.
 
 ### Parameters
 
-- user_id (*
+- user_id *
 
 # POSTS
 
