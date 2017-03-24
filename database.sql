@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
 DROP TABLE IF EXISTS `restful_api`.`payment_method`;
 
 CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
-
-  `user_id` INT(70),
+  `id` INT(70) AUTO_INCREMENT,
+  `user_id` INT(70) NOT NULL,
   `type` ENUM('Visa/4B/Euro6000', 'MasterCard/4B/Euro6000', 'American Express', 'Maestro'),
-  `number` VARCHAR(20),
+  `number` VARCHAR(20) NOT NULL,
   `expireDate` DATE NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `country` VARCHAR(50) NOT NULL,
@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
   `adress` VARCHAR(70) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
 
-  CONSTRAINT Pk_payment_method PRIMARY KEY (`user_id`, `number`),
+  CONSTRAINT Pk_payment_method PRIMARY KEY (`id`),
+  CONSTRAINT Uniques_payment_method UNIQUE KEY (`user_id`, `number`),
   CONSTRAINT Fk_user_id FOREIGN KEY (`user_id`) REFERENCES user(`id`)
   ON DELETE CASCADE
 ) ENGINE = InnoDB;
@@ -65,7 +66,8 @@ DROP TABLE IF EXISTS `restful_api`.`shipment_method`;
 
 CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
 
-  `user_id` INT(70),
+  `id` INT(70) AUTO_INCREMENT,
+  `user_id` INT(70) NOT NULL,
   `country` VARCHAR(50) NOT NULL,
   `province` VARCHAR(50) NOT NULL,
   `city` VARCHAR(50) NOT NULL,
@@ -75,7 +77,8 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
   `idCard` VARCHAR(20) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
 
-  CONSTRAINT Pk_shipment_method PRIMARY KEY (`user_id`, `postalCode`, `adress`),
+  CONSTRAINT Pk_shipment_method PRIMARY KEY (`id`),
+  CONSTRAINT Uniques_shipment_method UNIQUE KEY (`user_id`, `postalCode`, `adress`),
   CONSTRAINT Fk_user_id_shipment_method FOREIGN KEY (`user_id`) REFERENCES user(`id`)
   ON DELETE CASCADE
 ) ENGINE = InnoDB;
