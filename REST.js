@@ -84,7 +84,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             if (err) {
                 res.json({ "Error": true, "Message": "Error executing MySQL query" });
             } else {
-                res.json({ "Error": false, "Message": "Updated the password for the user with id " + req.params.id });
+                res.json({ "Error": false, "Message": "Updated the field !" });
             }
         });
     });
@@ -98,7 +98,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             if (err) {
                 res.json({ "Error": true, "Message": "Error executing MySQL query" });
             } else {
-                res.json({ "Error": false, "Message": "Deleted the user with id " + req.params.id });
+                res.json({ "Error": false, "Message": "User Deleted !" });
             }
         });
     });
@@ -140,11 +140,39 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
+    // Modify a shipment info.
+    router.put("/paymentinfo/:id", function(req, res) {
+        var query = "UPDATE ?? SET ??=? WHERE ??=?";
+        var table = ["payment_method", req.body.field, req.body.value, "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            } else {
+                res.json({ "Error": false, "Message": "Updated the field !" });
+            }
+        });
+    });
+
+    // Delete a shipment info.
+    router.delete("/paymentinfo/:id", function(req, res) {
+        var query = "DELETE FROM ?? WHERE ??=?";
+        var table = ["payment_method", "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            } else {
+                res.json({ "Error": false, "Message": "Shipment Information Deleted !" });
+            }
+        });
+    });
+
 
     // SHIPMENT_METHOD TABLE
     // ----- ----- ----- -----
 
-    // Get the user shipment data of a specific user.
+    // Get the user shipment info of a specific user.
     router.get("/shipmentinfo/:user_id", function(req, res) {
         var query = "SELECT * FROM ?? WHERE ??=?";
         var table = ["shipment_method", "user_id", req.params.user_id];
@@ -158,7 +186,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-    // Insert a payment info of an specific user.
+    // Insert a user shipment info of an specific user.
     router.post("/shipmentinfo", function(req, res) {
         var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)";
         var table = ["shipment_method", "user_id", "country", "province", "city",
@@ -171,6 +199,34 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 res.json({ "Error": true, "Message": err });
             } else {
                 res.json({ "Error": false, "Message": "User Shipment Information Added !" });
+            }
+        });
+    });
+
+    // Modify a shipment info.
+    router.put("/shipmentinfo/:id", function(req, res) {
+        var query = "UPDATE ?? SET ??=? WHERE ??=?";
+        var table = ["shipment_method", req.body.field, req.body.value, "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            } else {
+                res.json({ "Error": false, "Message": "Updated the field !" });
+            }
+        });
+    });
+
+    // Delete a shipment info.
+    router.delete("/shipmentinfo/:id", function(req, res) {
+        var query = "DELETE FROM ?? WHERE ??=?";
+        var table = ["shipment_method", "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            } else {
+                res.json({ "Error": false, "Message": "Shipment Information Deleted !" });
             }
         });
     });
