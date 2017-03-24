@@ -34,8 +34,7 @@ Returns the payment methods of an user given its user_id.
 
 - user_id *
 
-## GET /shipmentinfo/:user_id
-
+## GET /shipmentinfo/:user_id
 Returns the shipment methods of an user given its user_id.
 
 ### Parameters
@@ -75,7 +74,7 @@ Inserts a new method of payment for a user to the DB.
 
 # DELETE
 
-## DELETE /users/:id
+## DELETE /users/:id
 
 Deletes an user with an specific id from the DB.
 
