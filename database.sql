@@ -89,6 +89,22 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
 -- INSERT INTO `shipment_method`(`user_id`, `country`, `province`, `city`, `postalCode`, `adress`, `name`, `idCard`, `phone`) VALUES ('1', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', 'Homer', '12931230', '619703921');
 
 -- -----------------------------------------------------
+-- Table `restful_api`.`category`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`category` (
+
+  `category` VARCHAR(50),
+
+  CONSTRAINT Pk_category PRIMARY KEY (`category`)
+
+) ENGINE = InnoDB;
+
+-- Example of insert (category)
+
+-- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
+
+-- -----------------------------------------------------
 -- Table `restful_api`.`product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `restful_api`.`product`;
@@ -104,8 +120,9 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`product` (
   `max_price` INT(30) NOT NULL,
 
   CONSTRAINT Pk_product PRIMARY KEY (`id`),
-  CONSTRAINT Fk_user_product FOREIGN KEY (`user_id`) REFERENCES user(`id`)
-  ON DELETE CASCADE
+  CONSTRAINT Fk_user_product FOREIGN KEY (`user_id`) REFERENCES user(`id`) ON DELETE CASCADE,
+  CONSTRAINT Fk_user_category FOREIGN KEY (`category`) REFERENCES category(`category`)
+
 ) ENGINE = InnoDB;
 
 DELIMITER $$
@@ -122,6 +139,7 @@ DELIMITER ;
 -- Example of insert (product)
 
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
+-- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
 -- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '1', '2');
 
 -- Check Trigger Working
