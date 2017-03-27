@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
 
   CONSTRAINT Pk_payment_method PRIMARY KEY (`id`),
   CONSTRAINT Uniques_payment_method UNIQUE KEY (`user_id`, `number`),
-  CONSTRAINT Fk_user_id FOREIGN KEY (`user_id`) REFERENCES user(`id`)
+  CONSTRAINT Fk_user_id_payment_method FOREIGN KEY (`user_id`) REFERENCES user(`id`)
   ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
 -- -----------------------------------------------------
 -- Table `restful_api`.`category`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `restful_api`.`category`;
 
 CREATE TABLE IF NOT EXISTS `restful_api`.`category` (
 
@@ -120,8 +121,8 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`product` (
   `max_price` INT(30) NOT NULL,
 
   CONSTRAINT Pk_product PRIMARY KEY (`id`),
-  CONSTRAINT Fk_user_product FOREIGN KEY (`user_id`) REFERENCES user(`id`) ON DELETE CASCADE,
-  CONSTRAINT Fk_user_category FOREIGN KEY (`category`) REFERENCES category(`category`)
+  CONSTRAINT Fk_user_id_product FOREIGN KEY (`user_id`) REFERENCES user(`id`) ON DELETE CASCADE,
+  CONSTRAINT Fk_category_product FOREIGN KEY (`category`) REFERENCES category(`category`)
 
 ) ENGINE = InnoDB;
 
@@ -145,6 +146,29 @@ DELIMITER ;
 -- Check Trigger Working
 -- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '3', '2');
 -- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '0', '2');
+
+-- -----------------------------------------------------
+-- Table `restful_api`.`product_wants_category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `restful_api`.`product_wants_category`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`product_wants_category` (
+
+  `product_id` INT (70),
+  `category` VARCHAR(50),
+
+  CONSTRAINT Pk_category PRIMARY KEY (`product_id`,`category`),
+  CONSTRAINT Fk_category_product_wants_category FOREIGN KEY (`category`) REFERENCES category(`category`),
+  CONSTRAINT Fk_product_product_wants_category_product FOREIGN KEY (`product_id`) REFERENCES product(`id`) ON DELETE CASCADE
+
+) ENGINE = InnoDB;
+
+-- Example of insert (product_wants_category)
+
+-- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
+-- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
+-- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '1', '2');
+-- INSERT INTO `product_wants_category`(`product_id`,`category`) VALUES ('1','electrodomestics');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
