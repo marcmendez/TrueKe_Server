@@ -1,5 +1,22 @@
 # API REST DOCUMENTATION
 
+# AUTHENTICATION
+
+This API has a security layer. In order to use the API is needed to get permissions.
+
+To get permissions make a post to "/authenticate" with the body params **phone or email** and **pass**. If the user exists into the db and the password is correct, the returned value is:
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"token" : [YOUR TOKEN]
+}
+```
+
+## Parameters
+- phone or email : the phone or email of the user.
+- pass : the pass of the user into the system.
+
 # GETS
 
 ## GET /users

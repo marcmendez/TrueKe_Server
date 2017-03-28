@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
   `birthDate` DATE NOT NULL,
   `products` INT(10) DEFAULT 0,
   `truekes` INT(10) DEFAULT 0,
-  `rating` FLOAT(3, 2) DEFAULT 0.0,
+  `rating` FLOAT(2, 1) DEFAULT 0.0,
 
   PRIMARY KEY (`id`),
   UNIQUE INDEX `phone_UNIQUE` (`phone` ASC),
