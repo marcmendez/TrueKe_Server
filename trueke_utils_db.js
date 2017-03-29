@@ -1,5 +1,3 @@
-
-
 function DbController() {};
 
 DbController.prototype.initDBConnection = function() {
@@ -8,9 +6,12 @@ DbController.prototype.initDBConnection = function() {
         host: 'localhost',
         user: 'root',
         password: 'pes03',
-        database: 'restful_api'
+        database: 'restful_api',
+        dateStrings: 'date',
+        debug: false
     });
     connection.connect();
+    this.mysql = mysql;
     this.connection = connection;
 }
 
@@ -37,6 +38,34 @@ DbController.prototype.clearDB = function() {
         if (!err)
             console.log('Deleted all the rows from `shipment_method` table');
         else
+            console.log('Error while performing Query.');
+    });
+}
+
+DbController.prototype.insertUser = function(userData) {
+    var fields = "";
+    var values = "";
+    var table = ["user"];
+    var first = true;
+    for (var field in userData) {
+        if (first) {
+            first = false;
+            fields += "??";
+            values += "?";
+        }
+        else {
+            fields += ",??";
+            values += ",?";
+        }
+        table.push(field);
+    }
+    for (var field in userData) {
+        table.push(userData[field]);
+    }
+    var query = "INSERT INTO ??(" + fields + ") VALUES(" + values + ")";
+    query = this.mysql.format(query, table);
+    this.connection.query(query, function(err, rows, fields) {
+        if (err)
             console.log('Error while performing Query.');
     });
 }

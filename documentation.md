@@ -9,7 +9,7 @@ To get permissions make a post to "/authenticate" with the body params **phone o
 {
 	"Error" : false,
 	"Message" : Success,
-	"token" : [YOUR TOKEN]
+	"Token" : [YOUR TOKEN]
 }
 ```
 

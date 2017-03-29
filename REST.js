@@ -36,9 +36,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         } else if (req.body.phone) {
             var table = ["user", "phone", req.body.phone, "password", md5(req.body.password)];
             query = mysql.format(query, table);
-            console.log(query);
             connection.query(query, function(err, rows) {
-                console.log(rows);
                 if (!err && typeof(rows[0]) != 'undefined') {
                     res.json({ "Error": false, "Message": "Success", "Token": md5(rows[0].id + MAGIC_PHRASE) });
                 } else {

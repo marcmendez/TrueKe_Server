@@ -15,6 +15,7 @@ Server to manage queries from TrueKe application.
     $ mysql -u <user> -p < database.sql
     $ <password>
 	$ npm install
+	$ npm install -g jasmine-node
 
 ## Usage
 
