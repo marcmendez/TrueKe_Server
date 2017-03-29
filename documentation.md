@@ -43,7 +43,7 @@ Returns a user given an email.
 
 - email *
 
-## GET /paymentinfo/:user_id
+## GET api/paymentinfo/:user_id
 
 Returns the payment methods of an user given its user_id.
 
@@ -69,7 +69,7 @@ Inserts a new user to the DB.
 - phone *
 - user *
 - password *
-- bithDate *
+- birthDate *
 - email *
 
 ## POST /paymentinfo
