@@ -249,7 +249,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 res.json({ "Error": true, "Message": "Error executing the query" });
             } else {
                 if (ADMIN_TOKEN === token || (typeof(rows[0]) != 'undefined' && token === md5(rows[0].user_id + MAGIC_PHRASE))) {
-                    res.json({ "Error": false, "Message": "Shipment Information Deleted !" });   
+                    res.json({ "Error": false, "Message": "Shipment Information Deleted !" });
                 }
                 else {
                     res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated" });
@@ -343,6 +343,158 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             }
         });
     });
+
+    // ----- ----- ----- -----
+  // CATEGORY TABLE
+  // ----- ----- ----- -----
+
+  //  Get all the categories of the db.
+  router.get("/categories", function(req, res) {
+      var query = "SELECT * FROM ??";
+      var table = ["category"];
+      query = mysql.format(query, table);
+      connection.query(query, function(err, rows) {
+          if (err) {
+              res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          } else {
+              res.json({ "Error": false, "Message": "Success", "Users": rows });
+          }
+      });
+  });
+
+  // ----- ----- ----- -----
+  // PRODUCT TABLE
+  // ----- ----- ----- -----
+
+  //  Get all the categories of the db.
+  router.get("/products", function(req, res) {
+      var query = "SELECT * FROM ??";
+      var table = ["product", req.params.user_id];
+      query = mysql.format(query, table);
+      connection.query(query, function(err, rows) {
+          if (err) {
+              res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          } else {
+              res.json({ "Error": false, "Message": "Success", "Products": rows });
+          }
+      });
+  });
+
+    //  Get all the products of a given user of the db.
+  router.get("/products/:user_id", function(req, res) {
+      var query = "SELECT * FROM ?? WHERE ??=?";
+      var table = ["product", "user_id", req.params.user_id];
+      query = mysql.format(query, table);
+      connection.query(query, function(err, rows) {
+          if (err) {
+              res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          } else {
+              res.json({ "Error": false, "Message": "Success", "Products": rows });
+          }
+      });
+  });
+
+  function insertProductWantsCategory(insertId, category, callback) {
+
+    query = "INSERT INTO ??(??,??) VALUES (?,?)";
+    table = ["product_wants_category", "product_id", "category", insertId, category];
+    query = mysql.format(query, table);
+
+    connection.query(query, function(err, rows){
+      if (err){
+          console.log("error");
+          callback(true,insertId);}
+      else
+          callback(false,rows);
+    });
+
+  }
+
+  function insertProduct(user_id, title, description, category, min_price, max_price, callback) {
+    var query = "INSERT INTO ??(??,??,??,??,??,??) VALUES (?,?,?,?,?,?)";
+    var table = ["product", "user_id", "title", "description", "category", "min_price", "max_price", user_id,
+                 title, description, category, min_price, max_price];
+    query = mysql.format(query, table);
+
+    connection.query(query, function(err, rows){
+      if (err)
+          callback(err,"Error executing MySQL query");
+      else
+          callback(err,rows);
+    });
+
+  }
+
+  // Inserts a product of an specific user.
+  router.post("/products", function(req, res) {
+
+      var worked = true;
+
+      insertProduct(req.body.user_id, req.body.title, req.body.description, req.body.category,
+        req.body.min_price, req.body.max_price, function(err, data) {
+
+          if (err) {
+            res.json({ "Error": err, "Message": "Error executing MySQL query" });
+
+          } else {
+            var aux = 0; var bAux = 1;
+            var categories = req.body.wants_categories.split("-");
+            for (var i = 0; i < categories.length && worked; ++i) {
+
+              insertProductWantsCategory(data.insertId, categories[i], function(err,data){
+                aux += 1;
+                if (bAux == 1 && err) bAux = 0;
+                if (bAux == 0 && aux == categories.length) {
+
+                  res.json({"Error": err, "Message": data});
+                  var query = "DELETE FROM ?? WHERE ??=?";
+                  var table = ["product", "id", data];
+
+                  query = mysql.format(query, table);
+                  connection.query(query, function(err, rows) {});
+
+                } else if (bAux == 1 && aux == categories.length) {
+                  res.json({"Error": false, "Message": data});
+                }
+              });
+            }
+          }
+        });
+      });
+
+
+  // Delete a product.
+  router.delete("/products/:id", function(req, res) {
+      var query = "DELETE FROM ?? WHERE ??=?";
+      var table = ["product", "id", req.params.id];
+      query = mysql.format(query, table);
+
+      connection.query(query, function(err, rows) {
+          if (err) {
+              res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          } else {
+              res.json({ "Error": false, "Message": "Product Deleted !" });
+          }
+      });
+  });
+
+  // ----- ----- ----- ----- ----
+  // PRODUCT WANTS CATEGORY TABLE
+  // ----- ----- ----- ----- ----
+
+  // Inserts a pair of a product and a category to reflect the wanting categories of the product.
+  router.get("/productwantscategory/:id", function(req, res) {
+      var query = "SELECT * FROM ?? WHERE ??=?";
+      var table = ["product_wants_category", "product_id", req.params.product_id];
+      query = mysql.format(query, table);
+      connection.query(query, function(err, rows) {
+          if (err) {
+              res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          } else {
+              res.json({ "Error": false, "Message": "Success", "Product wants categories": rows });
+          }
+      });
+  });
 
 }
 
