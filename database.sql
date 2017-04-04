@@ -127,6 +127,8 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`product` (
 ) ENGINE = InnoDB;
 
 DELIMITER $$
+
+-- CHECK (max_price >= min_price && min_price <= 0)
 CREATE TRIGGER `product_check_price_range` BEFORE INSERT ON `product`
 FOR EACH ROW
 BEGIN
@@ -135,7 +137,27 @@ BEGIN
     END IF;
 
 END$$
+
+-- Increment number of products of an user if new product
+CREATE TRIGGER `increments_user_produts` AFTER INSERT ON `product`
+FOR EACH ROW
+BEGIN
+
+  UPDATE `restful_api`.`user` SET `products` = `products`+ 1 WHERE `id` = NEW.`user_id` LIMIT 1;
+
+END$$
+
+-- Decrement number of products of an user if delete product
+CREATE TRIGGER `decrements_user_produts` AFTER DELETE ON `product`
+FOR EACH ROW
+BEGIN
+
+  UPDATE `restful_api`.`user` SET `products` = `products`- 1 WHERE `id` = OLD.`user_id` LIMIT 1;
+
+END$$
+
 DELIMITER ;
+
 
 -- Example of insert (product)
 
@@ -146,6 +168,13 @@ DELIMITER ;
 -- Check Trigger Working
 -- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '3', '2');
 -- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '0', '2');
+
+-- Increment if create product
+-- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
+-- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654651', 'Homero', 'passapalabra', 'homer1@badulaque.com', '1996-04-02');
+-- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
+-- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '1', '2');
+-- DELETE FROM `product` WHERE `id` = 1;
 
 -- -----------------------------------------------------
 -- Table `restful_api`.`product_wants_category`
