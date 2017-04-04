@@ -116,6 +116,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var query = "INSERT INTO ??(??,??,??,??,??) VALUES (?,?,?,?,?)";
         var table = ["user", "phone", "user", "password", "birthDate", "email", req.body.phone, req.body.user, md5(req.body.password), req.body.birthDate, req.body.email];
         query = mysql.format(query, table);
+        console.log(query);
         connection.query(query, function(err, rows) {
             if (err) {
                 res.json({ "Error": true, "Message": "Error executing the query" });
@@ -348,19 +349,19 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
   // CATEGORY TABLE
   // ----- ----- ----- -----
 
-  //  Get all the categories of the db.
+  //  Get all the categories of the db. (It does not need authentication)
+
   router.get("/categories", function(req, res) {
+
       var query = "SELECT * FROM ??";
       var table = ["category"];
       query = mysql.format(query, table);
       connection.query(query, function(err, rows) {
-          if (err) {
-              res.json({ "Error": true, "Message": "Error executing MySQL query" });
-          } else {
-              res.json({ "Error": false, "Message": "Success", "Users": rows });
-          }
+          if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          else res.json({ "Error": false, "Message": "Success", "Content": rows });
       });
-  });
+
+    });
 
   // ----- ----- ----- -----
   // PRODUCT TABLE
@@ -368,100 +369,93 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
   //  Get all the categories of the db.
   router.get("/products", function(req, res) {
-      var query = "SELECT * FROM ??";
-      var table = ["product", req.params.user_id];
-      query = mysql.format(query, table);
-      connection.query(query, function(err, rows) {
-          if (err) {
-              res.json({ "Error": true, "Message": "Error executing MySQL query" });
-          } else {
-              res.json({ "Error": false, "Message": "Success", "Products": rows });
-          }
-      });
+
+      var token = req.headers["token"];
+      if (token === ADMIN_TOKEN) {
+
+        var query = "SELECT * FROM ??";
+        var table = ["product"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            else res.json({ "Error": false, "Message": "Success", "Content": rows });
+        });
+
+      } else res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated as admin" });
+
   });
 
-    //  Get all the products of a given user of the db.
+  //  Get all the products of a given user of the db.
   router.get("/products/:user_id", function(req, res) {
-      var query = "SELECT * FROM ?? WHERE ??=?";
-      var table = ["product", "user_id", req.params.user_id];
-      query = mysql.format(query, table);
-      connection.query(query, function(err, rows) {
-          if (err) {
-              res.json({ "Error": true, "Message": "Error executing MySQL query" });
-          } else {
-              res.json({ "Error": false, "Message": "Success", "Products": rows });
-          }
-      });
+
+      var token = req.headers["token"];
+      if (token === ADMIN_TOKEN || token === md5(req.params.user_id + MAGIC_PHRASE)) {
+
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "user_id", req.params.user_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            else res.json({ "Error": false, "Message": "Success", "Products": rows });
+        });
+
+      } else res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated." });
+
   });
 
-  function insertProductWantsCategory(insertId, category, callback) {
+  function insertProductWantsCategory(insertedId, categories, aux, callback) {
 
-    query = "INSERT INTO ??(??,??) VALUES (?,?)";
-    table = ["product_wants_category", "product_id", "category", insertId, category];
-    query = mysql.format(query, table);
+    if (aux < categories.length && categories.length > 0) {
 
-    connection.query(query, function(err, rows){
-      if (err){
-          console.log("error");
-          callback(true,insertId);}
-      else
-          callback(false,rows);
-    });
+      query = "INSERT INTO ??(??,??) VALUES (?,?)";
+      table = ["product_wants_category", "product_id", "category", insertedId, categories[aux]];
+      query = mysql.format(query, table);
+      connection.query(query, function(err, rows){
+        if (err) callback(true, insertedId);
+        else if (aux == categories.length - 1) callback(false, insertedId);
+        else insertProductWantsCategory(insertedId, categories, aux + 1, callback);
+      });
 
-  }
-
-  function insertProduct(user_id, title, description, category, min_price, max_price, callback) {
-    var query = "INSERT INTO ??(??,??,??,??,??,??) VALUES (?,?,?,?,?,?)";
-    var table = ["product", "user_id", "title", "description", "category", "min_price", "max_price", user_id,
-                 title, description, category, min_price, max_price];
-    query = mysql.format(query, table);
-
-    connection.query(query, function(err, rows){
-      if (err)
-          callback(err,"Error executing MySQL query");
-      else
-          callback(err,rows);
-    });
+    } else if (categories.length > 0) callback(false, insertedId);
 
   }
 
   // Inserts a product of an specific user.
   router.post("/products", function(req, res) {
 
-      var worked = true;
+    var token = req.headers["token"];
+    if (token === ADMIN_TOKEN || token === md5(req.body.user_id + MAGIC_PHRASE)) {
 
-      insertProduct(req.body.user_id, req.body.title, req.body.description, req.body.category,
-        req.body.min_price, req.body.max_price, function(err, data) {
+      var query = "INSERT INTO ??(??,??,??,??,??,??) VALUES (?,?,?,?,?,?)";
+      var table = ["product", "user_id", "title", "description", "category", "min_price", "max_price", req.body.user_id,
+                   req.body.title, req.body.description, req.body.category, req.body.min_price, req.body.max_price];
+      query = mysql.format(query, table);
 
-          if (err) {
-            res.json({ "Error": err, "Message": "Error executing MySQL query" });
+      connection.query(query, function(err, rows) {
+        if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
 
-          } else {
-            var aux = 0; var bAux = 1;
-            var categories = req.body.wants_categories.split("-");
-            for (var i = 0; i < categories.length && worked; ++i) {
+        else {
 
-              insertProductWantsCategory(data.insertId, categories[i], function(err,data){
-                aux += 1;
-                if (bAux == 1 && err) bAux = 0;
-                if (bAux == 0 && aux == categories.length) {
+          var categories = req.body.wants_categories.split("-"); console.log(categories.length);
+          insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
 
-                  res.json({"Error": err, "Message": data});
-                  var query = "DELETE FROM ?? WHERE ??=?";
-                  var table = ["product", "id", data];
+            if (err) {
 
-                  query = mysql.format(query, table);
-                  connection.query(query, function(err, rows) {});
+              res.json({ "Error": true, "Message": "Error executing MySQL query" });
+              var query = "DELETE FROM ?? WHERE ??=?";
+              var table = ["product", "id", insertedId];
+              query = mysql.format(query, table);
+              connection.query(query, function(){});
 
-                } else if (bAux == 1 && aux == categories.length) {
-                  res.json({"Error": false, "Message": data});
-                }
-              });
-            }
-          }
-        });
+            } else res.json({ "Error": false, "Message": "A new product was inserted in the database" });
+
+          });
+        }
       });
 
+    } else res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated." });
+
+    });
 
   // Delete a product.
   router.delete("/products/:id", function(req, res) {
