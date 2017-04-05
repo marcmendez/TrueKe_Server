@@ -42,12 +42,18 @@ DbController.prototype.clearDB = function() {
     });
 }
 
-DbController.prototype.insertUser = function(userData) {
+/**
+ * Inserts a row inside the specified table on the connected database.
+ * @param  {String} tablename - table name inside the database.
+ * @param  {Object} dataToInsert - dictionary with keys as a names of table columns and the value for insert.
+ * @return {[type]}
+ */
+DbController.prototype.insert = function(tableName, dataToInsert) {
     var fields = "";
     var values = "";
-    var table = ["user"];
+    var table = [tableName];
     var first = true;
-    for (var field in userData) {
+    for (var field in dataToInsert) {
         if (first) {
             first = false;
             fields += "??";
@@ -59,8 +65,8 @@ DbController.prototype.insertUser = function(userData) {
         }
         table.push(field);
     }
-    for (var field in userData) {
-        table.push(userData[field]);
+    for (var field in dataToInsert) {
+        table.push(dataToInsert[field]);
     }
     var query = "INSERT INTO ??(" + fields + ") VALUES(" + values + ")";
     query = this.mysql.format(query, table);
@@ -68,6 +74,14 @@ DbController.prototype.insertUser = function(userData) {
         if (err)
             console.log('Error while performing Query.');
     });
+}
+
+DbController.prototype.insertUser = function(userData) {
+    this.insert("user", userData);
+}
+
+DbController.prototype.insertShipmentMethod = function(shipmentMethodData) {
+    this.insert("shipment_method", shipmentMethodData);
 }
 
 
