@@ -47,6 +47,13 @@ DbController.prototype.clearDB = function() {
         else
             console.log('Error while performing Query.');
     });
+
+    this.connection.query('DELETE FROM `product`', function(err, rows, fields) {
+        if (!err)
+            console.log('Deleted all the rows from `product` table');
+        else
+            console.log('Error while performing Query.');
+    });
 }
 
 /**
@@ -96,7 +103,7 @@ DbController.prototype.insertCategory = function(categoryData) {
 }
 
 DbController.prototype.insertProduct = function(productData) {
-  this.insert("product", categoryData);
+  this.insert("product", productData);
 }
 
 
