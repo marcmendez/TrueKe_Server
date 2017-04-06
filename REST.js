@@ -430,7 +430,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
       var table = ["product", "user_id", "title", "description", "category", "min_price", "max_price", req.body.user_id,
                    req.body.title, req.body.description, req.body.category, req.body.min_price, req.body.max_price];
       query = mysql.format(query, table);
-
       connection.query(query, function(err, rows) {
         if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
 
@@ -459,17 +458,30 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
   // Delete a product.
   router.delete("/products/:id", function(req, res) {
-      var query = "DELETE FROM ?? WHERE ??=?";
-      var table = ["product", "id", req.params.id];
-      query = mysql.format(query, table);
 
-      connection.query(query, function(err, rows) {
-          if (err) {
-              res.json({ "Error": true, "Message": "Error executing MySQL query" });
-          } else {
-              res.json({ "Error": false, "Message": "Product Deleted !" });
-          }
-      });
+    var token = req.headers["token"];
+
+    var query = "SELECT * FROM ?? WHERE ??=?";
+    var table = ["product", "id", req.params.id];
+    query = mysql.format(query, table);
+    connection.query(query, function(err, rows) {
+
+      if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+      else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+
+        var query = "DELETE FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+
+          if(err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+          else res.json({ "Error": false, "Message": "Product deleted correctly" });
+
+        });
+
+      } else res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated." });
+
+    });
   });
 
   // ----- ----- ----- ----- ----
@@ -478,16 +490,29 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
   // Inserts a pair of a product and a category to reflect the wanting categories of the product.
   router.get("/productwantscategory/:id", function(req, res) {
-      var query = "SELECT * FROM ?? WHERE ??=?";
-      var table = ["product_wants_category", "product_id", req.params.product_id];
-      query = mysql.format(query, table);
-      connection.query(query, function(err, rows) {
-          if (err) {
-              res.json({ "Error": true, "Message": "Error executing MySQL query" });
-          } else {
-              res.json({ "Error": false, "Message": "Success", "Product wants categories": rows });
-          }
-      });
+
+    var token = req.headers["token"];
+
+    var query = "SELECT * FROM ?? WHERE ??=?";
+    var table = ["product", "id", req.params.product_id];
+    query = mysql.format(query, table);
+    connection.query(query, function(err, rows) {
+
+      if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+      else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product_wants_category", "product_id", req.params.product_id];
+        query = mysql.format(query, table);
+        console.log(query);
+        connection.query(query, function(err, rows) {
+            if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
+            else res.json({ "Error": false, "Message": "Success", "Content": rows });
+        });
+
+      } else res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated." });
+
+    });
   });
 
 }
