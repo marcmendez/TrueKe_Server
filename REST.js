@@ -435,7 +435,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
         else {
 
-          var categories = req.body.wants_categories.split("-"); console.log(categories.length);
+          var categories = req.body.wants_categories.split("-");
           insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
 
             if (err) {
@@ -489,13 +489,14 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
   // ----- ----- ----- ----- ----
 
   // Inserts a pair of a product and a category to reflect the wanting categories of the product.
-  router.get("/productwantscategory/:id", function(req, res) {
+  router.get("/productwantscategory/:product_id", function(req, res) {
 
     var token = req.headers["token"];
 
     var query = "SELECT * FROM ?? WHERE ??=?";
     var table = ["product", "id", req.params.product_id];
     query = mysql.format(query, table);
+    console.log(query);
     connection.query(query, function(err, rows) {
 
       if (err) res.json({ "Error": true, "Message": "Error executing MySQL query" });
