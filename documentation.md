@@ -397,6 +397,13 @@ The API supplies this functionality in order to give the user the possibility of
 |-----------------|---------------------------------------|
 | id (*)          | id of the user we want to delete /current| 
 
+```
+{
+	"Error" : false,
+	"Message" : "User deleted !"
+}
+```	
+
 
 
 
