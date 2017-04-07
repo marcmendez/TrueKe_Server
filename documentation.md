@@ -347,7 +347,7 @@ This API URI allows the creation of a new user in the database. It is accesible 
 {
 	"Error" : false,
 	"Message" : "User Added !",
-	"Content" : [{ "token": "thetoken" }]
+	"Content" :  "the token of the user added"
 }
 ```
 
