@@ -24,21 +24,21 @@ DbController.prototype.clearDB = function() {
         if (!err)
             console.log('Deleted all the rows from `user` table');
         else
-            console.log('Error while performing Query.');
+            console.log('Error while performing Query: ' + err);
     });
 
     this.connection.query('DELETE FROM `payment_method`', function(err, rows, fields) {
         if (!err)
             console.log('Deleted all the rows from `payment_method` table');
         else
-            console.log('Error while performing Query.');
+            console.log('Error while performing Query: ' + err);
     });
 
     this.connection.query('DELETE FROM `shipment_method`', function(err, rows, fields) {
         if (!err)
             console.log('Deleted all the rows from `shipment_method` table');
         else
-            console.log('Error while performing Query.');
+            console.log('Error while performing Query: ' + err);
     });
 }
 
@@ -58,8 +58,7 @@ DbController.prototype.insert = function(tableName, dataToInsert) {
             first = false;
             fields += "??";
             values += "?";
-        }
-        else {
+        } else {
             fields += ",??";
             values += ",?";
         }
@@ -72,7 +71,7 @@ DbController.prototype.insert = function(tableName, dataToInsert) {
     query = this.mysql.format(query, table);
     this.connection.query(query, function(err, rows, fields) {
         if (err)
-            console.log('Error while performing Query.');
+            console.log('Error while performing Query: ' + err);
     });
 }
 

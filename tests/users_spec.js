@@ -1,5 +1,6 @@
 var dbController = require('../trueke_utils_db.js');
 dbController.initDBConnection();
+dbController.clearDB();
 
 var frisby = require('frisby');
 
@@ -54,7 +55,7 @@ function test2() {
                     .expectJSON({
                         "Error": false,
                         "Message": "Success",
-                        "Users": [{
+                        "Content": [{
                             "phone": "654654654",
                             "user": "Manolo",
                             "password": "edfd50a85db1fe977d2ad4efa006c6f2",
@@ -87,7 +88,7 @@ function test3() {
         .expectJSON({
             "Error": false,
             "Message": "Success",
-            "Users": []
+            "Content": []
         })
         .after(function(err, res, body) {
             if (!err) {

@@ -26,6 +26,16 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
 ) ENGINE = InnoDB;
 
+-- CHECK (max_price >= min_price && min_price <= 0)
+CREATE TRIGGER `product_check_price_range` BEFORE INSERT ON `user`
+FOR EACH ROW
+BEGIN
+    IF new.`rating` > 10 OR new.`rating` < 10 THEN
+        SIGNAL SQLSTATE '12345' SET message_text = 'Check constraint rating';
+    END IF;
+
+END$$
+
 -- Example of insert (user)
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
 

@@ -3,8 +3,57 @@ var md5 = require("md5");
 var MAGIC_NUMBER_ADMIN = 0x82862484753532;
 var MAGIC_PHRASE = "Oro parece, plátano es";
 var ADMIN_TOKEN = md5(MAGIC_NUMBER_ADMIN); // f4493ed183abba6b096f3903a5fc3b64
+var DEBUG = true;
 
 var mysql = require("mysql");
+
+function getInsertQueryParameters(dataObj) {
+    var fields = "";
+    var values = "";
+    var table = [];
+    var first = true;
+    for (var field in dataObj) {
+        if (first) {
+            first = false;
+            fields += "??";
+            values += "?";
+        }
+        else {
+            fields += ",??";
+            values += ",?";
+        }
+        table.push(field);
+    }
+    for (var field in dataObj) {
+        table.push(dataObj[field]);
+    }
+    var objToReturn = new Object();
+    objToReturn.table = table;
+    objToReturn.fields = fields;
+    objToReturn.values = values;
+    return table;
+}
+
+function getUpdateQueryParameters(dataObj) {
+    var assignments = "";
+    var table = [];
+    var first = true;
+    for (var field in dataObj) {
+        if (first) {
+            first = false;
+            assignments += "??=?";
+        }
+        else {
+            assignments += ",??=?";
+        }
+        table.push(field);
+        table.push(dataObj[field]);
+    }
+    var objToReturn = new Object();
+    objToReturn.table = table;
+    objToReturn.assignments = assignments;
+    return objToReturn;
+}
 
 function REST_ROUTER(router, connection, md5) {
     var self = this;
@@ -28,7 +77,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (!err && typeof(rows[0]) != 'undefined') {
-                    res.json({ "Error": false, "Message": "Success", "Token": md5(rows[0].id + MAGIC_PHRASE) });
+                    res.json({ "Error": false, "Message": "Success", "Content": md5(rows[0].id + MAGIC_PHRASE) });
                 } else {
                     res.json({ "Error": true, "Message": "Error executing the query" });
                 }
@@ -38,7 +87,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (!err && typeof(rows[0]) != 'undefined') {
-                    res.json({ "Error": false, "Message": "Success", "Token": md5(rows[0].id + MAGIC_PHRASE) });
+                    res.json({ "Error": false, "Message": "Success", "Content": md5(rows[0].id + MAGIC_PHRASE) });
                 } else {
                     res.json({ "Error": true, "Message": "Error executing the query" });
                 }
@@ -63,7 +112,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 if (err) {
                     res.json({ "Error": true, "Message": "Error executing the query" });
                 } else {
-                    res.json({ "Error": false, "Message": "Success", "Users": rows });
+                    res.json({ "Error": false, "Message": "Success", "Content": rows });
                 }
             });
         } else {
@@ -82,7 +131,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             } else {
                 var token = req.headers["token"];
                 if (ADMIN_TOKEN === token || (typeof(rows[0]) != 'undefined' && token === md5(rows[0].id + MAGIC_PHRASE))) {
-                    res.json({ "Error": false, "Message": "Success", "User": rows });
+                    res.json({ "Error": false, "Message": "Success", "Content": rows });
                 }
                 else {
                     res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated" });
@@ -102,7 +151,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             } else {
                 var token = req.headers["token"];
                 if (ADMIN_TOKEN === token || (typeof(rows[0]) != 'undefined' && token === md5(rows[0].id + MAGIC_PHRASE))) {
-                    res.json({ "Error": false, "Message": "Success", "User": rows });
+                    res.json({ "Error": false, "Message": "Success", "Content": rows });
                 }
                 else {
                     res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated" });
@@ -116,12 +165,11 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var query = "INSERT INTO ??(??,??,??,??,??) VALUES (?,?,?,?,?)";
         var table = ["user", "phone", "user", "password", "birthDate", "email", req.body.phone, req.body.user, md5(req.body.password), req.body.birthDate, req.body.email];
         query = mysql.format(query, table);
-        console.log(query);
         connection.query(query, function(err, rows) {
             if (err) {
                 res.json({ "Error": true, "Message": "Error executing the query" });
             } else {
-                res.json({ "Error": false, "Message": "User Added !" });
+                res.json({ "Error": false, "Message": "User Added !", "Content": md5(rows.insertId + MAGIC_PHRASE) });
             }
         });
     });
@@ -185,7 +233,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 if (err) {
                     res.json({ "Error": true, "Message": "Error executing the query" });
                 } else {
-                    res.json({ "Error": false, "Message": "Success", "Payment Information": rows });
+                    res.json({ "Error": false, "Message": "Success", "Content": rows });
                 }
             });
         }
@@ -259,12 +307,11 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-
     // SHIPMENT_METHOD TABLE
     // ----- ----- ----- -----
 
     // Get the user shipment info of a specific user.
-    router.get("/shipmentinfo/:user_id", function(req, res) {
+    router.get("/shipmentsinfo/:user_id", function(req, res) {
         var token = req.headers["token"];
         if (ADMIN_TOKEN === token || token === md5(req.params.user_id + MAGIC_PHRASE)) {
             var query = "SELECT * FROM ?? WHERE ??=?";
@@ -274,7 +321,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 if (err) {
                     res.json({ "Error": true, "Message": "Error executing the query" });
                 } else {
-                    res.json({ "Error": false, "Message": "Success", "Shipment Information": rows });
+                    res.json({ "Error": false, "Message": "Success", "Content": rows });
                 }
             });
         } else {
@@ -283,7 +330,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     });
 
     // Insert a user shipment info of an specific user.
-    router.post("/shipmentinfo", function(req, res) {
+    router.post("/shipmentsinfo", function(req, res) {
         var token = req.headers["token"];
         if (ADMIN_TOKEN === token || token === md5(req.body.user_id + MAGIC_PHRASE)) {
             var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -305,28 +352,63 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         }
     });
 
+
+
     // Modify a shipment info.
-    router.put("/shipmentinfo/:id", function(req, res) {
+    router.put("/shipmentsinfo/:id", function(req, res) {
         var token = req.headers["token"];
-        var query = "UPDATE ?? SET ??=? WHERE ??=?";
-        var table = ["shipment_method", req.body.field, req.body.value, "id", req.params.id];
-        query = mysql.format(query, table);
-        connection.query(query, function(err, rows) {
-            if (err) {
-                res.json({ "Error": true, "Message": "Error executing the query" });
-            } else {
-                if (ADMIN_TOKEN === token || (typeof(rows[0]) != 'undefined' && token === md5(rows[0].user_id + MAGIC_PHRASE))) {
-                    res.json({ "Error": false, "Message": "Updated the field !" });
+
+        /////////////////////////////////
+        // Assert that is a valid user //
+        /////////////////////////////////
+
+        if (token === ADMIN_TOKEN) {
+            var queryParameters = getUpdateQueryParameters(req.body);
+            var query = "UPDATE ?? SET " + queryParameters.assignments + " WHERE ??=?";
+            var table = ["shipment_method"].concat(queryParameters.table.concat(["id", req.params.id]));
+            query = mysql.format(query, table);
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    res.json({ "Error": true, "Message": "Error executing the query" });
+                } else {
+                    res.json({ "Error": false, "Message": "Updated !" });
+                }
+            });
+        }
+        else {
+            // Also we can make the assertion inside the query, but then we can't throw a bad token exception.
+            var queryAssertion = "SELECT * FROM ?? WHERE ??=?";
+            var tableAssertion = ["shipment_method", "id", req.params.id];
+            queryAssertion = mysql.format(queryAssertion, tableAssertion);
+            connection.query(queryAssertion, function(err, rows) {
+                if (!err && typeof(rows[0]) != 'undefined' && md5(rows[0].user_id + MAGIC_PHRASE) === token) {
+                    var queryParameters = getUpdateQueryParameters(req.body);
+                    var query = "UPDATE ?? SET " + queryParameters.assignments + " WHERE ??=?";
+                    var table = ["shipment_method"].concat(queryParameters.table.concat(["id", req.params.id]));
+                    query = mysql.format(query, table);
+                    connection.query(query, function(err, rows) {
+                        if (err) {
+                            res.json({ "Error": true, "Message": "Error executing the query" });
+                        } else {
+                            res.json({ "Error": false, "Message": "Updated !" });
+                        }
+                    });
+                }
+                else if (err) {
+                    res.json({ "Error": true, "Message": "Error executing the query" });
                 }
                 else {
                     res.json({ "Error": true, "Message": "Fail to access to API REST. You are not authenticated" });
                 }
-            }
-        });
+            });
+
+        }
+
+
     });
 
     // Delete a shipment info.
-    router.delete("/shipmentinfo/:id", function(req, res) {
+    router.delete("/shipmentsinfo/:id", function(req, res) {
         var token = req.headers["token"];
         var query = "DELETE FROM ?? WHERE ??=?";
         var table = ["shipment_method", "id", req.params.id];
