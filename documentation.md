@@ -234,7 +234,7 @@ Returns a user given an email.
 
 - email *
 
-## GET api/paymentinfo/:user_id
+## GET api/paymentsinfo/:user_id
 
 Returns the payment methods of an user given its user_id.
 
@@ -263,7 +263,7 @@ Inserts a new user to the DB.
 - birthDate *
 - email *
 
-## POST /paymentinfo
+## POST /paymentsinfo
 
 Inserts a new method of payment for a user to the DB.
 

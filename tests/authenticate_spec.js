@@ -1,6 +1,5 @@
 var dbController = require('../trueke_utils_db.js');
 dbController.initDBConnection();
-dbController.clearDB();
 
 var frisby = require('frisby');
 

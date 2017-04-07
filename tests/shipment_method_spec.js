@@ -1,6 +1,5 @@
 var dbController = require('../trueke_utils_db.js');
 dbController.initDBConnection();
-dbController.clearDB();
 
 var frisby = require('frisby');
 
@@ -56,14 +55,12 @@ function initializeSamples() {
     dbController.insertShipmentMethod(shipmentMethodData);
 }
 
-initializeSamples();
-
 function test1() {
     dbController.clearDB();
     initializeSamples();
     frisby.create('Get shipmentMethod without credentials')
         .waits(100)
-        .get('http://localhost:3000/api/shipmentsinfo/1')
+        .get('http://localhost:3000/api/shipmentmethods/1')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
@@ -84,7 +81,7 @@ function test2() {
     frisby.create('Get shipmentMethod with invalid credentials')
         .addHeader("token", "f4493ed183abba6b096f3903a5fc3b60")
         .waits(100)
-        .get('http://localhost:3000/api/shipmentsinfo/1')
+        .get('http://localhost:3000/api/shipmentmethods/1')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
@@ -105,7 +102,7 @@ function test3() {
     frisby.create('Get shipmentMethod with admin credentials')
         .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
         .waits(100)
-        .get('http://localhost:3000/api/shipmentsinfo/1')
+        .get('http://localhost:3000/api/shipmentmethods/1')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
@@ -160,7 +157,7 @@ function test4() {
     frisby.create('Get shipmentMethod with admin credentials of a user without shipmentmethods')
         .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
         .waits(100)
-        .get('http://localhost:3000/api/shipmentsinfo/2')
+        .get('http://localhost:3000/api/shipmentmethods/2')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
@@ -182,7 +179,7 @@ function test5() {
     frisby.create('Get shipmentMethod with user credentials')
         .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
         .waits(100)
-        .get('http://localhost:3000/api/shipmentsinfo/1')
+        .get('http://localhost:3000/api/shipmentmethods/1')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
@@ -248,7 +245,7 @@ function test6() {
 
     frisby.create('New shipmentMethod without credentials')
         .waits(100)
-        .post('http://localhost:3000/api/shipmentsinfo', {
+        .post('http://localhost:3000/api/shipmentmethods', {
             user_id: 1,
             country: "Spain",
             province: "Barcelona",
@@ -270,7 +267,7 @@ function test6() {
                 frisby.create('Get shipmentMethod with admin credentials')
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
-                    .get('http://localhost:3000/api/shipmentsinfo/1')
+                    .get('http://localhost:3000/api/shipmentmethods/1')
                     .expectStatus(200)
                     .expectHeaderContains('content-type', 'application/json')
                     .expectJSON({
@@ -307,7 +304,7 @@ function test7() {
     frisby.create('New shipmentMethod with admin credentials')
         .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
         .waits(100)
-        .post('http://localhost:3000/api/shipmentsinfo', {
+        .post('http://localhost:3000/api/shipmentmethods', {
             user_id: 1,
             country: "Spain",
             province: "Barcelona",
@@ -322,14 +319,14 @@ function test7() {
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
             "Error": false,
-            "Message": "User Shipment Information Added !"
+            "Message": "User Shipment Method Added !"
         })
         .after(function(err, res, body) {
             if (!err) {
                 frisby.create('Get shipmentMethod with admin credentials')
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
-                    .get('http://localhost:3000/api/shipmentsinfo/1')
+                    .get('http://localhost:3000/api/shipmentmethods/1')
                     .expectStatus(200)
                     .expectHeaderContains('content-type', 'application/json')
                     .expectJSON({
@@ -376,7 +373,7 @@ function test8() {
     frisby.create('New shipmentMethod with user credentials')
         .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
         .waits(100)
-        .post('http://localhost:3000/api/shipmentsinfo', {
+        .post('http://localhost:3000/api/shipmentmethods', {
             user_id: 1,
             country: "Spain",
             province: "Barcelona",
@@ -391,14 +388,14 @@ function test8() {
         .expectHeaderContains('content-type', 'application/json')
         .expectJSON({
             "Error": false,
-            "Message": "User Shipment Information Added !"
+            "Message": "User Shipment Method Added !"
         })
         .after(function(err, res, body) {
             if (!err) {
                 frisby.create('Get shipmentMethod with admin credentials')
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
-                    .get('http://localhost:3000/api/shipmentsinfo/1')
+                    .get('http://localhost:3000/api/shipmentmethods/1')
                     .expectStatus(200)
                     .expectHeaderContains('content-type', 'application/json')
                     .expectJSON({
@@ -432,8 +429,9 @@ function test9() {
     initializeSamples();
     frisby.create('Modify shipment attributes without credentials')
         .waits(100)
-        .put('http://localhost:3000/api/shipmentsinfo/1', {
-            // user_id: 2; POR SEGURIDAD HABRIA QUE QUITARLO
+        .put('http://localhost:3000/api/shipmentmethods/1', {
+            id: 404,
+            user_id: 2,
             country: "Switzerland",
             province: "Bern",
             city: "Bern",
@@ -454,7 +452,7 @@ function test9() {
                 frisby.create('Get shipmentMethod with admin credentials')
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
-                    .get('http://localhost:3000/api/shipmentsinfo/1')
+                    .get('http://localhost:3000/api/shipmentmethods/1')
                     .expectStatus(200)
                     .expectHeaderContains('content-type', 'application/json')
                     .expectJSON({
@@ -512,8 +510,9 @@ function test10() {
     frisby.create('Modify shipment attributes with admin credentials')
         .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
         .waits(100)
-        .put('http://localhost:3000/api/shipmentsinfo/1', {
-            // user_id: 2; POR SEGURIDAD HABRIA QUE QUITARLO
+        .put('http://localhost:3000/api/shipmentmethods/1', {
+            id: 404,
+            user_id: 2,
             country: "Switzerland",
             province: "Bern",
             city: "Bern",
@@ -533,7 +532,7 @@ function test10() {
                 frisby.create('Get shipmentMethod with admin credentials')
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
-                    .get('http://localhost:3000/api/shipmentsinfo/1')
+                    .get('http://localhost:3000/api/shipmentmethods/1')
                     .expectStatus(200)
                     .expectHeaderContains('content-type', 'application/json')
                     .expectJSON({
@@ -591,8 +590,9 @@ function test11() {
     frisby.create('Modify shipment attributes with user credentials')
         .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
         .waits(100)
-        .put('http://localhost:3000/api/shipmentsinfo/1', {
-            // user_id: 2; POR SEGURIDAD HABRIA QUE QUITARLO
+        .put('http://localhost:3000/api/shipmentmethods/1', {
+            id: 404,
+            user_id: 2,
             country: "Switzerland",
             province: "Bern",
             city: "Bern",
@@ -612,7 +612,7 @@ function test11() {
                 frisby.create('Get shipmentMethod with admin credentials')
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
-                    .get('http://localhost:3000/api/shipmentsinfo/1')
+                    .get('http://localhost:3000/api/shipmentmethods/1')
                     .expectStatus(200)
                     .expectHeaderContains('content-type', 'application/json')
                     .expectJSON({
@@ -647,6 +647,192 @@ function test11() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }]
+                    })
+                    .after(function(err, res, body) {
+                        if (!err) {
+                            test12();
+                        }
+                    })
+                    .toss();
+            }
+        })
+        .toss();
+}
+
+function test12() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Delete shipmentMethod without credentials')
+        .waits(100)
+        .delete('http://localhost:3000/api/shipmentmethods/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": true,
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                frisby.create('Get shipmentMethod with admin credentials')
+                    .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                    .waits(100)
+                    .get('http://localhost:3000/api/shipmentmethods/1')
+                    .expectStatus(200)
+                    .expectHeaderContains('content-type', 'application/json')
+                    .expectJSON({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": [{
+                            "id": 1,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8006,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }, {
+                            "id": 2,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8029,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }, {
+                            "id": 3,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8019,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }]
+                    })
+                    .after(function(err, res, body) {
+                        if (!err) {
+                            test13();
+                        }
+                    })
+                    .toss();
+            }
+        })
+        .toss();
+}
+
+function test13() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Delete shipmentMethod with admin credentials')
+        .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+        .waits(100)
+        .delete('http://localhost:3000/api/shipmentmethods/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Shipment Method Deleted !"
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                frisby.create('Get shipmentMethod with admin credentials')
+                    .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                    .waits(100)
+                    .get('http://localhost:3000/api/shipmentmethods/1')
+                    .expectStatus(200)
+                    .expectHeaderContains('content-type', 'application/json')
+                    .expectJSON({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": [{
+                            "id": 3,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8019,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }, {
+                            "id": 2,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8029,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }]
+                    })
+                    .after(function(err, res, body) {
+                        if (!err) {
+                            test14();
+                        }
+                    })
+                    .toss();
+            }
+        })
+        .toss();
+}
+
+function test14() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Delete shipmentMethod with user credentials')
+        .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
+        .waits(100)
+        .delete('http://localhost:3000/api/shipmentmethods/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Shipment Method Deleted !"
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                frisby.create('Get shipmentMethod with admin credentials')
+                    .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                    .waits(100)
+                    .get('http://localhost:3000/api/shipmentmethods/1')
+                    .expectStatus(200)
+                    .expectHeaderContains('content-type', 'application/json')
+                    .expectJSON({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": [{
+                            "id": 3,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8019,
+                            "adress": "Calle Falsa 123",
+                            "name": "Pepito Mendizabal",
+                            "idCard": "654845616531",
+                            "phone": "654654654"
+                        }, {
+                            "id": 2,
+                            "user_id": 1,
+                            "country": "Spain",
+                            "province": "Barcelona",
+                            "city": "Barcelona",
+                            "postalCode": 8029,
                             "adress": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",

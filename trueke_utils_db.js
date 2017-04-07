@@ -21,37 +21,27 @@ DbController.prototype.closeDBConnection = function() {
 
 DbController.prototype.clearDB = function() {
     this.connection.query('DELETE FROM `user`', function(err, rows, fields) {
-        if (!err)
-            console.log('Deleted all the rows from `user` table');
-        else
+        if (err)
             console.log('Error while performing Query: ' + err);
     });
 
     this.connection.query('DELETE FROM `payment_method`', function(err, rows, fields) {
-        if (!err)
-            console.log('Deleted all the rows from `payment_method` table');
-        else
+        if (err)
             console.log('Error while performing Query: ' + err);
     });
 
     this.connection.query('DELETE FROM `shipment_method`', function(err, rows, fields) {
-        if (!err)
-            console.log('Deleted all the rows from `shipment_method` table');
-        else
+        if (err)
             console.log('Error while performing Query: ' + err);
     });
 
     this.connection.query('DELETE FROM `category`', function(err, rows, fields) {
-        if (!err)
-            console.log('Deleted all the rows from `category` table');
-        else
+        if (err)
             console.log('Error while performing Query.');
     });
 
     this.connection.query('DELETE FROM `product`', function(err, rows, fields) {
-        if (!err)
-            console.log('Deleted all the rows from `product` table');
-        else
+        if (err)
             console.log('Error while performing Query.');
     });
 }
@@ -91,6 +81,10 @@ DbController.prototype.insert = function(tableName, dataToInsert) {
 
 DbController.prototype.insertUser = function(userData) {
     this.insert("user", userData);
+}
+
+DbController.prototype.insertPaymentMethod = function(paymentMethodData) {
+    this.insert("payment_method", paymentMethodData);
 }
 
 DbController.prototype.insertShipmentMethod = function(shipmentMethodData) {
