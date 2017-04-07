@@ -196,6 +196,7 @@ The API returns the wanted category of a given product. This method is only acce
 
 If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
 
+
 ```
 {
 	"Error" : false,
@@ -208,31 +209,196 @@ If there's an error the error will turn to true and the message will tell wheter
 }
 ```
 
-# GETS
+# USERS
 
-## GET /users
+This API stores the information related to its users and it allows its modification, creation, elimination and consulting its data.
 
-Returns all the users of the database.
+## GET /api/users
+
+The API returns the set of users stored in the database. This functionality is only available for the admin of the platform with its special token.
+
+## Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given to the admin	          |
+
+## Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : [{"id": 1,
+		      "phone": "691203231",
+		      "user": "Albert Pouman",
+		      "password": "posuelo",
+		      "email": "llapispala@gmail.com",
+		      "birthDate": 1996-10-10,
+		      "products": 0,
+		      "truekes": 3,
+		      "rating": 0.0}, 
+		     {"id": 2,
+		      "phone": "691243231",
+		      "user": "Marcs Pouman",
+		      "password": "posuelo",
+		      "email": "llapisrastrillo@gmail.com",
+		      "birthDate": 1996-10-10,
+		      "products": 0,
+		      "truekes": 3,
+		      "rating": 0.0},   ... 
+		     ]
+}
+```
+
+## GET /api/users/byphone/:phone
+
+The API returns the user (selected by the phone number) information stored in the database. This functionality is available for the admin of the platform with its special token and by the users with its authentification token.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
 
 ### Parameters
 
-You need no parameters.
 
-## GET /users/byphone/:phone
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| phone	 	  | phone number of the current user      |
 
-Returns a user given a phone number.
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : [{"id": 1,
+		      "phone": "691203231",
+		      "user": "Albert Pouman",
+		      "password": "posuelo",
+		      "email": "llapispala@gmail.com",
+		      "birthDate": 1996-10-10,
+		      "products": 0,
+		      "truekes": 3,
+		      "rating": 0.0
+		      }]
+}
+```
+
+## GET /api/users/byemail/:email
+
+the API returns the user (selected by the email) information stored in the database. This functionality is available for the admin of the platform with its special token and by the users with its authentification token.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
 
 ### Parameters
 
-- phone *
 
-## GET /users/byemail/:email
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| email		  | email of the current user    	  |
 
-Returns a user given an email.
+### Response
 
-### Parameters
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : [{"id": 1,
+		      "phone": "691203231",
+		      "user": "Albert Pouman",
+		      "password": "posuelo",
+		      "email": "llapispala@gmail.com",
+		      "birthDate": 1996-10-10,
+		      "products": 0,
+		      "truekes": 3,
+		      "rating": 0.0
+		      }]
+}
+```
+## POST /api/users
 
-- email *
+This API URI allows the creation of a new user in the database. It is accesible without any type of authentification.
+
+### BODY
+
+|       KEY       	|                 VALUE                 |
+|-----------------------|---------------------------------------|
+| phone (*)    	  	| phone of the user (UNIQUE)            |
+| user  	     	| name of the user                      |
+| password (*)    	| password of the user         		|
+| birthDate (*)	  	| birth date of the user. FORMAT: YY-MM-DD |
+| email	 (*)   		| email of the user (UNIQUE)		|
+
+### RESPONSE
+
+```
+{
+	"Error" : false,
+	"Message" : "User Added !",
+	"Content" : [{ "token": "thetoken" }]
+}
+```
+
+## PUT /api/users/:id
+
+The API allows the modification of an existing user in the database. It is accesible with admin authentification or with a normal user authentification that coincides with the modified user.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
+
+
+### Body
+
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| field (*)       | name of the field we want to modify   | 
+| value (*)	  | value of the field we want to modify  |
+
+
+### RESPONSE
+
+```
+{
+	"Error" : false,
+	"Message" : "Field Updated !"
+}
+```	
+
+## DELETE /api/users
+
+The API supplies this functionality in order to give the user the possibility of deleting an existing user in the database.It is accesible with admin authentification or with a normal user authentification that coincides with the deleted user.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
+
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)          | id of the user we want to delete /current| 
+
+
+
 
 ## GET api/paymentinfo/:user_id
 
@@ -280,12 +446,3 @@ Inserts a new method of payment for a user to the DB.
 - adress *
 - phone *
 
-# DELETE
-
-## DELETE /users/:id
-
-Deletes an user with an specific id from the DB.
-
-### Parameters
-
-- id *
