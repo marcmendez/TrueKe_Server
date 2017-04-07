@@ -111,6 +111,67 @@ If there's an error the error will turn to true and the message will tell wheter
 }
 ```
 
+## POST /products
+
+The API is prepared to insert a new product in the DB in order to have it in the storage. This can only be done by authentified users and the admin, as before, the user must give a user_id that coincides with the current user.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
+
+### Body
+
+|       KEY       	|                 VALUE                 |
+|-----------------------|---------------------------------------|
+| user_id (*)     	| id of the current user                |
+| title (*)    	  	| title of the product.                 |
+| description     	| description of the product            |
+| category (*)    	| category of the product. It must be a valid category|
+| min_price (*)	  	| minimum price of the product. Higher that 0. |
+| max_price (*)   	| maximum price of the product. Higher than min_price |
+| wants_categories (*)  | categories wanted by the product. Separator:"-". |
+
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```{
+	"Error" : false,
+	"Message" : "A new product was inserted in the database"
+   }
+```
+## DELETE /products/:id
+
+The API deletes the selected product. This can only be done by authentified users and the admin, as before, the user must give a user_id that coincides with the current user.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id     	  | id of the product	                  |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```{
+	"Error" : false,
+	"Message" : "Product deleted correctly"
+   }
+
+
+
+
+
 # GETS
 
 ## GET /users
