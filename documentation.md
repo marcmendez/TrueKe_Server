@@ -172,6 +172,41 @@ If there's an error the error will turn to true and the message will tell wheter
    }
    ```
 
+# PRODUCT WANTS CATEGORY
+
+The API is capable of storing the wishes of a product and returning them, this functionality only offers gets, as the inserts and the deletes are done in the product insertion and removal.
+
+## GET /productwantscategory/:product_id
+
+The API returns the wanted category of a given product. This method is only accesible for admins and for the owner of the product with the correct authentification.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during athentification    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| product_id (*)  | id of the product	                  |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : [{"product_id": 1
+		      "category": "Pouman"}, 
+		     {"product_id": 1
+		      "category": "Pouman2"},  ... 
+		     ]
+}
+```
 
 # GETS
 
