@@ -78,7 +78,7 @@ The API returns the set of products stored in the database of a given user. This
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 ### Parameters
 
@@ -120,7 +120,7 @@ The API is prepared to insert a new product in the DB in order to have it in the
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 ### Body
 
@@ -153,7 +153,7 @@ The API deletes the selected product. This can only be done by authentified user
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 ### Parameters
 
@@ -184,7 +184,7 @@ The API returns the wanted category of a given product. This method is only acce
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 ### Parameters
 
@@ -261,7 +261,7 @@ The API returns the user (selected by the phone number) information stored in th
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 ### Parameters
 
@@ -299,7 +299,7 @@ the API returns the user (selected by the email) information stored in the datab
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 ### Parameters
 
@@ -336,7 +336,7 @@ This API URI allows the creation of a new user in the database. It is accesible 
 |       KEY       	|                 VALUE                 |
 |-----------------------|---------------------------------------|
 | phone (*)    	  	| phone of the user (UNIQUE)            |
-| user  	     	| name of the user                      |
+| user (*) 	     	| name of the user                      |
 | password (*)    	| password of the user         		|
 | birthDate (*)	  	| birth date of the user. FORMAT: YY-MM-DD |
 | email	 (*)   		| email of the user (UNIQUE)		|
@@ -359,28 +359,40 @@ The API allows the modification of an existing user in the database. It is acces
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 
-### Body
-
+### Parameters
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| field (*)       | name of the field we want to modify   | 
-| value (*)	  | value of the field we want to modify  |
+| id (*)          | id of the user we want to delete /current| 
 
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| \[Attribute to modify\] (*)       | value that we want to put inside the attribute   | 
+
+**You can put more than one attribute to change it**
+
+### Attributes
+- phone
+- user
+- password
+- email
+- birthDate
 
 ### Response
 
 ```
 {
 	"Error" : false,
-	"Message" : "Field Updated !"
+	"Message" : "Updated !"
 }
 ```	
 
-## DELETE /api/users
+## DELETE /api/users/:id
 
 The API supplies this functionality in order to give the user the possibility of deleting an existing user in the database.It is accesible with admin authentification or with a normal user authentification that coincides with the deleted user.
 
@@ -388,10 +400,10 @@ The API supplies this functionality in order to give the user the possibility of
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| token	 	  | token given during athentification    |
+| token	 	  | token given during authentication    |
 
 
-### Body
+### Parameters
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
@@ -404,43 +416,33 @@ The API supplies this functionality in order to give the user the possibility of
 }
 ```	
 
+# PAYMENTMETHODS
 
-
-
-## GET api/paymentsinfo/:user_id
+## GET /api/paymentmethods/:user_id
 
 Returns the payment methods of an user given its user_id.
 
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
 ### Parameters
 
 - user_id *
 
-## GET /shipmentinfo/:user_id
-Returns the shipment methods of an user given its user_id.
-
-### Parameters
-
-- user_id *
-
-# POSTS
-
-## POST /users
-
-Inserts a new user to the DB.
-
-### Parameters
-
-- phone *
-- user *
-- password *
-- birthDate *
-- email *
-
-## POST /paymentsinfo
+## POST /api/paymentmethods
 
 Inserts a new method of payment for a user to the DB.
 
-### Parameters
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
 
 - user_id *
 - type *
@@ -453,3 +455,142 @@ Inserts a new method of payment for a user to the DB.
 - adress *
 - phone *
 
+## PUT /api/paymentmethods/:id
+
+Modifies the payment method :id
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| \[Attribute to modify\] (*)       | value that we want to put inside the attribute   | 
+
+### Attributes
+
+- country
+- province
+- city
+- postalCode
+- adress
+- name
+- idCard
+- phone
+
+## DELETE /api/paymentmethods/:id
+
+Deletes the payment method :id
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)          | id of the payment method we want to delete /current| 
+
+```
+{
+	"Error" : false,
+	"Message" : "Payment Method Deleted !"
+}
+```	
+
+# SHIPMENTMETHODS
+
+## GET /api/shipmentmethods/:user_id
+
+Returns the shipment methods of an user given its user_id.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Parameters
+
+- user_id *
+
+## POST /api/shipmentmethods
+
+Inserts a new shipment method for a user to the DB.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
+
+- user_id *
+- country *
+- province *
+- city *
+- postalCode *
+- adress *
+- name *
+- idCard *
+- phone *
+
+## PUT /api/shipmentmethods/:id
+
+Modifies the shipment method :id
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| \[Attribute to modify\] (*)       | value that we want to put inside the attribute   | 
+
+### Attributes
+
+- country
+- province
+- city
+- postalCode
+- adress
+- name
+- idCard
+- phone
+
+## DELETE /api/shipmentmethods/:id
+
+Deletes the shipment method :id
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)          | id of the shipment method we want to delete /current| 
+
+```
+{
+	"Error" : false,
+	"Message" : "Shipment Method Deleted !"
+}
+```	
