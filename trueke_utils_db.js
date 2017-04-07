@@ -40,6 +40,20 @@ DbController.prototype.clearDB = function() {
         else
             console.log('Error while performing Query: ' + err);
     });
+
+    this.connection.query('DELETE FROM `category`', function(err, rows, fields) {
+        if (!err)
+            console.log('Deleted all the rows from `category` table');
+        else
+            console.log('Error while performing Query.');
+    });
+
+    this.connection.query('DELETE FROM `product`', function(err, rows, fields) {
+        if (!err)
+            console.log('Deleted all the rows from `product` table');
+        else
+            console.log('Error while performing Query.');
+    });
 }
 
 /**
@@ -83,5 +97,16 @@ DbController.prototype.insertShipmentMethod = function(shipmentMethodData) {
     this.insert("shipment_method", shipmentMethodData);
 }
 
+DbController.prototype.insertCategory = function(categoryData) {
+  this.insert("category", categoryData);
+}
+
+DbController.prototype.insertProduct = function(productData) {
+  this.insert("product", productData);
+}
+
+DbController.prototype.insertProductWantsCategory = function(productWantsCategoryData) {
+  this.insert("product_wants_category", productWantsCategoryData);
+}
 
 module.exports = new DbController();
