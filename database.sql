@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`product` (
   `id` INT(70) AUTO_INCREMENT,
   `user_id` INT(70) NOT NULL,
   `title` VARCHAR(50) NOT NULL,
-  `description` VARCHAR(50),
+  `description` TEXT,
   `category` VARCHAR(50) NOT NULL,
   `min_price` INT(30) NOT NULL,
   `max_price` INT(30) NOT NULL,
