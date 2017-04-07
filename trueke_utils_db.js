@@ -106,5 +106,8 @@ DbController.prototype.insertProduct = function(productData) {
   this.insert("product", productData);
 }
 
+DbController.prototype.insertProductWantsCategory = function(productWantsCategoryData) {
+  this.insert("product_wants_category", productWantsCategoryData);
+}
 
 module.exports = new DbController();
