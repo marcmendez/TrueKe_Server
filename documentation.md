@@ -14,6 +14,11 @@ To get permissions make a post to "/authenticate" with the body params **phone o
 ```
 
 ## Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| phone or email  | phone or email of the user            |
+| pass            | the password of the user in the system|
 - phone or email : the phone or email of the user.
 - pass : the pass of the user into the system.
 
