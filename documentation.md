@@ -84,7 +84,7 @@ The API returns the set of products stored in the database of a given user. This
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| user_id     	  | id of the current user                |
+| user_id (*)     | id of the current user                |
 
 ### Response
 
@@ -157,7 +157,7 @@ The API deletes the selected product. This can only be done by authentified user
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
-| id     	  | id of the product	                  |
+| id (*)    	  | id of the product	                  |
 
 ### Response
 
@@ -167,9 +167,7 @@ If there's an error the error will turn to true and the message will tell wheter
 	"Error" : false,
 	"Message" : "Product deleted correctly"
    }
-
-
-
+   ```
 
 
 # GETS
