@@ -217,13 +217,13 @@ This API stores the information related to its users and it allows its modificat
 
 The API returns the set of users stored in the database. This functionality is only available for the admin of the platform with its special token.
 
-## Headers
+### Headers
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
 | token	 	  | token given to the admin	          |
 
-## Response
+### Response
 
 If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
 
@@ -331,7 +331,7 @@ If there's an error the error will turn to true and the message will tell wheter
 
 This API URI allows the creation of a new user in the database. It is accesible without any type of authentification.
 
-### BODY
+### Body
 
 |       KEY       	|                 VALUE                 |
 |-----------------------|---------------------------------------|
@@ -341,7 +341,7 @@ This API URI allows the creation of a new user in the database. It is accesible 
 | birthDate (*)	  	| birth date of the user. FORMAT: YY-MM-DD |
 | email	 (*)   		| email of the user (UNIQUE)		|
 
-### RESPONSE
+### Response
 
 ```
 {
@@ -371,7 +371,7 @@ The API allows the modification of an existing user in the database. It is acces
 | value (*)	  | value of the field we want to modify  |
 
 
-### RESPONSE
+### Response
 
 ```
 {
