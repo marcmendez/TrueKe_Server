@@ -90,7 +90,8 @@ The API returns the set of products stored in the database of a given user. This
 
 If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
 
-```{
+```
+{
 	"Error" : false,
 	"Message" : Success,
 	"Content" : [{"id": 3,
@@ -138,7 +139,8 @@ The API is prepared to insert a new product in the DB in order to have it in the
 
 If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
 
-```{
+```
+   {
 	"Error" : false,
 	"Message" : "A new product was inserted in the database"
    }
@@ -163,7 +165,8 @@ The API deletes the selected product. This can only be done by authentified user
 
 If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
 
-```{
+```
+  {
 	"Error" : false,
 	"Message" : "Product deleted correctly"
    }
