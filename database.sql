@@ -27,14 +27,19 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
 ) ENGINE = InnoDB;
 
 -- CHECK (max_price >= min_price && min_price <= 0)
-CREATE TRIGGER `product_check_price_range` BEFORE INSERT ON `user`
+
+DELIMITER $$
+
+CREATE TRIGGER `product_check_rating` BEFORE INSERT ON `user`
 FOR EACH ROW
 BEGIN
-    IF new.`rating` > 10 OR new.`rating` < 10 THEN
+    IF new.`rating` > 10 OR new.`rating` < 0 THEN
         SIGNAL SQLSTATE '12345' SET message_text = 'Check constraint rating';
     END IF;
 
 END$$
+
+DELIMITER ;
 
 -- Example of insert (user)
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
@@ -208,6 +213,74 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`product_wants_category` (
 -- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
 -- INSERT INTO `product`( `user_id`, `title`, `description`, `category`, `min_price`, `max_price`) VALUES ('1', 'Clip Vermell', 'Et canviara la vida', 'electrodomestics', '1', '2');
 -- INSERT INTO `product_wants_category`(`product_id`,`category`) VALUES ('1','electrodomestics');
+
+
+-- -----------------------------------------------------
+-- Table `restful_api`.`chat`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `restful_api`.`chat`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`chat` (
+
+  `product_id1` INT (70),
+  `product_id2` INT (70),
+
+  CONSTRAINT Pk_category PRIMARY KEY (`product_id1`,`product_id2`),
+  CONSTRAINT Fk_chat_product1 FOREIGN KEY (`product_id1`) REFERENCES product(`id`) ON DELETE CASCADE,
+  CONSTRAINT Fk_chat_product2 FOREIGN KEY (`product_id2`) REFERENCES product(`id`) ON DELETE CASCADE
+
+) ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `restful_api`.`match`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `restful_api`.`match`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`match` (
+
+  `product_id1` INT (70),
+  `product_id2` INT (70),
+  `wants` BIT (1),
+
+  CONSTRAINT Pk_category PRIMARY KEY (`product_id1`,`product_id2`),
+  CONSTRAINT Fk_match_product1 FOREIGN KEY (`product_id1`) REFERENCES product(`id`) ON DELETE CASCADE,
+  CONSTRAINT Fk_match_product2 FOREIGN KEY (`product_id2`) REFERENCES product(`id`) ON DELETE CASCADE
+
+) ENGINE = InnoDB;
+
+DELIMITER $$
+
+CREATE TRIGGER `match_check_not_same_product` BEFORE INSERT ON `match`
+FOR EACH ROW
+BEGIN
+    IF new.`product_id1`= new.`product_id2` THEN
+        SIGNAL SQLSTATE '12345' SET message_text = 'Check not same product match';
+    END IF;
+
+END$$
+
+CREATE TRIGGER `open_new_chat` BEFORE INSERT ON `match`
+FOR EACH ROW
+BEGIN
+    IF new.`wants`= 1 THEN
+
+        IF EXISTS ( SELECT 1
+                    FROM `match`
+                    WHERE `match`.`product_id1` = NEW.product_id2 AND
+                          `match`.`product_id2` = NEW.product_id1 AND
+                          `match`.`wants`= 1) THEN
+
+          INSERT INTO `chat`(`product_id1`, `product_id2`) VALUES (NEW.product_id1, NEW.product_id2);
+
+        END IF;
+
+    END IF;
+
+END$$
+
+DELIMITER ;
+
+-- INSERT INTO `match`(`product_id1`, `product_id2`, `wants`) VALUES ('3', '4', 0);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
