@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`match` (
 
   `product_id1` INT (70),
   `product_id2` INT (70),
-  `wants` BIT (1),
+  `wants` INT (1),
 
   CONSTRAINT Pk_category PRIMARY KEY (`product_id1`,`product_id2`),
   CONSTRAINT Fk_match_product1 FOREIGN KEY (`product_id1`) REFERENCES product(`id`) ON DELETE CASCADE,
