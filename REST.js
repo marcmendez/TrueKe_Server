@@ -878,6 +878,38 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
           });
     });
 
+    // ----- ----- ----- -----
+    // CHAT TABLE
+    // ----- ----- ----- -----
+
+    router.get("/chats", function(req, res) {
+        var token = req.headers["token"];
+        if (token == ADMIN_TOKEN) {
+            var query = "SELECT * FROM ??";
+            var table = ["chat"];
+            query = mysql.format(query, table);
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing the query"
+                    });
+                } else {
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": rows
+                    });
+                }
+            });
+        } else {
+            res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated"
+            });
+        }
+    });
+
 
 
 }

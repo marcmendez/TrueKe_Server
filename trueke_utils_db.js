@@ -44,6 +44,16 @@ DbController.prototype.clearDB = function() {
         if (err)
             console.log('Error while performing Query.');
     });
+
+    this.connection.query('DELETE FROM `match`', function(err, rows, fields) {
+        if (err)
+            console.log('Error while performing Query.');
+    });
+
+    this.connection.query('DELETE FROM `chat`', function(err, rows, fields) {
+        if (err)
+            console.log('Error while performing Query.');
+    });
 }
 
 /**
@@ -101,6 +111,10 @@ DbController.prototype.insertProduct = function(productData) {
 
 DbController.prototype.insertProductWantsCategory = function(productWantsCategoryData) {
   this.insert("product_wants_category", productWantsCategoryData);
+}
+
+DbController.prototype.insertMatch = function(matchData) {
+  this.insert("match", matchData);
 }
 
 module.exports = new DbController();
