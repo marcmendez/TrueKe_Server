@@ -1,5 +1,5 @@
 // token generation
-var md5 = require("md5");
+var md5 = require("MD5");
 var MAGIC_NUMBER_ADMIN = 0x82862484753532;
 var MAGIC_PHRASE = "Oro parece, plátano es";
 var ADMIN_TOKEN = md5(MAGIC_NUMBER_ADMIN); // f4493ed183abba6b096f3903a5fc3b64
@@ -220,7 +220,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     });
     // Modify an user with a specific id.
     router.put("/users/:id", function(req, res) {
-        // For security, we don't allow change id's 
+        // For security, we don't allow change id's
         delete req.body["id"];
         var token = req.headers["token"];
         if (ADMIN_TOKEN === token || token === md5(req.params.id + MAGIC_PHRASE)) {
@@ -338,7 +338,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     });
     // Modify a payment info.
     router.put("/paymentmethods/:id", function(req, res) {
-        // For security, we don't allow change id's 
+        // For security, we don't allow change id's
         delete req.body["id"];
         delete req.body["user_id"];
         var token = req.headers["token"];
@@ -521,7 +521,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     });
     // Modify a shipment info.
     router.put("/shipmentmethods/:id", function(req, res) {
-        // For security, we don't allow change id's 
+        // For security, we don't allow change id's
         delete req.body["id"];
         delete req.body["user_id"];
         var token = req.headers["token"];
@@ -805,7 +805,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var query = "SELECT * FROM ?? WHERE ??=?";
         var table = ["product", "id", req.params.product_id];
         query = mysql.format(query, table);
-        console.log(query);
         connection.query(query, function(err, rows) {
             if (err) res.json({
                 "Error": true,
@@ -833,5 +832,85 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             });
         });
     });
+
+    // ----- ----- ----- -----
+    // MATCH TABLE
+    // ----- ----- ----- -----
+
+    router.post("/matches", function(req, res) {
+
+        var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.body.product_id1];
+        query = mysql.format(query, table);
+        console.log(query);
+        connection.query(query, function(err, rows) {
+
+            if (err) res.json({
+                "Error": true,
+                "Message": "Error executing MySQL query"
+            });
+
+            else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+
+              var query = "INSERT INTO ??(??,??,??) VALUES (?,?,?)";
+              var table = ["match", "product_id1", "product_id2", "wants", req.body.product_id1, req.body.product_id2, req.body.wants];
+              query = mysql.format(query, table);
+              console.log(query);
+              connection.query(query, function(err, rows) {
+
+                  if (err) res.json({
+                      "Error": true,
+                      "Message": "Error executing MySQL query"
+                  });
+
+                  else res.json({
+                       "Error": false,
+                       "Message": "Match Added !",
+                  });
+
+              });
+
+            } else res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated."
+            });
+          });
+    });
+
+    // ----- ----- ----- -----
+    // CHAT TABLE
+    // ----- ----- ----- -----
+
+    router.get("/chats", function(req, res) {
+        var token = req.headers["token"];
+        if (token == ADMIN_TOKEN) {
+            var query = "SELECT * FROM ??";
+            var table = ["chat"];
+            query = mysql.format(query, table);
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing the query"
+                    });
+                } else {
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": rows
+                    });
+                }
+            });
+        } else {
+            res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated"
+            });
+        }
+    });
+
+
+
 }
 module.exports = REST_ROUTER;
