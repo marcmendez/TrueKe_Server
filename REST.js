@@ -142,6 +142,35 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             });
         }
     });
+
+    router.get("/users/:id", function(req, res) {
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["user", "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing the query"
+                });
+            } else {
+                var token = req.headers["token"];
+                if (ADMIN_TOKEN === token || (typeof(rows[0]) != 'undefined' && token === md5(rows[0].id + MAGIC_PHRASE))) {
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": rows
+                    });
+                } else {
+                    res.json({
+                        "Error": true,
+                        "Message": "Fail to access to API REST. You are not authenticated"
+                    });
+                }
+            }
+        });
+    });
+
     // Get specific user data by phone.
     router.get("/users/byphone/:phone", function(req, res) {
         var query = "SELECT * FROM ?? WHERE ??=?";

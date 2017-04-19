@@ -80,7 +80,6 @@ function test2() {
         .toss();
 }
 
-
 function test3() {
     dbController.clearDB();
     initializeSamples();
@@ -112,7 +111,6 @@ function test3() {
         })
         .toss();
 }
-
 
 // /users/byphone/:email
 
@@ -200,9 +198,7 @@ function test6() {
         .toss();
 }
 
-
 // /users/:id
-
 
 function test7() {
     dbController.clearDB();
@@ -407,12 +403,6 @@ function test9() {
         .toss();
 }
 
-
-
-
-
-
-
 function test10() {
     dbController.clearDB();
     initializeSamples();
@@ -547,10 +537,94 @@ function test12() {
                     })
                     .after(function(err, res, body) {
                         if (!err) {
-                            dbController.closeDBConnection();
+                            test13();
                         }
                     })
                     .toss();
+            }
+        })
+        .toss();
+}
+
+function test13() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Get user by id without credentials')
+        .waits(100)
+        .get('http://localhost:3000/api/users/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": true,
+            "Message": "Fail to access to API REST. You are not authenticated"
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                test14();
+            }
+        })
+        .toss();
+}
+
+function test14() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Get user by id with admin credentials')
+        .waits(100)
+        .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+        .get('http://localhost:3000/api/users/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Success",
+            "Content": [{
+                "id": 1,
+                "phone": "654654654",
+                "user": "Pepito",
+                "password": "passapalabra",
+                "email": "manolito@gmail.com",
+                "birthDate": "1990-01-01",
+                "products": 3,
+                "truekes": 2,
+                "rating": 1
+            }]
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                test15();
+            }
+        })
+        .toss();
+}
+
+function test15() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Get user by id with user credentials')
+        .waits(100)
+        .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
+        .get('http://localhost:3000/api/users/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Success",
+            "Content": [{
+                "id": 1,
+                "phone": "654654654",
+                "user": "Pepito",
+                "password": "passapalabra",
+                "email": "manolito@gmail.com",
+                "birthDate": "1990-01-01",
+                "products": 3,
+                "truekes": 2,
+                "rating": 1
+            }]
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                dbController.closeDBConnection();
             }
         })
         .toss();
