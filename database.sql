@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
   `province` VARCHAR(50) NOT NULL,
   `city` VARCHAR(50) NOT NULL,
   `postalCode` INT(10) NOT NULL,
-  `adress` VARCHAR(70) NOT NULL,
+  `address` VARCHAR(70) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
 
   CONSTRAINT Pk_payment_method PRIMARY KEY (`id`),
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
 -- Example of insert (payment_method)
 
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
--- INSERT INTO `payment_method`(`user_id`, `type`, `number`, `expireDate`, `name`, `country`, `province`, `city`, `postalCode`, `adress`, `phone`) VALUES ('1', 'MasterCard/4B/Euro6000','1234123412341234', '2020-02-01', 'Homer', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', '619703921');
+-- INSERT INTO `payment_method`(`user_id`, `type`, `number`, `expireDate`, `name`, `country`, `province`, `city`, `postalCode`, `address`, `phone`) VALUES ('1', 'MasterCard/4B/Euro6000','1234123412341234', '2020-02-01', 'Homer', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', '619703921');
 
 -- -----------------------------------------------------
 -- Table `restful_api`.`shipment_method`
@@ -82,13 +82,13 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
   `province` VARCHAR(50) NOT NULL,
   `city` VARCHAR(50) NOT NULL,
   `postalCode` INT(10) NOT NULL,
-  `adress` VARCHAR(70) NOT NULL,
+  `address` VARCHAR(70) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `idCard` VARCHAR(20) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
 
   CONSTRAINT Pk_shipment_method PRIMARY KEY (`id`),
-  CONSTRAINT Uniques_shipment_method UNIQUE KEY (`user_id`, `postalCode`, `adress`),
+  CONSTRAINT Uniques_shipment_method UNIQUE KEY (`user_id`, `postalCode`, `address`),
   CONSTRAINT Fk_user_id_shipment_method FOREIGN KEY (`user_id`) REFERENCES user(`id`)
   ON DELETE CASCADE
 ) ENGINE = InnoDB;
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
 -- Example of insert (payment_method)
 
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
--- INSERT INTO `shipment_method`(`user_id`, `country`, `province`, `city`, `postalCode`, `adress`, `name`, `idCard`, `phone`) VALUES ('1', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', 'Homer', '12931230', '619703921');
+-- INSERT INTO `shipment_method`(`user_id`, `country`, `province`, `city`, `postalCode`, `address`, `name`, `idCard`, `phone`) VALUES ('1', 'America', 'Barcelona', 'Springfield', '11101', 'Calle del general Comilla', 'Homer', '12931230', '619703921');
 
 -- -----------------------------------------------------
 -- Table `restful_api`.`category`

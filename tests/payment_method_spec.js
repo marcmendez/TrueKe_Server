@@ -41,7 +41,7 @@ function initializeSamples() {
     paymentMethodData.province = "Barcelona";
     paymentMethodData.city = "Barcelona";
     paymentMethodData.postalCode = 08029;
-    paymentMethodData.adress = "Carrer Diagonal";
+    paymentMethodData.address = "Carrer Diagonal";
     paymentMethodData.phone = "654654654";
 
     dbController.insertPaymentMethod(paymentMethodData);
@@ -120,7 +120,7 @@ function test3() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Carrer Diagonal",
+                "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
                 "id": 2,
@@ -133,7 +133,7 @@ function test3() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Carrer Diagonal",
+                "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
                 "id": 3,
@@ -146,7 +146,7 @@ function test3() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Carrer Diagonal",
+                "address": "Carrer Diagonal",
                 "phone": "654654654"
             }]
         })
@@ -203,7 +203,7 @@ function test5() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Carrer Diagonal",
+                "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
                 "id": 2,
@@ -216,7 +216,7 @@ function test5() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Carrer Diagonal",
+                "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
                 "id": 3,
@@ -229,7 +229,7 @@ function test5() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Carrer Diagonal",
+                "address": "Carrer Diagonal",
                 "phone": "654654654"
             }]
         })
@@ -268,7 +268,7 @@ function test6() {
             "province": "Barcelona",
             "city": "Barcelona",
             "postalCode": 8029,
-            "adress": "Carrer Diagonal",
+            "address": "Carrer Diagonal",
             "phone": "654654654"
         })
         .expectStatus(200)
@@ -329,7 +329,7 @@ function test7() {
             "province": "Barcelona",
             "city": "Barcelona",
             "postalCode": 8029,
-            "adress": "Carrer Diagonal",
+            "address": "Carrer Diagonal",
             "phone": "654654654"
         })
         .expectStatus(200)
@@ -358,7 +358,7 @@ function test7() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -401,7 +401,7 @@ function test8() {
             "province": "Barcelona",
             "city": "Barcelona",
             "postalCode": 8029,
-            "adress": "Carrer Diagonal",
+            "address": "Carrer Diagonal",
             "phone": "654654654"
         })
         .expectStatus(200)
@@ -430,7 +430,7 @@ function test8() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -461,7 +461,7 @@ function test9() {
             "province": "Barcelona",
             "city": "Barcelona",
             "postalCode": 8029,
-            "adress": "Carrer Diagonal",
+            "address": "Carrer Diagonal",
             "phone": "654654654"
         })
         .expectStatus(200)
@@ -492,7 +492,7 @@ function test9() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 2,
@@ -505,7 +505,7 @@ function test9() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 3,
@@ -518,7 +518,7 @@ function test9() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -550,7 +550,7 @@ function test10() {
             "province": "Quinto Pino",
             "city": "La Ciudad Perdida",
             "postalCode": 0800,
-            "adress": "Carrer Meridiana",
+            "address": "Carrer Meridiana",
             "phone": "654159753"
         })
         .expectStatus(200)
@@ -581,7 +581,7 @@ function test10() {
                             "province": "Quinto Pino",
                             "city": "La Ciudad Perdida",
                             "postalCode": 0800,
-                            "adress": "Carrer Meridiana",
+                            "address": "Carrer Meridiana",
                             "phone": "654159753"
                         }, {
                             "id": 2,
@@ -594,7 +594,7 @@ function test10() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 3,
@@ -607,7 +607,7 @@ function test10() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -639,7 +639,7 @@ function test11() {
             "province": "Quinto Pino",
             "city": "La Ciudad Perdida",
             "postalCode": 0800,
-            "adress": "Carrer Meridiana",
+            "address": "Carrer Meridiana",
             "phone": "654159753"
         })
         .expectStatus(200)
@@ -670,7 +670,7 @@ function test11() {
                             "province": "Quinto Pino",
                             "city": "La Ciudad Perdida",
                             "postalCode": 0800,
-                            "adress": "Carrer Meridiana",
+                            "address": "Carrer Meridiana",
                             "phone": "654159753"
                         }, {
                             "id": 2,
@@ -683,7 +683,7 @@ function test11() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 3,
@@ -696,7 +696,7 @@ function test11() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -744,7 +744,7 @@ function test12() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 2,
@@ -757,7 +757,7 @@ function test12() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 3,
@@ -770,7 +770,7 @@ function test12() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -820,7 +820,7 @@ function test13() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 2,
@@ -833,7 +833,7 @@ function test13() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })
@@ -883,7 +883,7 @@ function test14() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
                             "id": 2,
@@ -896,7 +896,7 @@ function test14() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Carrer Diagonal",
+                            "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
                     })

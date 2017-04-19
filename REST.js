@@ -310,10 +310,10 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var token = req.headers["token"];
         if (ADMIN_TOKEN === token || token === md5(req.body.user_id + MAGIC_PHRASE)) {
             var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-            var table = ["payment_method", "user_id", "type", "number", "expireDate", "name", "country", "province", "city", "postalCode", "adress", "phone", req.body.user_id,
+            var table = ["payment_method", "user_id", "type", "number", "expireDate", "name", "country", "province", "city", "postalCode", "address", "phone", req.body.user_id,
                 req.body.type, req.body.number, req.body.expireDate, req.body.name,
                 req.body.country, req.body.province, req.body.city,
-                req.body.postalCode, req.body.adress, req.body.phone
+                req.body.postalCode, req.body.address, req.body.phone
             ];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
@@ -494,9 +494,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var token = req.headers["token"];
         if (ADMIN_TOKEN === token || token === md5(req.body.user_id + MAGIC_PHRASE)) {
             var query = "INSERT INTO ??(??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)";
-            var table = ["shipment_method", "user_id", "country", "province", "city", "postalCode", "adress", "name", "idCard", "phone", req.body.user_id,
+            var table = ["shipment_method", "user_id", "country", "province", "city", "postalCode", "address", "name", "idCard", "phone", req.body.user_id,
                 req.body.country, req.body.province, req.body.city, req.body.postalCode,
-                req.body.adress, req.body.name, req.body.idCard, req.body.phone
+                req.body.address, req.body.name, req.body.idCard, req.body.phone
             ];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {

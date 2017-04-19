@@ -41,7 +41,7 @@ function initializeSamples() {
     shipmentMethodData.province = "Barcelona";
     shipmentMethodData.city = "Barcelona";
     shipmentMethodData.postalCode = 08006;
-    shipmentMethodData.adress = "Calle Falsa 123";
+    shipmentMethodData.address = "Calle Falsa 123";
     shipmentMethodData.name = "Pepito Mendizabal";
     shipmentMethodData.idCard = 654845616531;
     shipmentMethodData.phone = 654654654;
@@ -115,7 +115,7 @@ function test3() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8006,
-                "adress": "Calle Falsa 123",
+                "address": "Calle Falsa 123",
                 "name": "Pepito Mendizabal",
                 "idCard": "654845616531",
                 "phone": "654654654"
@@ -126,7 +126,7 @@ function test3() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Calle Falsa 123",
+                "address": "Calle Falsa 123",
                 "name": "Pepito Mendizabal",
                 "idCard": "654845616531",
                 "phone": "654654654"
@@ -137,7 +137,7 @@ function test3() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8019,
-                "adress": "Calle Falsa 123",
+                "address": "Calle Falsa 123",
                 "name": "Pepito Mendizabal",
                 "idCard": "654845616531",
                 "phone": "654654654"
@@ -192,7 +192,7 @@ function test5() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8006,
-                "adress": "Calle Falsa 123",
+                "address": "Calle Falsa 123",
                 "name": "Pepito Mendizabal",
                 "idCard": "654845616531",
                 "phone": "654654654"
@@ -203,7 +203,7 @@ function test5() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8029,
-                "adress": "Calle Falsa 123",
+                "address": "Calle Falsa 123",
                 "name": "Pepito Mendizabal",
                 "idCard": "654845616531",
                 "phone": "654654654"
@@ -214,7 +214,7 @@ function test5() {
                 "province": "Barcelona",
                 "city": "Barcelona",
                 "postalCode": 8019,
-                "adress": "Calle Falsa 123",
+                "address": "Calle Falsa 123",
                 "name": "Pepito Mendizabal",
                 "idCard": "654845616531",
                 "phone": "654654654"
@@ -251,7 +251,7 @@ function test6() {
             province: "Barcelona",
             city: "Barcelona",
             postalCode: 08006,
-            adress: "Calle Falsa 123",
+            address: "Calle Falsa 123",
             name: "Pepito Mendizabal",
             idCard: "654845616531",
             phone: "654654654"
@@ -310,7 +310,7 @@ function test7() {
             province: "Barcelona",
             city: "Barcelona",
             postalCode: 08006,
-            adress: "Calle Falsa 123",
+            address: "Calle Falsa 123",
             name: "Pepito Mendizabal",
             idCard: "654845616531",
             phone: "654654654"
@@ -338,7 +338,7 @@ function test7() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8006,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -379,7 +379,7 @@ function test8() {
             province: "Barcelona",
             city: "Barcelona",
             postalCode: 08006,
-            adress: "Calle Falsa 123",
+            address: "Calle Falsa 123",
             name: "Pepito Mendizabal",
             idCard: "654845616531",
             phone: "654654654"
@@ -407,7 +407,7 @@ function test8() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8006,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -436,7 +436,7 @@ function test9() {
             province: "Bern",
             city: "Bern",
             postalCode: 3270,
-            adress: "Calle Falsa 321",
+            address: "Calle Falsa 321",
             name: "Aurelien Ricachel",
             idCard: "135616548456",
             phone: "456456456"
@@ -465,7 +465,7 @@ function test9() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8006,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -476,7 +476,7 @@ function test9() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -487,7 +487,7 @@ function test9() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -517,7 +517,7 @@ function test10() {
             province: "Bern",
             city: "Bern",
             postalCode: 3270,
-            adress: "Calle Falsa 321",
+            address: "Calle Falsa 321",
             name: "Aurelien Ricachel",
             idCard: "135616548456",
             phone: "456456456"
@@ -545,7 +545,7 @@ function test10() {
                             "province": "Bern",
                             "city": "Bern",
                             "postalCode": 3270,
-                            "adress": "Calle Falsa 321",
+                            "address": "Calle Falsa 321",
                             "name": "Aurelien Ricachel",
                             "idCard": "135616548456",
                             "phone": "456456456"
@@ -556,7 +556,7 @@ function test10() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -567,7 +567,7 @@ function test10() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -597,7 +597,7 @@ function test11() {
             province: "Bern",
             city: "Bern",
             postalCode: 3270,
-            adress: "Calle Falsa 321",
+            address: "Calle Falsa 321",
             name: "Aurelien Ricachel",
             idCard: "135616548456",
             phone: "456456456"
@@ -625,7 +625,7 @@ function test11() {
                             "province": "Bern",
                             "city": "Bern",
                             "postalCode": 3270,
-                            "adress": "Calle Falsa 321",
+                            "address": "Calle Falsa 321",
                             "name": "Aurelien Ricachel",
                             "idCard": "135616548456",
                             "phone": "456456456"
@@ -636,7 +636,7 @@ function test11() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -647,7 +647,7 @@ function test11() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -693,7 +693,7 @@ function test12() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8006,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -704,7 +704,7 @@ function test12() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -715,7 +715,7 @@ function test12() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -763,7 +763,7 @@ function test13() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -774,7 +774,7 @@ function test13() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -822,7 +822,7 @@ function test14() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8019,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
@@ -833,7 +833,7 @@ function test14() {
                             "province": "Barcelona",
                             "city": "Barcelona",
                             "postalCode": 8029,
-                            "adress": "Calle Falsa 123",
+                            "address": "Calle Falsa 123",
                             "name": "Pepito Mendizabal",
                             "idCard": "654845616531",
                             "phone": "654654654"
