@@ -79,7 +79,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     res.json({
                         "Error": false,
                         "Message": "Success",
-                        "Content": md5(rows[0].id + MAGIC_PHRASE)
+                        "Content": {user: rows[0], token: md5(rows[0].id + MAGIC_PHRASE)}
                     });
                 } else {
                     res.json({
@@ -96,7 +96,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     res.json({
                         "Error": false,
                         "Message": "Success",
-                        "Content": md5(rows[0].id + MAGIC_PHRASE)
+                        "Content": {user: rows[0], token: md5(rows[0].id + MAGIC_PHRASE)}
                     });
                 } else {
                     res.json({
@@ -242,7 +242,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 res.json({
                     "Error": false,
                     "Message": "User Added !",
-                    "Content": md5(rows.insertId + MAGIC_PHRASE)
+                    "Content": {user: {id: rows.insertId}, token: md5(rows.insertId + MAGIC_PHRASE)}
                 });
             }
         });

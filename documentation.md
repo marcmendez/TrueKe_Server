@@ -9,7 +9,20 @@ To get permissions make a post to "/authenticate" with the body params **phone o
 {
 	"Error" : false,
 	"Message" : Success,
-	"Token" : [YOUR TOKEN]
+	"Content": {
+	  "user": {
+	    "id": 1,
+	    "phone": "654654654",
+	    "user": "Pepito",
+	    "password": "edfd50a85db1fe977d2ad4efa006c6f2",
+	    "email": "manolito@gmail.com",
+	    "birthDate": "1990-01-01",
+	    "products": 3,
+	    "truekes": 2,
+	    "rating": 1
+	  },
+	  "token": "7e9420e418be9f2662ddbe9cb95b6783"
+	}
 }
 ```
 
