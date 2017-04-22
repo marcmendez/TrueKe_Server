@@ -79,9 +79,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     res.json({
                         "Error": false,
                         "Message": "Success",
-                        "Content": {user: rows[0], token: md5(rows[0].id + MAGIC_PHRASE)}
+                        "Content": {
+                            user: rows[0],
+                            token: md5(rows[0].id + MAGIC_PHRASE)
+                        }
                     });
                 } else {
+                    if (err) console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -96,9 +100,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     res.json({
                         "Error": false,
                         "Message": "Success",
-                        "Content": {user: rows[0], token: md5(rows[0].id + MAGIC_PHRASE)}
+                        "Content": {
+                            user: rows[0],
+                            token: md5(rows[0].id + MAGIC_PHRASE)
+                        }
                     });
                 } else {
+                    if (err) console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -123,6 +131,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -149,6 +158,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                 res.json({
                     "Error": true,
                     "Message": "Error executing the query"
@@ -178,6 +188,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                 res.json({
                     "Error": true,
                     "Message": "Error executing the query"
@@ -206,6 +217,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                 res.json({
                     "Error": true,
                     "Message": "Error executing the query"
@@ -234,6 +246,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                 res.json({
                     "Error": true,
                     "Message": "Error executing the query"
@@ -242,7 +255,12 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 res.json({
                     "Error": false,
                     "Message": "User Added !",
-                    "Content": {user: {id: rows.insertId}, token: md5(rows.insertId + MAGIC_PHRASE)}
+                    "Content": {
+                        user: {
+                            id: rows.insertId
+                        },
+                        token: md5(rows.insertId + MAGIC_PHRASE)
+                    }
                 });
             }
         });
@@ -259,6 +277,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -286,6 +305,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -315,6 +335,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -347,6 +368,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": err
@@ -379,6 +401,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -390,13 +413,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     });
                 }
             });
-        }
-        else {
+        } else {
             var queryAssertion = "SELECT * FROM ?? WHERE ??=?";
             var tableAssertion = ["payment_method", "id", req.params.id];
             queryAssertion = mysql.format(queryAssertion, tableAssertion);
             connection.query(queryAssertion, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -408,6 +431,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     query = mysql.format(query, table);
                     connection.query(query, function(err, rows) {
                         if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                             res.json({
                                 "Error": true,
                                 "Message": "Error executing the query"
@@ -439,6 +463,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -450,13 +475,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     });
                 }
             });
-        }
-        else {
+        } else {
             var queryAssertion = "SELECT * FROM ?? WHERE ??=?";
             var tableAssertion = ["payment_method", "id", req.params.id];
             queryAssertion = mysql.format(queryAssertion, tableAssertion);
             connection.query(queryAssertion, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -467,6 +492,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     query = mysql.format(query, table);
                     connection.query(query, function(err, rows) {
                         if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                             res.json({
                                 "Error": true,
                                 "Message": "Error executing the query"
@@ -499,6 +525,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -530,6 +557,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": err
@@ -564,6 +592,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -583,6 +612,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             connection.query(queryAssertion, function(err, rows) {
 
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -594,6 +624,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     query = mysql.format(query, table);
                     connection.query(query, function(err, rows) {
                         if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                             res.json({
                                 "Error": true,
                                 "Message": "Error executing the query"
@@ -624,6 +655,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -642,6 +674,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             queryAssertion = mysql.format(queryAssertion, tableAssertion);
             connection.query(queryAssertion, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
@@ -652,6 +685,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     query = mysql.format(query, table);
                     connection.query(query, function(err, rows) {
                         if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                             res.json({
                                 "Error": true,
                                 "Message": "Error executing the query"
@@ -683,11 +717,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var table = ["category"];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
-            if (err) res.json({
-                "Error": true,
-                "Message": "Error executing MySQL query"
-            });
-            else res.json({
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else res.json({
                 "Error": false,
                 "Message": "Success",
                 "Content": rows
@@ -705,11 +741,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             var table = ["product"];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
-                if (err) res.json({
-                    "Error": true,
-                    "Message": "Error executing MySQL query"
-                });
-                else res.json({
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing MySQL query"
+                    });
+                } else res.json({
                     "Error": false,
                     "Message": "Success",
                     "Content": rows
@@ -728,11 +766,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             var table = ["product", "user_id", req.params.user_id];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
-                if (err) res.json({
-                    "Error": true,
-                    "Message": "Error executing MySQL query"
-                });
-                else res.json({
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing MySQL query"
+                    });
+                } else res.json({
                     "Error": false,
                     "Message": "Success",
                     "Content": rows
@@ -750,8 +790,10 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             table = ["product_wants_category", "product_id", "category", insertedId, categories[aux]];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
-                if (err) callback(true, insertedId);
-                else if (aux == categories.length - 1) callback(false, insertedId);
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    callback(true, insertedId);
+                } else if (aux == categories.length - 1) callback(false, insertedId);
                 else insertProductWantsCategory(insertedId, categories, aux + 1, callback);
             });
         } else if (categories.length > 0) callback(false, insertedId);
@@ -766,14 +808,17 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             ];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
-                if (err) res.json({
-                    "Error": true,
-                    "Message": "Error executing MySQL query"
-                });
-                else {
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing MySQL query"
+                    });
+                } else {
                     var categories = req.body.wants_categories.split("-");
                     insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
                         if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                             res.json({
                                 "Error": true,
                                 "Message": "Error executing MySQL query"
@@ -801,20 +846,24 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var table = ["product", "id", req.params.id];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
-            if (err) res.json({
-                "Error": true,
-                "Message": "Error executing MySQL query"
-            });
-            else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
                 var query = "DELETE FROM ?? WHERE ??=?";
                 var table = ["product", "id", req.params.id];
                 query = mysql.format(query, table);
                 connection.query(query, function(err, rows) {
-                    if (err) res.json({
-                        "Error": true,
-                        "Message": "Error executing MySQL query"
-                    });
-                    else res.json({
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else res.json({
                         "Error": false,
                         "Message": "Product deleted correctly"
                     });
@@ -835,21 +884,24 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var table = ["product", "id", req.params.product_id];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
-            if (err) res.json({
-                "Error": true,
-                "Message": "Error executing MySQL query"
-            });
-            else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
                 var query = "SELECT * FROM ?? WHERE ??=?";
                 var table = ["product_wants_category", "product_id", req.params.product_id];
                 query = mysql.format(query, table);
-                console.log(query);
                 connection.query(query, function(err, rows) {
-                    if (err) res.json({
-                        "Error": true,
-                        "Message": "Error executing MySQL query"
-                    });
-                    else res.json({
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else res.json({
                         "Error": false,
                         "Message": "Success",
                         "Content": rows
@@ -873,39 +925,39 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         var query = "SELECT * FROM ?? WHERE ??=?";
         var table = ["product", "id", req.body.product_id1];
         query = mysql.format(query, table);
-        console.log(query);
         connection.query(query, function(err, rows) {
 
-            if (err) res.json({
-                "Error": true,
-                "Message": "Error executing MySQL query"
-            });
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
 
-            else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+                var query = "INSERT INTO ??(??,??,??) VALUES (?,?,?)";
+                var table = ["match", "product_id1", "product_id2", "wants", req.body.product_id1, req.body.product_id2, req.body.wants];
+                query = mysql.format(query, table);
+                connection.query(query, function(err, rows) {
 
-              var query = "INSERT INTO ??(??,??,??) VALUES (?,?,?)";
-              var table = ["match", "product_id1", "product_id2", "wants", req.body.product_id1, req.body.product_id2, req.body.wants];
-              query = mysql.format(query, table);
-              console.log(query);
-              connection.query(query, function(err, rows) {
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else res.json({
+                        "Error": false,
+                        "Message": "Match Added !",
+                    });
 
-                  if (err) res.json({
-                      "Error": true,
-                      "Message": "Error executing MySQL query"
-                  });
-
-                  else res.json({
-                       "Error": false,
-                       "Message": "Match Added !",
-                  });
-
-              });
+                });
 
             } else res.json({
                 "Error": true,
                 "Message": "Fail to access to API REST. You are not authenticated."
             });
-          });
+        });
     });
 
     // + GETTING PRODUCTS
@@ -913,46 +965,49 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     router.get("/products/matchmaking/:id", function(req, res) {
 
         var token = req.headers["token"];
-        var query = "SELECT p.id as id, "  +
-                           "p.user_id as user_id, " +
-                           "p.min_price as min_price, " +
-                           "p.max_price as max_price, " +
-                           "pc.category as desired_category " +
-                    "FROM product p INNER JOIN product_wants_category pc ON  p.id=pc.product_id WHERE p.id=?";
+        var query = "SELECT p.id as id, " +
+            "p.user_id as user_id, " +
+            "p.min_price as min_price, " +
+            "p.max_price as max_price, " +
+            "pc.category as desired_category " +
+            "FROM product p INNER JOIN product_wants_category pc ON  p.id=pc.product_id WHERE p.id=?";
         var table = [req.params.id];
         query = mysql.format(query, table);
 
         connection.query(query, function(err, rows) {
 
-            if (err) res.json({
-                "Error": true,
-                "Message": "Error executing MySQL query"
-            });
-            else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
                 var query = "SELECT * " +
-                            "FROM product p " +
-                            "WHERE p.user_id<>" + rows[0].user_id + " AND (" +
-                            "(" + rows[0].min_price + " <= p.min_price AND p.min_price <=" + rows[0].max_price + ") OR " +
-                            "(" + rows[0].min_price + " <= p.max_price AND p.max_price <=" + rows[0].max_price + ")) AND ";
+                    "FROM product p " +
+                    "WHERE p.user_id<>" + rows[0].user_id + " AND (" +
+                    "(" + rows[0].min_price + " <= p.min_price AND p.min_price <=" + rows[0].max_price + ") OR " +
+                    "(" + rows[0].min_price + " <= p.max_price AND p.max_price <=" + rows[0].max_price + ")) AND ";
 
                 for (i = 0; i < rows.length; ++i) {
                     if (i == 0) query = query + "(p.category=" + "'" + rows[i].desired_category + "'";
                     else query = query + " OR p.category=" + "'" + rows[i].desired_category + "'";
                 }
 
-                 query = query + ") AND 0 >= (SELECT COUNT(*) FROM `match` m WHERE m.product_id2=p.id AND m.product_id1=" + rows[0].id + ")";
+                query = query + ") AND 0 >= (SELECT COUNT(*) FROM `match` m WHERE m.product_id2=p.id AND m.product_id1=" + rows[0].id + ")";
                 connection.query(query, function(err, rows) {
-                    console.log(rows);
-                    if (err) res.json({
-                        "Error": true,
-                        "Message": "Error executing MySQL query"
-                    });
-                    else 
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                         res.json({
-                        "Error": false,
-                        "Message": "Success",
-                        "Content": rows
-                    });
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else
+                        res.json({
+                            "Error": false,
+                            "Message": "Success",
+                            "Content": rows
+                        });
 
                 });
             } else res.json({
@@ -976,6 +1031,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing the query"
