@@ -862,6 +862,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
+
     // ----- ----- ----- -----
     // MATCH TABLE
     // ----- ----- ----- -----
@@ -907,6 +908,62 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
           });
     });
 
+    // + GETTING PRODUCTS
+
+    router.get("/products/matchmaking/:id", function(req, res) {
+
+        var token = req.headers["token"];
+        var query = "SELECT p.id as id, "  +
+                           "p.user_id as user_id, " +
+                           "p.min_price as min_price, " +
+                           "p.max_price as max_price, " +
+                           "pc.category as desired_category " +
+                    "FROM product p INNER JOIN product_wants_category pc ON  p.id=pc.product_id WHERE p.id=?";
+        var table = [req.params.id];
+        query = mysql.format(query, table);
+
+        connection.query(query, function(err, rows) {
+
+            if (err) res.json({
+                "Error": true,
+                "Message": "Error executing MySQL query"
+            });
+            else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+                var query = "SELECT * " +
+                            "FROM product p " +
+                            "WHERE p.user_id<>" + rows[0].user_id + " AND (" +
+                            "(" + rows[0].min_price + " <= p.min_price AND p.min_price <=" + rows[0].max_price + ") OR " +
+                            "(" + rows[0].min_price + " <= p.max_price AND p.max_price <=" + rows[0].max_price + ")) AND ";
+
+                for (i = 0; i < rows.length; ++i) {
+                    if (i == 0) query = query + "(p.category=" + "'" + rows[i].desired_category + "'";
+                    else query = query + " OR p.category=" + "'" + rows[i].desired_category + "'";
+                }
+
+                 query = query + ") AND 0 >= (SELECT COUNT(*) FROM `match` m WHERE m.product_id2=p.id AND m.product_id1=" + rows[0].id + ")";
+                connection.query(query, function(err, rows) {
+                    console.log(rows);
+                    if (err) res.json({
+                        "Error": true,
+                        "Message": "Error executing MySQL query"
+                    });
+                    else 
+                        res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": rows
+                    });
+
+                });
+            } else res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated."
+            });
+        });
+    });
+
+
+
     // ----- ----- ----- -----
     // CHAT TABLE
     // ----- ----- ----- -----
@@ -938,6 +995,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             });
         }
     });
+
+    // ----
 
 
 
