@@ -23,11 +23,22 @@ REST.prototype.connectMysql = function() {
     });
     pool.getConnection(function(err, connection) {
         if (err) {
+            console.log("There was an error with the connection and It will be stopped. Error: " + err);
             self.stop(err);
         } else {
             self.configureExpress(connection);
         }
     });
+
+    function keepAlive() {
+        pool.getConnection(function(err, connection) {
+            if (err) {console.log("There was an error with the connection and It will be stopped. Error: " + err);}
+            // console.log("PING TO MYSQL!");
+            connection.ping();
+            connection.release();
+        });
+    }
+    setInterval(keepAlive, 30000);
 }
 
 REST.prototype.configureExpress = function(connection) {
