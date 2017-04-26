@@ -1,10 +1,10 @@
+var DEBUG = true;
 var express = require("express");
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
 var md5 = require('MD5');
 var rest = require("./REST.js");
 var app = express();
-
 function REST() {
     var self = this;
     self.connectMysql();
@@ -33,7 +33,11 @@ REST.prototype.connectMysql = function() {
     function keepAlive() {
         pool.getConnection(function(err, connection) {
             if (err) {console.log("There was an error with the connection and It will be stopped. Error: " + err);}
-            // console.log("PING TO MYSQL!");
+            if (DEBUG) {
+                console.log("PING TO MYSQL!\n");
+                var time = new Date();
+                console.log(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+            }
             connection.ping();
             connection.release();
         });
