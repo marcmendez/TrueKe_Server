@@ -656,6 +656,12 @@ Deletes the shipment method :id
 
 The database saves the response of a given product (product_id1) to a shown product (product_id2) as (wants). You must be logged in or have the admin token. You must have the same token as the one of the owner of the product.
 
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
 ### Body
 
 |       KEY       	|                 VALUE                 |
