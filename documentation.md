@@ -125,6 +125,48 @@ If there's an error the error will turn to true and the message will tell wheter
 }
 ```
 
+## GET /api/products/matchmaking/:id
+
+The API returns the set of products stored in the database that have a potential possibility to have a match with the product identified by the id given. This functionality is only available for autheticated users or admin. In case of accesing to the method with an specific user, the product must be the same as the owner of the product.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)   	  | id of the product                     |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : [{"id": 3,
+		      "user_id": 1,
+                      "title": "Llapis pala",
+                      "description": "Pel pou de ASW del baqua",
+                      "category": "Uranus",
+                      "min_price": 1,
+                      "max_price": 2}, 
+		     {"id": 4,
+		      "user_id": 1,
+                      "title": "Pen drive",
+                      "description": "0GB",
+                      "category": "electrodomestics",
+                      "min_price": 1,
+                      "max_price": 2}, ... 
+		     ]
+}
+```
+
 ## POST /products
 
 The API is prepared to insert a new product in the DB in order to have it in the storage. This can only be done by authentified users and the admin, as before, the user must give a user_id that coincides with the current user.
@@ -607,3 +649,28 @@ Deletes the shipment method :id
 	"Message" : "Shipment Method Deleted !"
 }
 ```	
+
+# MATCHES
+
+## POST /api/matches
+
+The database saves the response of a given product (product_id1) to a shown product (product_id2) as (wants). You must be logged in or have the admin token. You must have the same token as the one of the owner of the product.
+
+### Body
+
+|       KEY       	|                 VALUE                 |
+|-----------------------|---------------------------------------|
+| product_id1 (*)    	| the id of the product of the matchmaking|
+| product_id2 (*) 	| the id of the product shown           |
+| wants (*)    		| the response (OK->1, NO->0)		|
+
+### Response
+
+```
+{
+	"Error" : false,
+	"Message" : "Match Added !"
+}
+```
+
+
