@@ -116,8 +116,21 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`category` (
 
 ) ENGINE = InnoDB;
 
--- Example of insert (category)
+-- Initial values
+INSERT INTO `category`(`category`) VALUES ('Coches');
+INSERT INTO `category`(`category`) VALUES ('Motor y accesorios');
+INSERT INTO `category`(`category`) VALUES ('Elctrónica');
+INSERT INTO `category`(`category`) VALUES ('Deporte y Ocio');
+INSERT INTO `category`(`category`) VALUES ('Muebles, Deco y Jardín');
+INSERT INTO `category`(`category`) VALUES ('Consolas y videojuegos');
+INSERT INTO `category`(`category`) VALUES ('Libros, Películas y Música');
+INSERT INTO `category`(`category`) VALUES ('Moda y Accesorios');
+INSERT INTO `category`(`category`) VALUES ('Niños y Bebés');
+INSERT INTO `category`(`category`) VALUES ('Inmobiliaria');
+INSERT INTO `category`(`category`) VALUES ('Electrodomésticos');
+INSERT INTO `category`(`category`) VALUES ('Servicios');
 
+-- Example of insert (category)
 -- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
 
 -- -----------------------------------------------------
