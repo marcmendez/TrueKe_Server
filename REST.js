@@ -734,7 +734,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     // ----- ----- ----- -----
     // PRODUCT TABLE
     // ----- ----- ----- -----
-    //  Get all the categories of the db.
     router.get("/products", function(req, res) {
         var token = req.headers["token"];
         if (token === ADMIN_TOKEN) {
