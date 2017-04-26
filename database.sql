@@ -19,27 +19,14 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
   `birthDate` DATE NOT NULL,
   `products` INT(10) DEFAULT 0,
   `truekes` INT(10) DEFAULT 0,
-  `rating` FLOAT(2, 1) DEFAULT 0.0,
+  `imagePath` VARCHAR(140) DEFAULT '',
+  `ratingsNumber` INT(10) DEFAULT 0,
+  `ratingsValue` INT(10) DEFAULT 0,
 
   PRIMARY KEY (`id`),
   UNIQUE INDEX `phone_UNIQUE` (`phone` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
 ) ENGINE = InnoDB;
-
--- CHECK (max_price >= min_price && min_price <= 0)
-
-DELIMITER $$
-
-CREATE TRIGGER `product_check_rating` BEFORE INSERT ON `user`
-FOR EACH ROW
-BEGIN
-    IF new.`rating` > 10 OR new.`rating` < 0 THEN
-        SIGNAL SQLSTATE '12345' SET message_text = 'Check constraint rating';
-    END IF;
-
-END$$
-
-DELIMITER ;
 
 -- Example of insert (user)
 -- INSERT INTO `user`(`phone`, `user`, `password`, `email`, `birthDate`) VALUES ('654654654', 'Homer', 'passapalabra', 'homer@badulaque.com', '1996-04-02');
@@ -292,8 +279,22 @@ BEGIN
 END$$
 
 DELIMITER ;
-
 -- INSERT INTO `match`(`product_id1`, `product_id2`, `wants`) VALUES ('3', '4', 0);
+
+-- -----------------------------------------------------
+-- Table `restful_api`.`image`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `restful_api`.`image`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`image` (
+
+  `md5` CHAR(32),
+  `imagePath` VARCHAR(250),
+
+  PRIMARY KEY (`md5`)
+) ENGINE = InnoDB;
+
+-- INSERT INTO `image`(`imagePath`) VALUES (/images/1');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

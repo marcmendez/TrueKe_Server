@@ -18,7 +18,6 @@ function initializeSamples() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
 
     dbController.insertUser(userData);
 
@@ -253,7 +252,6 @@ function test6() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     frisby.create('New paymentMethod without credentials')
@@ -313,7 +311,6 @@ function test7() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     frisby.create('New paymentMethod with admin credentials')
@@ -385,7 +382,6 @@ function test8() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     frisby.create('New paymentMethod with user credentials')

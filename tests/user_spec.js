@@ -13,7 +13,6 @@ function initializeSamples() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
 
     dbController.insertUser(userData);
 
@@ -69,7 +68,9 @@ function test2() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
             }]
         })
         .after(function(err, res, body) {
@@ -101,7 +102,9 @@ function test3() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
             }]
         })
         .after(function(err, res, body) {
@@ -155,7 +158,9 @@ function test5() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
             }]
         })
         .after(function(err, res, body) {
@@ -187,7 +192,9 @@ function test6() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
             }]
         })
         .after(function(err, res, body) {
@@ -212,7 +219,9 @@ function test7() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
+    userData.imagePath = "";
+    userData.ratingsNumber = 0;
+    userData.ratingsValue = 0;
     dbController.insertUser(userData);
 
     frisby.create('Change user attributes with admin credentials')
@@ -227,7 +236,9 @@ function test7() {
             "birthDate": "1990-05-11",
             "products": 5,
             "truekes": 6,
-            "rating": 7.5
+            "imagePath": "otroPath",
+            "ratingsNumber": 1,
+            "ratingsValue": 1
         })
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
@@ -254,7 +265,9 @@ function test7() {
                             "birthDate": "1990-05-11",
                             "products": 5,
                             "truekes": 6,
-                            "rating": 7.5
+                            "imagePath": "otroPath",
+                            "ratingsNumber": 1,
+                            "ratingsValue": 1
                         }]
                     })
                     .after(function(err, res, body) {
@@ -280,7 +293,9 @@ function test8() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
+    userData.imagePath = "";
+    userData.ratingsNumber = 0;
+    userData.ratingsValue = 0;
     dbController.insertUser(userData);
 
     frisby.create('Change user attributes without credentials')
@@ -294,7 +309,9 @@ function test8() {
             "birthDate": "1990-05-11",
             "products": 5,
             "truekes": 6,
-            "rating": 7.5
+            "imagePath": "otroPath",
+            "ratingsNumber": 1,
+            "ratingsValue": 1
         })
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
@@ -321,7 +338,9 @@ function test8() {
                             "birthDate": "1990-01-01",
                             "products": 3,
                             "truekes": 2,
-                            "rating": 1.0
+                            "imagePath": "",
+                            "ratingsNumber": 0,
+                            "ratingsValue": 0
                         }]
                     })
                     .after(function(err, res, body) {
@@ -347,7 +366,9 @@ function test9() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
+    userData.imagePath = "";
+    userData.ratingsNumber = 0;
+    userData.ratingsValue = 0;
     dbController.insertUser(userData);
 
     frisby.create('Change user attributes with user credentials')
@@ -362,7 +383,9 @@ function test9() {
             "birthDate": "1990-05-11",
             "products": 5,
             "truekes": 6,
-            "rating": 7.5
+            "imagePath": "otroPath",
+            "ratingsNumber": 1,
+            "ratingsValue": 1
         })
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
@@ -389,7 +412,9 @@ function test9() {
                             "birthDate": "1990-05-11",
                             "products": 5,
                             "truekes": 6,
-                            "rating": 7.5
+                            "imagePath": "otroPath",
+                            "ratingsNumber": 1,
+                            "ratingsValue": 1
                         }]
                     })
                     .after(function(err, res, body) {
@@ -532,7 +557,9 @@ function test12() {
                             "birthDate": "1990-01-01",
                             "products": 3,
                             "truekes": 2,
-                            "rating": 1
+                            "imagePath": '',
+                            "ratingsNumber": 0,
+                            "ratingsValue": 0
                         }]
                     })
                     .after(function(err, res, body) {
@@ -587,7 +614,9 @@ function test14() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
             }]
         })
         .after(function(err, res, body) {
@@ -619,7 +648,9 @@ function test15() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
             }]
         })
         .after(function(err, res, body) {

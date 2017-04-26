@@ -17,8 +17,6 @@ function initializeSamples() {
     userData.email = "manolito@gmail.com";
     userData.birthDate = "1990-01-01";
     userData.products = 3;
-    userData.truekes = 2;
-    userData.rating = 1.0;
 
     dbController.insertUser(userData);
 
@@ -239,8 +237,6 @@ function test6() {
     userData.email = "manolito@gmail.com";
     userData.birthDate = "1990-01-01";
     userData.products = 3;
-    userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     frisby.create('New shipmentMethod without credentials')
@@ -297,8 +293,6 @@ function test7() {
     userData.email = "manolito@gmail.com";
     userData.birthDate = "1990-01-01";
     userData.products = 3;
-    userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     frisby.create('New shipmentMethod with admin credentials')
@@ -366,8 +360,6 @@ function test8() {
     userData.email = "manolito@gmail.com";
     userData.birthDate = "1990-01-01";
     userData.products = 3;
-    userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     frisby.create('New shipmentMethod with user credentials')

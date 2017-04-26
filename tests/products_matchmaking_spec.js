@@ -27,7 +27,6 @@ function initializeSamples() {
     userData.birthDate = "1990-01-01";
     userData.products = 0;
     userData.truekes = 0;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     userData.id = 2; //7e9420e418be9f2662ddbe9cb95b6783
@@ -38,7 +37,6 @@ function initializeSamples() {
     userData.birthDate = "1990-01-01";
     userData.products = 0;
     userData.truekes = 0;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
    
     var productData = new Object();

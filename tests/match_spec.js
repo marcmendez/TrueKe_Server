@@ -18,7 +18,6 @@ function initializeSamples() {
     userData.birthDate = "1990-01-01";
     userData.products = 0;
     userData.truekes = 2;
-    userData.rating = 1.0;
     dbController.insertUser(userData);
 
     var productData = new Object();

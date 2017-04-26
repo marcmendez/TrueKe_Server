@@ -13,7 +13,6 @@ function initializeSamples() {
     userData.birthDate = "1990-01-01";
     userData.products = 3;
     userData.truekes = 2;
-    userData.rating = 1.0;
 
     dbController.insertUser(userData);
 
@@ -50,7 +49,9 @@ function test1() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
               },
               "token": "7e9420e418be9f2662ddbe9cb95b6783"
             }
@@ -129,7 +130,9 @@ function test4() {
                 "birthDate": "1990-01-01",
                 "products": 3,
                 "truekes": 2,
-                "rating": 1
+                "imagePath": '',
+                "ratingsNumber": 0,
+                "ratingsValue": 0
               },
               "token": "7e9420e418be9f2662ddbe9cb95b6783"
             }

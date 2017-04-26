@@ -4,6 +4,7 @@ var MAGIC_NUMBER_ADMIN = 0x82862484753532;
 var MAGIC_PHRASE = "Oro parece, plátano es";
 var ADMIN_TOKEN = md5(MAGIC_NUMBER_ADMIN); // f4493ed183abba6b096f3903a5fc3b64
 var DEBUG = true;
+var fs = require('fs');
 var mysql = require("mysql");
 
 function getInsertQueryParameters(dataObj) {
@@ -1054,7 +1055,98 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     // ----
 
+    /////////////////
+    // IMAGE TABLE //
+    /////////////////
 
+    router.get("/images/:md5", function(req, res) {
+        // See if exists the image
+        var query = "SELECT * FROM ?? WHERE ??=?"
+        var table = ["image", "md5", req.params.md5];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing the query"
+                });
+            }
+            else {
 
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing the query"
+                    });
+                }
+                else {
+                    var dataToReturn = rows[0] ? fs.readFileSync(rows[0].imagePath, 'base64') : "";
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": dataToReturn
+                    });
+                }
+            }
+        });
+        
+    });
+
+    router.post("/images", function(req, res) {
+        var data = req.body.image;
+        var datamd5 = md5(data);
+        // See if exists the image
+        var query = "SELECT * FROM ?? WHERE ??=?"
+        var table = ["image", "md5", datamd5];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing the query"
+                });
+            }
+            else {
+                // If not exist, insert
+
+                if (rows.length == 0) {
+                    var buf = new Buffer(data, "base64");
+                    fs.writeFile("images/" + datamd5, buf);
+                    
+                    
+                    var query = "INSERT INTO ??(??,??) VALUES (?,?)"
+                    var table = ["image", "md5", "imagePath", datamd5, "images/" + datamd5];
+                    query = mysql.format(query, table);
+                    connection.query(query, function(err, rows) {
+                        if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                            res.json({
+                                "Error": true,
+                                "Message": "Error executing the query"
+                            });
+                        }
+                        else {
+                            res.json({
+                                "Error": false,
+                                "Message": "Success",
+                                "Content": "images/" + datamd5
+                            });
+                        }
+                    });
+                }
+                else {
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": "images/" + datamd5
+                    });
+                }
+            }
+        });
+        
+    });
 }
 module.exports = REST_ROUTER;
