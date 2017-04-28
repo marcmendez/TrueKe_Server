@@ -296,6 +296,18 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`image` (
 
 -- INSERT INTO `image`(`imagePath`) VALUES (/images/1');
 
+DROP TABLE IF EXISTS `restful_api`.`product_has_images`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`product_has_images` (
+
+  `image_md5` CHAR(32),
+  `product_id` INT(70),
+
+  CONSTRAINT Pk_category PRIMARY KEY (`image_md5`,`product_id`),
+  CONSTRAINT Fk_product_has_images_image_md5 FOREIGN KEY (`image_md5`) REFERENCES image(`md5`) ON DELETE CASCADE,
+  CONSTRAINT Fk_product_has_images_product_id FOREIGN KEY (`product_id`) REFERENCES product(`id`) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
