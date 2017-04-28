@@ -104,18 +104,14 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`category` (
 ) ENGINE = InnoDB;
 
 -- Initial values
-INSERT INTO `category`(`category`) VALUES ('Coches');
-INSERT INTO `category`(`category`) VALUES ('Motor y accesorios');
-INSERT INTO `category`(`category`) VALUES ('Elctrónica');
-INSERT INTO `category`(`category`) VALUES ('Deporte y Ocio');
-INSERT INTO `category`(`category`) VALUES ('Muebles, Deco y Jardín');
+INSERT INTO `category`(`category`) VALUES ('Vehículos');
+INSERT INTO `category`(`category`) VALUES ('Electrónico');
+INSERT INTO `category`(`category`) VALUES ('Deporte y ocio');
+INSERT INTO `category`(`category`) VALUES ('Hogar y electrodomésticos');
 INSERT INTO `category`(`category`) VALUES ('Consolas y videojuegos');
-INSERT INTO `category`(`category`) VALUES ('Libros, Películas y Música');
-INSERT INTO `category`(`category`) VALUES ('Moda y Accesorios');
-INSERT INTO `category`(`category`) VALUES ('Niños y Bebés');
-INSERT INTO `category`(`category`) VALUES ('Inmobiliaria');
-INSERT INTO `category`(`category`) VALUES ('Electrodomésticos');
-INSERT INTO `category`(`category`) VALUES ('Servicios');
+INSERT INTO `category`(`category`) VALUES ('Libros, películas o música');
+INSERT INTO `category`(`category`) VALUES ('Moda y accesorios');
+INSERT INTO `category`(`category`) VALUES ('Otros');
 
 -- Example of insert (category)
 -- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
