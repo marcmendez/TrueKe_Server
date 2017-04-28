@@ -264,6 +264,67 @@ If there's an error the error will turn to true and the message will tell wheter
 }
 ```
 
+## POST /productwantscategory/
+
+The API adds the wanted category to a given product. This method is only accesible for admins and for the owner of the product with the correct authentification.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| product_id (*)  | id of the product	                  |
+| category (*)    | category of the product	          |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : "The product desired category was added!
+}
+```
+
+## DELETE /productwantscategory/
+
+The API deletes the wanted category to a given product. This method is only accesible for admins and for the owner of the product with the correct authentification.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| product_id (*)  | id of the product	                  |
+| category (*)    | category of the product	          |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : "The product desired category was deleted!
+}
+```
+
+
 # USERS
 
 This API stores the information related to its users and it allows its modification, creation, elimination and consulting its data.
