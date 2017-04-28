@@ -1147,5 +1147,77 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
         
     });
+
+
+    ////////////////////////////
+    // PRODUCTHASIMAGES TABLE //
+    ////////////////////////////
+    
+    router.get("/products/:id/images", function(req, res) {
+        // See if exists the image
+        var query = "SELECT ?? FROM ??, ??, ?? WHERE ??=? AND ??=?? AND ??=??"
+        var table = ["image.imagePath","image", "product", "product_has_images", "product.id", req.params.id, "product.id",
+                    "product_has_images.product_id", "product_has_images.image_md5", "image.md5"];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing the query"
+                });
+            }
+            else {
+
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing the query"
+                    });
+                }
+                else {
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": rows
+                    });
+                }
+            }
+        });
+        
+    });
+
+    router.post("/products/:id/images", function(req, res) {
+        var query = "INSERT INTO ??(??,??) VALUES (?,?)";
+        var table = ["producthasimages", "image_md5", "product_id", req.body.image_md5, req.body.product_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing the query"
+                });
+            }
+            else {
+
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing the query"
+                    });
+                }
+                else {
+                    res.json({
+                        "Error": false,
+                        "Message": "Success",
+                    });
+                }
+            }
+        });
+        
+    });
 }
 module.exports = REST_ROUTER;
