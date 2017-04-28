@@ -914,6 +914,92 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
+     router.post("/productwantscategory", function(req, res) {
+
+        var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.body.product_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+
+                var query = "INSERT INTO ??(??,??) VALUES (?,?)";
+                var table = ["product_wants_category", "product_id", "category", req.body.product_id, req.body.category];
+                query = mysql.format(query, table);
+                connection.query(query, function(err, rows) {
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else 
+                        res.json({
+                            "Error": false,
+                            "Message": "A new wanted category was inserted."
+                        });     
+                }); 
+
+            } else
+                res.json({
+                    "Error": true,
+                    "Message": "Fail to access to API REST. You are not authenticated."
+                });
+        });
+
+    });
+
+    router.delete("/productwantscategory", function(req, res) {
+
+        var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.body.product_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+
+                var query = "DELETE FROM ?? WHERE product_id=? AND category=?";
+                var table = ["product_wants_category", req.body.product_id, req.body.category];
+                query = mysql.format(query, table);
+                connection.query(query, function(err, rows) {
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else 
+                        res.json({
+                            "Error": false,
+                            "Message": "A wanted category was deleted."
+                        });     
+                }); 
+
+            } else
+                res.json({
+                    "Error": true,
+                    "Message": "Fail to access to API REST. You are not authenticated."
+                });
+        });
+
+    });
+
 
     // ----- ----- ----- -----
     // MATCH TABLE
