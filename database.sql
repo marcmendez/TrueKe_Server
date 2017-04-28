@@ -280,6 +280,8 @@ DELIMITER ;
 -- -----------------------------------------------------
 -- Table `restful_api`.`image`
 -- -----------------------------------------------------
+-- THIS TABLE NEEDS TO CREATE INSTANCES WITH THE REST API TO MANTAIN THE
+-- CONSISTENCY INTO THE APP.
 DROP TABLE IF EXISTS `restful_api`.`image`;
 
 CREATE TABLE IF NOT EXISTS `restful_api`.`image` (
@@ -290,8 +292,8 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`image` (
   PRIMARY KEY (`md5`)
 ) ENGINE = InnoDB;
 
--- INSERT INTO `image`(`imagePath`) VALUES (/images/1');
-
+-- THIS TABLE NEEDS TO CREATE INSTANCES WITH THE REST API TO MANTAIN THE
+-- CONSISTENCY INTO THE APP.
 DROP TABLE IF EXISTS `restful_api`.`product_has_images`;
 
 CREATE TABLE IF NOT EXISTS `restful_api`.`product_has_images` (

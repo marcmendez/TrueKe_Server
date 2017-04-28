@@ -13,11 +13,24 @@ DbController.prototype.initDBConnection = function() {
     connection.connect();
     this.mysql = mysql;
     this.connection = connection;
+
+    var fs = require("fs");
+    this.fs = fs;
 }
 
 DbController.prototype.closeDBConnection = function() {
     this.connection.end();
 }
+
+DbController.prototype.clearImagesFolder = function() {
+    var files = this.fs.readdirSync("../images/");
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file != "README.txt") {
+            this.fs.unlinkSync("../images/" + file);
+        }
+    }
+};
 
 DbController.prototype.clearDB = function() {
     this.connection.query('DELETE FROM `user`', function(err, rows, fields) {
@@ -51,6 +64,26 @@ DbController.prototype.clearDB = function() {
     });
 
     this.connection.query('DELETE FROM `chat`', function(err, rows, fields) {
+        if (err)
+            console.log('Error while performing Query.');
+    });
+
+    this.connection.query('DELETE FROM `product_wants_category`', function(err, rows, fields) {
+        if (err)
+            console.log('Error while performing Query.');
+    });
+
+    this.connection.query('DELETE FROM `match`', function(err, rows, fields) {
+        if (err)
+            console.log('Error while performing Query.');
+    });
+
+    this.connection.query('DELETE FROM `image`', function(err, rows, fields) {
+        if (err)
+            console.log('Error while performing Query.');
+    });
+
+    this.connection.query('DELETE FROM `product_has_images`', function(err, rows, fields) {
         if (err)
             console.log('Error while performing Query.');
     });

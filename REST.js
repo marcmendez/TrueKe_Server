@@ -914,7 +914,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-     router.post("/productwantscategory", function(req, res) {
+    router.post("/productwantscategory", function(req, res) {
 
         var token = req.headers["token"];
         var query = "SELECT * FROM ?? WHERE ??=?";
@@ -941,12 +941,12 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             "Error": true,
                             "Message": "Error executing MySQL query"
                         });
-                    } else 
+                    } else
                         res.json({
                             "Error": false,
                             "Message": "A new wanted category was inserted."
-                        });     
-                }); 
+                        });
+                });
 
             } else
                 res.json({
@@ -984,12 +984,12 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             "Error": true,
                             "Message": "Error executing MySQL query"
                         });
-                    } else 
+                    } else
                         res.json({
                             "Error": false,
                             "Message": "A wanted category was deleted."
-                        });     
-                }); 
+                        });
+                });
 
             } else
                 res.json({
@@ -1156,8 +1156,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Error": true,
                     "Message": "Error executing the query"
                 });
-            }
-            else {
+            } else {
 
                 if (err) {
                     console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
@@ -1165,8 +1164,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Error": true,
                         "Message": "Error executing the query"
                     });
-                }
-                else {
+                } else {
                     var dataToReturn = rows[0] ? fs.readFileSync(rows[0].imagePath, 'base64') : "";
                     res.json({
                         "Error": false,
@@ -1176,7 +1174,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 }
             }
         });
-        
+
     });
 
     router.post("/images", function(req, res) {
@@ -1193,17 +1191,16 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Error": true,
                     "Message": "Error executing the query"
                 });
-            }
-            else {
+            } else {
                 // If not exist, insert
 
                 if (rows.length == 0) {
                     var buf = new Buffer(data, "base64");
                     fs.writeFile("images/" + datamd5, buf);
-                    
-                    
+
+
                     var query = "INSERT INTO ??(??,??) VALUES (?,?)"
-                    var table = ["image", "md5", "imagePath", datamd5, "images/" + datamd5];
+                    var table = ["image", "md5", "imagePath", datamd5, "/images/" + datamd5];
                     query = mysql.format(query, table);
                     connection.query(query, function(err, rows) {
                         if (err) {
@@ -1212,38 +1209,37 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                 "Error": true,
                                 "Message": "Error executing the query"
                             });
-                        }
-                        else {
+                        } else {
                             res.json({
                                 "Error": false,
                                 "Message": "Success",
-                                "Content": "images/" + datamd5
+                                "Content": "/images/" + datamd5
                             });
                         }
                     });
-                }
-                else {
+                } else {
                     res.json({
                         "Error": false,
                         "Message": "Success",
-                        "Content": "images/" + datamd5
+                        "Content": "/images/" + datamd5
                     });
                 }
             }
         });
-        
+
     });
 
 
     ////////////////////////////
     // PRODUCTHASIMAGES TABLE //
     ////////////////////////////
-    
+
     router.get("/products/:id/images", function(req, res) {
         // See if exists the image
         var query = "SELECT ?? FROM ??, ??, ?? WHERE ??=? AND ??=?? AND ??=??"
-        var table = ["image.imagePath","image", "product", "product_has_images", "product.id", req.params.id, "product.id",
-                    "product_has_images.product_id", "product_has_images.image_md5", "image.md5"];
+        var table = ["image.imagePath", "image", "product", "product_has_images", "product.id", req.params.id, "product.id",
+            "product_has_images.product_id", "product_has_images.image_md5", "image.md5"
+        ];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
@@ -1252,8 +1248,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Error": true,
                     "Message": "Error executing the query"
                 });
-            }
-            else {
+            } else {
 
                 if (err) {
                     console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
@@ -1261,8 +1256,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Error": true,
                         "Message": "Error executing the query"
                     });
-                }
-                else {
+                } else {
                     res.json({
                         "Error": false,
                         "Message": "Success",
@@ -1271,12 +1265,14 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 }
             }
         });
-        
+
     });
 
     router.post("/products/:id/images", function(req, res) {
-        var query = "INSERT INTO ??(??,??) VALUES (?,?)";
-        var table = ["producthasimages", "image_md5", "product_id", req.body.image_md5, req.body.product_id];
+
+        var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.params.id];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
@@ -1285,20 +1281,91 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Error": true,
                     "Message": "Error executing the query"
                 });
-            }
-            else {
+            } else {
+                if (token === ADMIN_TOKEN || (typeof rows[0] != "undefined" && token === md5(rows[0].user_id + MAGIC_PHRASE))) {
+                    var query = "INSERT INTO ??(??,??) VALUES (?,?)";
+                    var table = ["product_has_images", "image_md5", "product_id", req.body.image_md5, req.body.product_id];
+                    query = mysql.format(query, table);
+                    connection.query(query, function(err, rows) {
+                        if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                            res.json({
+                                "Error": true,
+                                "Message": "Error executing the query"
+                            });
+                        } else {
 
-                if (err) {
-                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
-                    res.json({
-                        "Error": true,
-                        "Message": "Error executing the query"
+                            if (err) {
+                                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                                res.json({
+                                    "Error": true,
+                                    "Message": "Error executing the query"
+                                });
+                            } else {
+                                res.json({
+                                    "Error": false,
+                                    "Message": "Success",
+                                });
+                            }
+                        }
                     });
                 }
                 else {
                     res.json({
-                        "Error": false,
-                        "Message": "Success",
+                        "Error": true,
+                        "Message": "Fail to access to API REST. You are not authenticated"
+                    });
+                }
+            }
+        });
+
+    });
+
+    router.delete("/products/:id/images/:md5", function(req, res) {
+        var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.params.id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing the query"
+                });
+            } else {
+                if (token === ADMIN_TOKEN || (typeof rows[0] != "undefined" && token === md5(rows[0].user_id + MAGIC_PHRASE))) {
+                    var query = "DELETE FROM ?? WHERE ??=? AND ??=?";
+                    var table = ["product_has_images", "product_has_images.product_id", req.params.id, "product_has_images.image_md5", req.params.md5];
+                    query = mysql.format(query, table);
+                    connection.query(query, function(err, rows) {
+                        if (err) {
+                            console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                            res.json({
+                                "Error": true,
+                                "Message": "Error executing the query"
+                            });
+                        } else {
+
+                            if (err) {
+                                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                                res.json({
+                                    "Error": true,
+                                    "Message": "Error executing the query"
+                                });
+                            } else {
+                                res.json({
+                                    "Error": false,
+                                    "Message": "Success",
+                                });
+                            }
+                        }
+                    });
+                }
+                else {
+                    res.json({
+                        "Error": true,
+                        "Message": "Fail to access to API REST. You are not authenticated"
                     });
                 }
             }

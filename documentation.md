@@ -643,6 +643,8 @@ Deletes the shipment method :id
 |-----------------|---------------------------------------|
 | id (*)          | id of the shipment method we want to delete /current| 
 
+### Response
+
 ```
 {
 	"Error" : false,
@@ -679,4 +681,126 @@ The database saves the response of a given product (product_id1) to a shown prod
 }
 ```
 
+# IMAGES
 
+## GET /api/images/:md5
+
+Get an image encoded to base64.
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| md5 (*)          | Image id. This value is the final of the path that the system returns when a image is created (e.g: /images/__3100bf4c8f7cdc238d5e8483e7295a44__) | 
+
+### Response
+
+```
+{
+	"Error" : false,
+	"Message" : "Success",
+	"Content" : "/9j/4AAQSkZJRgABAgAAAQABAAD/2wBD..."
+}
+```
+
+## POST /api/images
+
+Upload an image to the server and retrieve a path to access. 
+
+### Body
+
+|       KEY       	|                 VALUE                 |
+|-----------------------|---------------------------------------|
+| image (*)    	| Image base64 string |
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Success",
+	"Content": "/images/3100bf4c8f7cdc238d5e8483e7295a44"
+}
+```
+
+# PRODUCT IMAGES
+
+## GET /api/products/:id/images
+
+Get all the image paths of a product.
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)          | product id | 
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Success",
+	"Content": [{
+	    imagePath: "/images/3100bf4c8f7cdc238d5e8483e7295a44"
+	}]
+}
+```
+
+## POST /api/products/:id/images
+
+Add an image to a product.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)          | product id | 
+
+### Body
+
+|       KEY       	|                 VALUE                 |
+|-----------------------|---------------------------------------|
+| product_id (*)    	| the id of a product |
+| image_md5 (*) 	| the image md5 |
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Success"
+}
+```
+
+## DELETE /api/products/:id/images/:md5
+
+Delete a product image.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| id (*)          | product id | 
+| md5 (*)          | Image id. This value is the final of the path that the system returns when a image is created (e.g: /images/__3100bf4c8f7cdc238d5e8483e7295a44__) | 
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Success"
+}
+```

@@ -15,7 +15,7 @@ function test1() {
         .expectJSON({
             "Error": false,
             "Message": "Success",
-            "Content": "images/3100bf4c8f7cdc238d5e8483e7295a44"
+            "Content": "/images/3100bf4c8f7cdc238d5e8483e7295a44"
         })
         .after(function(err, res, body) {
             if (!err) {
@@ -53,7 +53,7 @@ function test2() {
         .expectJSON({
             "Error": false,
             "Message": "Success",
-            "Content": "images/3100bf4c8f7cdc238d5e8483e7295a44"
+            "Content": "/images/3100bf4c8f7cdc238d5e8483e7295a44"
         })
         .after(function(err, res, body) {
             if (!err) {
@@ -67,7 +67,7 @@ function test2() {
                     .expectJSON({
                         "Error": false,
                         "Message": "Success",
-                        "Content": "images/3100bf4c8f7cdc238d5e8483e7295a44"
+                        "Content": "/images/3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .after(function(err, res, body) {
                         if (!err) {
