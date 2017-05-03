@@ -19,7 +19,9 @@ To get permissions make a post to "/authenticate" with the body params **phone o
 	    "birthDate": "1990-01-01",
 	    "products": 3,
 	    "truekes": 2,
-	    "rating": 1
+        "imagePath": "",
+        "ratingsNumber": 10,
+        "ratingsValue": 50} 
 	  },
 	  "token": "7e9420e418be9f2662ddbe9cb95b6783"
 	}
@@ -355,7 +357,9 @@ If there's an error the error will turn to true and the message will tell wheter
 		      "birthDate": 1996-10-10,
 		      "products": 0,
 		      "truekes": 3,
-		      "rating": 0.0}, 
+		      "imagePath": "",
+		      "ratingsNumber": 10,
+		      "ratingsValue": 50} 
 		     {"id": 2,
 		      "phone": "691243231",
 		      "user": "Marcs Pouman",
@@ -364,7 +368,9 @@ If there's an error the error will turn to true and the message will tell wheter
 		      "birthDate": 1996-10-10,
 		      "products": 0,
 		      "truekes": 3,
-		      "rating": 0.0},   ... 
+		      "imagePath": "",
+		      "ratingsNumber": 10,
+		      "ratingsValue": 50}    ... 
 		     ]
 }
 ```
