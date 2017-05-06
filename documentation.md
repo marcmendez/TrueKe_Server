@@ -11,17 +11,17 @@ To get permissions make a post to "/authenticate" with the body params **phone o
 	"Message" : Success,
 	"Content": {
 	  "user": {
-	    "id": 1,
-	    "phone": "654654654",
-	    "user": "Pepito",
-	    "password": "edfd50a85db1fe977d2ad4efa006c6f2",
-	    "email": "manolito@gmail.com",
-	    "birthDate": "1990-01-01",
-	    "products": 3,
-	    "truekes": 2,
-        "imagePath": "",
-        "ratingsNumber": 10,
-        "ratingsValue": 50} 
+		"id": 1,
+		"phone": "654654654",
+		"user": "Pepito",
+		"password": "edfd50a85db1fe977d2ad4efa006c6f2",
+		"email": "manolito@gmail.com",
+		"birthDate": "1990-01-01",
+		"products": 3,
+		"truekes": 2,
+		"imagePath": "",
+		"ratingsNumber": 10,
+		"ratingsValue": 50} 
 	  },
 	  "token": "7e9420e418be9f2662ddbe9cb95b6783"
 	}
@@ -68,20 +68,20 @@ The API returns the set of products stored in the database. This functionality i
 	"Error" : false,
 	"Message" : Success,
 	"Content" : [{"id": 3,
-		      "user_id": 1,
-                      "title": "Llapis pala",
-                      "description": "Pel pou de ASW del baqua",
-                      "category": "Uranus",
-                      "min_price": 1,
-                      "max_price": 2}, 
-		     {"id": 4,
-		      "user_id": 1,
+		"user_id": 1,
+        "title": "Llapis pala",
+        "description": "Pel pou de ASW del baqua",
+        "category": "Uranus",
+        "min_price": 1,
+        "max_price": 2}, 
+		{"id": 4,
+		"user_id": 1,
                       "title": "Pen drive",
                       "description": "0GB",
                       "category": "electrodomestics",
                       "min_price": 1,
                       "max_price": 2}, ... 
-		     ]
+		]
 }
 ```
 
@@ -666,6 +666,58 @@ Inserts a new shipment method for a user to the DB.
 - idCard *
 - phone *
 
+### Response
+
+```
+{
+    "Error": false,
+    "Message": "Success",
+    "Content": [{
+        "id": 3,
+        "user_id": 1,
+        "country": "Spain",
+        "province": "Barcelona",
+        "city": "Barcelona",
+        "postalCode": 8019,
+        "address": "Calle Falsa 123",
+        "name": "Pepito Mendizabal",
+        "idCard": "654845616531",
+        "phone": "654654654"
+    	}, {
+        "id": 2,
+        "user_id": 1,
+        "country": "Spain",
+        "province": "Barcelona",
+        "city": "Barcelona",
+        "postalCode": 8029,
+        "address": "Calle Falsa 123",
+        "name": "Pepito Mendizabal",
+        "idCard": "654845616531",
+        "phone": "654654654"
+    	}]
+}
+```	
+
+## POST /api/shipmentmethods/calculate
+
+Calculates the estimated price to pay to transport company.
+
+### Body
+
+- address1 *
+- address2 *
+- method * -> Refers to what company uses
+
+### Response
+
+```
+{
+    "Error": false,
+    "Message": "Success",
+    "Content": 30
+}
+```	
+
 ## PUT /api/shipmentmethods/:id
 
 Modifies the shipment method :id
@@ -692,6 +744,15 @@ Modifies the shipment method :id
 - name
 - idCard
 - phone
+
+### Response
+
+```
+{
+    "Error": false,
+    "Message": "Updated !"
+}
+```	
 
 ## DELETE /api/shipmentmethods/:id
 
@@ -869,5 +930,31 @@ Delete a product image.
 {
 	"Error": false,
 	"Message": "Success"
+}
+```
+
+## POST /report/product
+
+Report a product.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| user_id (*)     |                                       | 
+| product_id (*)  |                                       | 
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Reported!"
 }
 ```

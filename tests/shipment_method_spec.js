@@ -833,10 +833,34 @@ function test14() {
                     })
                     .after(function(err, res, body) {
                         if (!err) {
-                            dbController.closeDBConnection();
+                            test15();
                         }
                     })
                     .toss();
+            }
+        })
+        .toss();
+}
+
+function test15() {
+    dbController.clearDB();
+    initializeSamples();
+    frisby.create('Get shipmentMethod calculated price')
+        .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+        .waits(100)
+        .post('http://localhost:3000/api/shipmentmethods/calculate')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Success",
+        })
+        .expectJSONTypes({
+            "Content": Number
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                dbController.closeDBConnection();
             }
         })
         .toss();

@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 var express = require("express");
 var mysql = require("mysql");
 var bodyParser = require("body-parser");

@@ -517,6 +517,21 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     // SHIPMENT_METHOD TABLE
     // ----- ----- ----- -----
+    
+    router.post("/shipmentmethods/calculate", function(req, res) {
+
+        var address1 = req.params.address1;
+        var address2 = req.params.address2;
+        var method = req.params.method;
+
+        var randomNumber = Math.floor((Math.random() * 100) + 1);
+        res.json({
+            "Error": false,
+            "Message": "Success",
+            "Content": randomNumber
+        });
+    });
+
     // Get the user shipment info of a specific user.
     router.get("/shipmentmethods/:user_id", function(req, res) {
         var token = req.headers["token"];
@@ -706,9 +721,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 }
             });
         }
-
-
     });
+
     // ----- ----- ----- -----
     // CATEGORY TABLE
     // ----- ----- ----- -----
@@ -731,6 +745,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             });
         });
     });
+
     // ----- ----- ----- -----
     // PRODUCT TABLE
     // ----- ----- ----- -----
@@ -1165,7 +1180,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Message": "Error executing the query"
                     });
                 } else {
-                    var dataToReturn = rows[0] ? fs.readFileSync(rows[0].imagePath, 'base64') : "";
+                    // The point character is needed in order to have a relative path.
+                    var dataToReturn = rows[0] ? fs.readFileSync('.' + rows[0].imagePath, 'base64') : "";
                     res.json({
                         "Error": false,
                         "Message": "Success",
@@ -1371,6 +1387,54 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             }
         });
         
+    });
+
+
+    //////////////////
+    // REPORT TABLE //
+    //////////////////
+    router.post("/report/product", function(req, res) {
+
+        var token = req.headers["token"];
+        var reporter = req.body.user_id;
+        var reportedProduct = req.body.product_id;
+
+        if (token === ADMIN_TOKEN || token === md5(reporter + MAGIC_PHRASE)) {
+            var query = "INSERT INTO ?? VALUES (?, ?)";
+            var table = ["report", reporter, reportedProduct];
+            query = mysql.format(query, table);
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    // One user can report only one time a product.
+                    // But we don't have to gives an error if someone try more than one time.
+                    if (err.toString().indexOf("Duplicate entry") != -1) {
+                        res.json({
+                            "Error": false,
+                            "Message": "Reported!",
+                        });
+                    }
+                    else {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing the query"
+                        });
+                    }
+                }
+                else {
+                    res.json({
+                        "Error": false,
+                        "Message": "Reported!",
+                    });
+                }
+            });
+        }
+        else {
+            res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated"
+            });
+        }
     });
 }
 module.exports = REST_ROUTER;

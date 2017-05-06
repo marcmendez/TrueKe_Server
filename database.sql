@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`user` (
   `truekes` INT(10) DEFAULT 0,
   `imagePath` VARCHAR(140) DEFAULT '',
   `ratingsNumber` INT(10) DEFAULT 0,
-  `ratingsValue` INT(10) DEFAULT 0,
+  `ratingsValue` FLOAT(2, 1) DEFAULT 0.0,
 
   PRIMARY KEY (`id`),
   UNIQUE INDEX `phone_UNIQUE` (`phone` ASC),
@@ -304,6 +304,23 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`product_has_images` (
   CONSTRAINT Pk_category PRIMARY KEY (`image_md5`,`product_id`),
   CONSTRAINT Fk_product_has_images_image_md5 FOREIGN KEY (`image_md5`) REFERENCES image(`md5`) ON DELETE CASCADE,
   CONSTRAINT Fk_product_has_images_product_id FOREIGN KEY (`product_id`) REFERENCES product(`id`) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `restful_api`.`report`
+-- -----------------------------------------------------
+-- THIS TABLE NEEDS TO CREATE INSTANCES WITH THE REST API TO MANTAIN THE
+-- CONSISTENCY INTO THE APP.
+DROP TABLE IF EXISTS `restful_api`.`report`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`report` (
+
+  `user_id` INT(70),
+  `product_id` INT(70),
+
+  CONSTRAINT Pk_category PRIMARY KEY (`user_id`,`product_id`),
+  CONSTRAINT Fk_report_user_id FOREIGN KEY (`user_id`) REFERENCES user(`id`) ON DELETE CASCADE,
+  CONSTRAINT Fk_report_product_id FOREIGN KEY (`product_id`) REFERENCES product(`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
