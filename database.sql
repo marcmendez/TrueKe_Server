@@ -218,10 +218,12 @@ DROP TABLE IF EXISTS `restful_api`.`chat`;
 
 CREATE TABLE IF NOT EXISTS `restful_api`.`chat` (
 
+  `id` INT(70) AUTO_INCREMENT,
   `product_id1` INT (70),
   `product_id2` INT (70),
 
-  CONSTRAINT Pk_category PRIMARY KEY (`product_id1`,`product_id2`),
+  CONSTRAINT Pk_chat PRIMARY KEY (`id`),
+  CONSTRAINT Unique_chat UNIQUE (`product_id1`,`product_id2`),
   CONSTRAINT Fk_chat_product1 FOREIGN KEY (`product_id1`) REFERENCES product(`id`) ON DELETE CASCADE,
   CONSTRAINT Fk_chat_product2 FOREIGN KEY (`product_id2`) REFERENCES product(`id`) ON DELETE CASCADE
 

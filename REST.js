@@ -1124,8 +1124,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
 
-
-
     // ----- ----- ----- -----
     // CHAT TABLE
     // ----- ----- ----- -----
@@ -1482,5 +1480,80 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             });
         }
     });
+
+
+    ///////////////////
+    // FAKE PAGAMENT//
+    /////////////////
+
+    router.put("/products/:product_id/chats/:chat_id/pay/:payment_id", function(req, res) {
+        var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.params.product_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+                var query = "SELECT * FROM ?? WHERE ??=? AND (product_id1=? OR product_id2=?) ";
+                var table = ["chat", "id", req.params.chat_id, req.params.product_id, req.params.product_id];
+                query = mysql.format(query, table);
+                connection.query(query, function(err, rows) {
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing MySQL query"
+                        });
+                    } else if (rows.length > 0) {
+                        var query = "SELECT * FROM ?? pm WHERE ??=? AND" + 
+                                    " 0 < (SELECT COUNT(*) FROM product p WHERE pm.user_id = p.user_id AND p.id=?)";
+                        var table = ["payment_method", "id", req.params.payment_id, req.params.product_id];
+                        query = mysql.format(query, table);
+                        console.log(query);
+                        connection.query(query, function(err, rows) {
+                            console.log(rows);
+                            if (err) {
+                                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                                res.json({
+                                    "Error": true,
+                                    "Message": "Error executing MySQL query"
+                            });
+                            }
+                            else if (rows.length === 0) {
+                                res.json({
+                                    "Error": true,
+                                    "Message": "Not paid."
+                                });
+                            }
+                            else {
+                                res.json({
+                                    "Error": false,
+                                    "Message": "Paid. Excel·lent"   
+                                });
+                            }
+
+                        });
+                    } else {
+
+                        res.json({
+                            "Error": true,
+                            "Message": "Not paid."
+                        });
+
+                    }
+                });
+            } else res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated."
+            });
+        });
+    });
+
 }
+
 module.exports = REST_ROUTER;
