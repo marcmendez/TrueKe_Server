@@ -958,3 +958,58 @@ Report a product.
 	"Message": "Reported!"
 }
 ```
+
+# CHAT
+
+## GET /api/chats
+
+Gets all the chats stored in the database. It is only accesible by the admin.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | admin token   			  |
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Succes"
+	"Content": [{
+	    "id": 1,
+	    "product_id1": 1,
+	    "product_id2": 2
+	}]
+}
+```
+
+## GET /api/chats/:user_id
+
+Gets all the chats of a given user stored in the database. It is accesible by the admin and by an user authenticated.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  |  token given during authentication    |
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Succes"
+	"Content": [{
+	    "id": 1,
+	    "product_id1": 1,
+	    "product_id2": 2
+	}]
+}
+```
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| user_id (*)     | user_id				  | 
