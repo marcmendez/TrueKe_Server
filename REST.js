@@ -1154,10 +1154,50 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         } else {
             res.json({
                 "Error": true,
-                "Message": "Fail to access to API REST. You are not authenticated"
+                "Message": "Fail to access to API REST. You are not authenticated as admin"
             });
         }
     });
+
+
+    router.get("/chats/:product_id", function(req, res) {
+		var token = req.headers["token"];
+        var query = "SELECT * FROM ?? WHERE ??=?";
+        var table = ["product", "id", req.params.product_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
+                var query = "SELECT * FROM ?? WHERE ??=? OR ??=?";
+            	var table = ["chat", "product_id1", req.params.product_id, "product_id2", req.params.product_id];
+            	query = mysql.format(query, table);
+            	connection.query(query, function(err, rows) {
+                	if (err) {
+                    	console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    	res.json({
+                        	"Error": true,
+                        	"Message": "Error executing the query"
+                    	});
+                	} else {
+                    	res.json({
+                      	  	"Error": false,
+                       		"Message": "Success",
+                        	"Content": rows
+                    	});
+                	}
+            	});
+            } else res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated."
+            });
+        });
+    });
+
 
     // ----
 
