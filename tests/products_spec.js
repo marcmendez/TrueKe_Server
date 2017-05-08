@@ -67,6 +67,68 @@ function initializeSamples2() {
 
 }
 
+function initializeSamples3 () {
+
+
+    var categoryData = new Object();
+    categoryData.category = "electrodomestics";
+    dbController.insertCategory(categoryData);
+
+    var userData = new Object();
+    userData.id = 1; //7e9420e418be9f2662ddbe9cb95b6783
+    userData.phone = "654654654";
+    userData.user = "Pouman";
+    userData.password = "passapalabra";
+    userData.email = "manolito@gmail.com";
+    userData.birthDate = "1990-01-01";
+    userData.products = 0;
+    userData.truekes = 2;
+    dbController.insertUser(userData);
+
+    var userData = new Object();
+    userData.id = 2; //988a86b7ae2b7dcfcb38de0ff12dcf93
+    userData.phone = "690708912";
+    userData.user = "PoumanV2";
+    userData.password = "passapalabra";
+    userData.email = "manolito2@gmail.com";
+    userData.birthDate = "1990-01-01";
+    userData.products = 0;
+    userData.truekes = 2;
+    dbController.insertUser(userData);
+
+    var productData = new Object();
+    productData.id = 1;
+    productData.user_id = "1";
+    productData.title = "Llapis pala";
+    productData.description = "Escava el teu pou, pouman";
+    productData.category = "electrodomestics";
+    productData.min_price = 1;
+    productData.max_price = 2;
+    dbController.insertProduct(productData);
+
+    productData = new Object();
+    productData.id = 2;
+    productData.user_id = "2";
+    productData.title = "Llapis rasclet";
+    productData.description = "Rasca nota, pouman";
+    productData.category = "electrodomestics";
+    productData.min_price = 1;
+    productData.max_price = 2;
+    dbController.insertProduct(productData);
+
+    var chatData = new Object();
+    chatData.product_id1 = 1;
+    chatData.product_id2 = 2;
+    dbController.insertChat(chatData);
+
+    var productWantsCategoryData = new Object();
+    productWantsCategoryData.product_id = 1;
+    productWantsCategoryData.category = "electrodomestics";
+    dbController.insertProductWantsCategory(productWantsCategoryData);
+
+
+}
+
 function test1() {
 	dbController.clearDB();
   initializeSamples();
@@ -1480,6 +1542,83 @@ function test27() {
                               ]
                             })
                             .after(function(err,res,body) {
+                              test28();
+                            })
+                            .toss();
+                  })
+                  .toss();
+        })
+        .toss();
+
+  })
+  .toss();
+}
+
+function test28() {
+  dbController.clearDB();
+  initializeSamples3();
+  frisby.create('Delete a product with a open chat')
+        .waits(200)
+        .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
+        .delete('http://localhost:3000/api/products/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+           "Error": false,
+           "Message": "Product not deleted"
+        })
+        .after(function(err, res, body) {
+           frisby.create('Get products after deleting a product')
+                 .waits(200)
+                 .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                 .get('http://localhost:3000/api/products') 
+                 .expectStatus(200)
+                 .expectHeaderContains('content-type', 'application/json')
+                 .expectJSON({
+                    "Error": false,
+                    "Message": "Success",
+                    "Content": [{
+                      "id": 1,
+                      "user_id": 1,
+                      "title": "Llapis pala",
+                      "description": "Escava el teu pou, pouman",
+                      "category": "electrodomestics",
+                      "min_price": 1,
+                      "max_price": 2
+                    }]
+                 })
+
+                .after(function(err, res, body) {
+                  frisby.create('User quantity of products after deleting product')
+                  .waits(100)
+                  .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                  .get('http://localhost:3000/api/users')
+                  .expectStatus(200)
+                  .expectHeaderContains('content-type', 'application/json')
+                  .expectJSON({
+                      "Error": false,
+                      "Message": "Success",
+                      "Content": [{
+                      "products": 1
+                      }]
+                  })
+                  .after(function(err, res, body) {
+
+                     frisby.create('Product wants category of product after deleting a product')
+                          .waits(100)
+                          .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                          .get('http://localhost:3000/api/productwantscategory/1')
+                            .expectStatus(200)
+                            .expectHeaderContains('content-type', 'application/json')
+                            .expectJSON({
+                              "Error": false,
+                              "Message": "Success",
+                              "Content": [{
+                                "product_id": 1,
+                                "category": "electrodomestics"
+                              }]
+                            })
+                            .after(function(err,res,body) {
                               dbController.closeDBConnection();
                             })
                             .toss();
@@ -1491,6 +1630,7 @@ function test27() {
   })
   .toss();
 }
+
 
 
 

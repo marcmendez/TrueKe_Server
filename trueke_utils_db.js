@@ -150,6 +150,10 @@ DbController.prototype.insertMatch = function(matchData) {
   this.insert("match", matchData);
 }
 
+DbController.prototype.insertChat = function(chatData) {
+  this.insert("chat", chatData);
+}
+
 DbController.prototype.insertImage = function(imageData) {
   this.insert("image", imageData);
 }

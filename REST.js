@@ -868,8 +868,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Message": "Error executing MySQL query"
                 });
             } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
-                var query = "DELETE FROM ?? WHERE ??=?";
-                var table = ["product", "id", req.params.id];
+                var query = "DELETE FROM ?? WHERE ??=? AND  0 >= (SELECT COUNT(*) FROM chat WHERE product_id1 =? OR product_id2 =?)";
+                var table = ["product", "id", req.params.id, req.params.id, req.params.id];
                 query = mysql.format(query, table);
                 connection.query(query, function(err, rows) {
                     if (err) {
@@ -878,10 +878,16 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             "Error": true,
                             "Message": "Error executing MySQL query"
                         });
-                    } else res.json({
+                    } else if (rows.affectedRows > 0) {
+                    	res.json({
                         "Error": false,
                         "Message": "Product deleted correctly"
-                    });
+                    	});
+                    } else 
+                    	res.json({
+                        "Error": false,
+                        "Message": "Product not deleted"
+                    	});
                 });
             } else res.json({
                 "Error": true,
@@ -1095,7 +1101,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     else query = query + " OR p.category=" + "'" + rows[i].desired_category + "'";
                 }
 
-                query = query + ") AND 0 >= (SELECT COUNT(*) FROM `match` m WHERE m.product_id2=p.id AND m.product_id1=" + rows[0].id + ")";
+                query = query + ") AND 0 = (SELECT COUNT(*) FROM `match` m WHERE m.product_id2=p.id AND m.product_id1=" + rows[0].id + ")";
                 connection.query(query, function(err, rows) {
                     if (err) {
                         console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
