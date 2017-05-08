@@ -1481,6 +1481,38 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         }
     });
 
+    ///////////////////
+    // TRUEKE TABLE //
+    /////////////////
+
+    router.post("/truekes", function(req, res) {
+
+        var token = req.headers["token"];
+        if (token === ADMIN_TOKEN) {
+            var query = "INSERT INTO ?? (??) VALUES (?)";
+            var table = ["trueke", "chat_id", req.body.chat_id];
+            query = mysql.format(query, table);
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing MySQL query"
+                    });
+                } else 
+                    res.json({
+                        "Error": false,
+                        "Message": "Trueke Added !",
+                    });
+
+            });
+        } else res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated as admin."
+                });
+    });
+
+
 
     ///////////////////
     // FAKE PAGAMENT//
@@ -1514,9 +1546,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                     " 0 < (SELECT COUNT(*) FROM product p WHERE pm.user_id = p.user_id AND p.id=?)";
                         var table = ["payment_method", "id", req.params.payment_id, req.params.product_id];
                         query = mysql.format(query, table);
-                        console.log(query);
+                        
                         connection.query(query, function(err, rows) {
-                            console.log(rows);
+                            
                             if (err) {
                                 console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                                 res.json({
@@ -1531,13 +1563,32 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                 });
                             }
                             else {
-                                res.json({
-                                    "Error": false,
-                                    "Message": "Paid. Excel·lent"   
+
+                                var query = "UPDATE ?? SET ??=??+1 WHERE ??=?"; 
+                                var table = ["trueke", "paid", "paid", "chat_id",req.params.chat_id];
+                                query = mysql.format(query, table);
+                                connection.query(query, function(err, rows) {
+                                    if (err) {
+                                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                                        res.json({
+                                            "Error": true,
+                                            "Message": "Error executing MySQL query"
+                                        });
+                                    } else if (rows.affectedRows >= 1) {
+                                        console.log(rows);
+                                        res.json({
+                                            "Error": false,
+                                            "Message": "Paid. Excel·lent"   
+                                        });
+                                    } else 
+                                        res.json({
+                                            "Error": true,
+                                            "Message": "Not paid."   
+                                        });
                                 });
                             }
-
                         });
+
                     } else {
 
                         res.json({

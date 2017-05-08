@@ -154,6 +154,10 @@ DbController.prototype.insertChat = function(chatData) {
   this.insert("chat", chatData);
 }
 
+DbController.prototype.insertTrueke = function(truekeData) {
+  this.insert("trueke", truekeData);
+}
+
 DbController.prototype.insertImage = function(imageData) {
   this.insert("image", imageData);
 }

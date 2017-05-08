@@ -325,6 +325,23 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`report` (
   CONSTRAINT Fk_report_product_id FOREIGN KEY (`product_id`) REFERENCES product(`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `restful_api`.`trueke`
+
+DROP TABLE IF EXISTS `restful_api`.`trueke`;
+
+CREATE TABLE IF NOT EXISTS `restful_api`.`trueke` (
+
+  `chat_id` INT(70),
+  `paid`INT(2) DEFAULT 0,
+
+  CONSTRAINT Pk_trueke PRIMARY KEY (`chat_id`),
+  CONSTRAINT Fk_trueke_chat_id FOREIGN KEY (`chat_id`) REFERENCES chat(`id`) ON DELETE CASCADE
+
+) ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
