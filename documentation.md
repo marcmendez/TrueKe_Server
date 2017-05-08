@@ -1013,3 +1013,33 @@ Gets all the chats of a given user stored in the database. It is accesible by th
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
 | user_id (*)     | user_id				  | 
+
+# TRUEKE
+
+## POST /api/truekes
+
+Creates a trueke to store it in the database. It is only accesible by the admin.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | admin token   			  |
+
+### Body
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| chat_id (*)     | id of the chat		          | 
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Trueke Added !"
+}
+```
+
+
+
