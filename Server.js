@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 var express = require("express");
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
@@ -32,14 +32,21 @@ REST.prototype.connectMysql = function() {
 
     function keepAlive() {
         pool.getConnection(function(err, connection) {
-            if (err) {console.log("There was an error with the connection and It will be stopped. Error: " + err);}
-            if (DEBUG) {
-                console.log("PING TO MYSQL!\n");
-                var time = new Date();
-                console.log(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+            if (err) {
+                console.log("There was an error with the connection and It will be stopped. Error: " + err);
+                return;
             }
-            connection.ping();
-            connection.release();
+            if (DEBUG) {
+                console.log("PING TO MYSQL!");
+                var time = new Date();
+                console.log("Done at " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds() + "\n");
+            }
+            connection.query( "SELECT 1", function(err, rows) {
+                    connection.release();
+                    if (err) {
+                        console.log("QUERY ERROR: " + err);
+                    }
+            });
         });
     }
     setInterval(keepAlive, 30000);
