@@ -520,8 +520,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     
     router.post("/shipmentmethods/calculate", function(req, res) {
 
-        var address1 = req.params.address1;
-        var address2 = req.params.address2;
+        var shipmentid1 = req.params.shipmentid1;
+        var shipmentid2 = req.params.shipmentid2;
         var method = req.params.method;
 
         var randomNumber = Math.floor((Math.random() * 100) + 1);
@@ -844,7 +844,10 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             connection.query(query, function() {});
                         } else res.json({
                             "Error": false,
-                            "Message": "A new product was inserted in the database"
+                            "Message": "A new product was inserted in the database",
+                            "Content": {
+                                product: insertedId
+                            }
                         });
                     });
                 }

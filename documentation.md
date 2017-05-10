@@ -531,6 +531,8 @@ The API supplies this functionality in order to give the user the possibility of
 |-----------------|---------------------------------------|
 | id (*)          | id of the user we want to delete /current| 
 
+### Response
+
 ```
 {
 	"Error" : false,
@@ -553,6 +555,28 @@ Returns the payment methods of an user given its user_id.
 ### Parameters
 
 - user_id *
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Success",
+	"Content": [{
+		"user_id": 1,
+		"type": "Visa/4B/Euro6000",
+		"number": "123456987",
+		"expireDate": "1990-05-06",
+		"name": "Sancho Panza",
+		"country": "España",
+		"province": "Barcelona",
+		"city": "Barcelona",
+		"postalCode": "08029",
+		"address": "Carrer Diagonal",
+		"phone": "654654654"
+	}]
+}
+```	
 
 ## POST /api/paymentmethods
 
@@ -678,7 +702,7 @@ Inserts a new shipment method for a user to the DB.
         "country": "Spain",
         "province": "Barcelona",
         "city": "Barcelona",
-        "postalCode": 8019,
+        "postalCode": "8019",
         "address": "Calle Falsa 123",
         "name": "Pepito Mendizabal",
         "idCard": "654845616531",
@@ -689,7 +713,7 @@ Inserts a new shipment method for a user to the DB.
         "country": "Spain",
         "province": "Barcelona",
         "city": "Barcelona",
-        "postalCode": 8029,
+        "postalCode": "8029",
         "address": "Calle Falsa 123",
         "name": "Pepito Mendizabal",
         "idCard": "654845616531",
@@ -704,8 +728,8 @@ Calculates the estimated price to pay to transport company.
 
 ### Body
 
-- address1 *
-- address2 *
+- shipmentid1 *
+- shipmentid2 *
 - method * -> Refers to what company uses
 
 ### Response

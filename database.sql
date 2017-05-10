@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`payment_method` (
   `country` VARCHAR(50) NOT NULL,
   `province` VARCHAR(50) NOT NULL,
   `city` VARCHAR(50) NOT NULL,
-  `postalCode` INT(10) NOT NULL,
+  `postalCode` VARCHAR(50) NOT NULL,
   `address` VARCHAR(70) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`shipment_method` (
   `country` VARCHAR(50) NOT NULL,
   `province` VARCHAR(50) NOT NULL,
   `city` VARCHAR(50) NOT NULL,
-  `postalCode` INT(10) NOT NULL,
+  `postalCode` VARCHAR(50) NOT NULL,
   `address` VARCHAR(70) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `idCard` VARCHAR(20) NOT NULL,

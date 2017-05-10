@@ -39,7 +39,7 @@ function initializeSamples() {
     paymentMethodData.country = "España";
     paymentMethodData.province = "Barcelona";
     paymentMethodData.city = "Barcelona";
-    paymentMethodData.postalCode = 08029;
+    paymentMethodData.postalCode = "08029";
     paymentMethodData.address = "Carrer Diagonal";
     paymentMethodData.phone = "654654654";
 
@@ -118,7 +118,7 @@ function test3() {
                 "country": "España",
                 "province": "Barcelona",
                 "city": "Barcelona",
-                "postalCode": 8029,
+                "postalCode": "08029",
                 "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
@@ -131,7 +131,7 @@ function test3() {
                 "country": "España",
                 "province": "Barcelona",
                 "city": "Barcelona",
-                "postalCode": 8029,
+                "postalCode": "08029",
                 "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
@@ -144,7 +144,7 @@ function test3() {
                 "country": "España",
                 "province": "Barcelona",
                 "city": "Barcelona",
-                "postalCode": 8029,
+                "postalCode": "08029",
                 "address": "Carrer Diagonal",
                 "phone": "654654654"
             }]
@@ -201,7 +201,7 @@ function test5() {
                 "country": "España",
                 "province": "Barcelona",
                 "city": "Barcelona",
-                "postalCode": 8029,
+                "postalCode": "08029",
                 "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
@@ -214,7 +214,7 @@ function test5() {
                 "country": "España",
                 "province": "Barcelona",
                 "city": "Barcelona",
-                "postalCode": 8029,
+                "postalCode": "08029",
                 "address": "Carrer Diagonal",
                 "phone": "654654654"
             }, {
@@ -227,7 +227,7 @@ function test5() {
                 "country": "España",
                 "province": "Barcelona",
                 "city": "Barcelona",
-                "postalCode": 8029,
+                "postalCode": "08029",
                 "address": "Carrer Diagonal",
                 "phone": "654654654"
             }]
@@ -265,7 +265,7 @@ function test6() {
             "country": "España",
             "province": "Barcelona",
             "city": "Barcelona",
-            "postalCode": 8029,
+            "postalCode": "08029",
             "address": "Carrer Diagonal",
             "phone": "654654654"
         })
@@ -325,7 +325,7 @@ function test7() {
             "country": "España",
             "province": "Barcelona",
             "city": "Barcelona",
-            "postalCode": 8029,
+            "postalCode": "08029",
             "address": "Carrer Diagonal",
             "phone": "654654654"
         })
@@ -354,7 +354,7 @@ function test7() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -396,7 +396,7 @@ function test8() {
             "country": "España",
             "province": "Barcelona",
             "city": "Barcelona",
-            "postalCode": 8029,
+            "postalCode": "08029",
             "address": "Carrer Diagonal",
             "phone": "654654654"
         })
@@ -425,7 +425,7 @@ function test8() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -456,7 +456,7 @@ function test9() {
             "country": "España",
             "province": "Barcelona",
             "city": "Barcelona",
-            "postalCode": 8029,
+            "postalCode": "08029",
             "address": "Carrer Diagonal",
             "phone": "654654654"
         })
@@ -487,7 +487,7 @@ function test9() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -500,7 +500,7 @@ function test9() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -513,7 +513,7 @@ function test9() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -545,7 +545,7 @@ function test10() {
             "country": "Holand",
             "province": "Quinto Pino",
             "city": "La Ciudad Perdida",
-            "postalCode": 0800,
+            "postalCode": "0800",
             "address": "Carrer Meridiana",
             "phone": "654159753"
         })
@@ -576,7 +576,7 @@ function test10() {
                             "country": "Holand",
                             "province": "Quinto Pino",
                             "city": "La Ciudad Perdida",
-                            "postalCode": 0800,
+                            "postalCode": "0800",
                             "address": "Carrer Meridiana",
                             "phone": "654159753"
                         }, {
@@ -589,7 +589,7 @@ function test10() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -602,7 +602,7 @@ function test10() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -634,7 +634,7 @@ function test11() {
             "country": "Holand",
             "province": "Quinto Pino",
             "city": "La Ciudad Perdida",
-            "postalCode": 0800,
+            "postalCode": "0800",
             "address": "Carrer Meridiana",
             "phone": "654159753"
         })
@@ -665,7 +665,7 @@ function test11() {
                             "country": "Holand",
                             "province": "Quinto Pino",
                             "city": "La Ciudad Perdida",
-                            "postalCode": 0800,
+                            "postalCode": "0800",
                             "address": "Carrer Meridiana",
                             "phone": "654159753"
                         }, {
@@ -678,7 +678,7 @@ function test11() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -691,7 +691,7 @@ function test11() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -739,7 +739,7 @@ function test12() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -752,7 +752,7 @@ function test12() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -765,7 +765,7 @@ function test12() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -815,7 +815,7 @@ function test13() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -828,7 +828,7 @@ function test13() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
@@ -878,7 +878,7 @@ function test14() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }, {
@@ -891,7 +891,7 @@ function test14() {
                             "country": "España",
                             "province": "Barcelona",
                             "city": "Barcelona",
-                            "postalCode": 8029,
+                            "postalCode": "08029",
                             "address": "Carrer Diagonal",
                             "phone": "654654654"
                         }]
