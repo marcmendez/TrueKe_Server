@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "trueke-ec028",
+  "private_key_id": "846abe27357530841f5798a6eb4b2a2b259bdd7c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDFdQGRR4/XlZrQ\nuhf3djZKhRnJowqWTvMXFyJ5QBJs7AsxpkL9aAi8djA7mTfeGTMJIoZ//CGZuARo\neTbYWDTxXkY2pcxHxdsWJQomyMsRV0+tsaMN/RTSEYazxhlfw8etPj9Hm/LDSW4U\nanr9THXqpDkPr2AkQXRGIPNmK4bhG7UH3BhL9hiE1ATYv92yrLw4DBGBVZgat2Q6\nDQQSN7OUI2Y7baaer4glouS2gwh+hxvd0U2FVrprNp8TEsu+FHZMtN8lJLgImTEx\nuhlH+WxZhiu4+sX5xPfHyVKUE2n8K/q1/kd4RrvU6TFjtLZd894vAPfkahYVKz7Y\n+SAIH7ABAgMBAAECggEBAI89YBO57BkiSBqexQAZWy0X/SsPAYEkaKgZekKnPjaR\nzVUJHZOiwqOkwTya27JcaW95AkUZ7G4M1fXL6QNsiYuHLjw6bkSqvVIFMKYOB3He\n+sgwEu705wO0/xiu3n1gExwUCeeys5sDS723uNzDeM7srxA30vC6ItU01h0J+mCV\nZlMbKlvzsdqwiWA7gfs6zS2jynSFcxtgferpD9aVmaDqvd57jmW0qCItz4VAKPTR\njFWlsuL9vnzUK1cQzz9dXK230/6bsc0aub7CG0Nbcg3aGxSRkE73yvjVX9fNXdrq\n/tbU6kkg0rqvzZohtSfNsW23+7qwLP1U6sqqAWIdCgECgYEA/eQWC6LCCT3uB5+0\nSdemIMdFUTgQnRO6UDgDh373VVWNWOlvj7Ha5x3BSO/CcbkBMBRODiTTJkfnX2k/\nO9kQcVZG3Yh2jrJt9JMTbos9cYUauEpZwIK3Z5CX1Jgs2q5lGV6ZwlejH1Vqx4Ya\nQ7SovXPPXDPLyLRBfGbz9PK1NZECgYEAxxjo94D37111Tu0jNx23deKanhSxkhip\n0tLnn57ts22HL51DXVFsDwv2lARE26BCGYo9/IyL+InG8G0TRba/OVxez+toD6Lu\nNnDcOSIq7fmQB5VfuLrjmGAdgt3xwEVW/3xl0S5SMfrznZowv/TC0skJIP2AdkBN\nxkgUauRQ23ECgYEA016tX9iLlCgj3+L8tLE9VHKx6dE0O6Ft7lUD0y1H+po0B/6n\n60iVxu3FudQp3IW6UG3HIg1UYL1iCdPUWh33i3PZoZt3oIs58XD0r4Zqi/TVbvIv\nUI9C44zEarCaPyELeBiDCAHwAykYsa2adh2Ukc01qDxS/u/ayRfpKFdbt5ECgYAQ\ncohcWfUhexED0idEmFndjTjEsmTw8sSku/OShiiQ2A2A63bzMJTCsXRPSgL+OcD8\nJyVzxZCSmZ8roXckHTKy5GSYvJO+JvGS4cPvnFj7i9BQMBDWS+odXmNRulAMWC4V\nsQsgOrljk52oeWJpmSi3DRCJ/ycrnahPJwk4w1/CoQKBgQDPqPd6ONOdbblnJWtb\nW7hbwPRWWWlid7Li1D2fp71ODc08Y3dLMZGGgL8gOx8KZe1GEtK/UpbdiYiNUgYL\nRR1jjJaxF7untGLXv2FKIwdjAzDuymAmNae+kjxoP1QkfVcrL5cE5E4XLtZCufXc\ndj8Wex0iYTKj6/+G907lepjHgw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "node-server@trueke-ec028.iam.gserviceaccount.com",
+  "client_id": "103824839680369794866",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/node-server%40trueke-ec028.iam.gserviceaccount.com"
+}

@@ -5,9 +5,15 @@ var bodyParser = require("body-parser");
 var md5 = require('MD5');
 var rest = require("./REST.js");
 var app = express();
+var firebase = require("firebase");
+
 function REST() {
     var self = this;
     self.connectMysql();
+    firebase.initializeApp({
+        serviceAccount: "./TrueKe-846abe273575.json",
+        databaseURL: "https://trueke-ec028.firebaseio.com/"
+    });
 };
 
 REST.prototype.connectMysql = function() {
