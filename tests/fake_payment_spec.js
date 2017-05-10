@@ -483,8 +483,7 @@ function test12() {
 }
 
 function test13() {
-  dbController.clearDB();
-  initializeSamples2();
+
 	frisby.create('Pay OK method with credentials with trueke')
 	    .waits(200)
 	    .put('http://localhost:3000/api/products/1/chats/1/pay/1')
