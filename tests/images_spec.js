@@ -5,6 +5,7 @@ var frisby = require('frisby');
 
 function test1() {
     dbController.clearDB();
+    dbController.clearImagesFolder();
     frisby.create('Create a non-existing image')
         .waits(100)
         .post('http://localhost:3000/api/images', {
@@ -43,6 +44,7 @@ function test1() {
 
 function test2() {
     dbController.clearDB();
+    dbController.clearImagesFolder();
     frisby.create('Create a existing image')
         .waits(100)
         .post('http://localhost:3000/api/images', {
@@ -99,6 +101,7 @@ function test2() {
 
 function test3() {
     dbController.clearDB();
+    dbController.clearImagesFolder();
     frisby.create('Get a non-existing image')
         .waits(100)
         .get('http://localhost:3000/api/images/C0S4inv3nt4d4')

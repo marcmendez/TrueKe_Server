@@ -45,6 +45,7 @@ function test2() {
         })
         .after(function(err, res, body) {
             if (!err) {
+                var useridparsed = JSON.parse(body);
                 frisby.create('Get users with admin credentials')
                     .waits(200)
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
@@ -55,6 +56,7 @@ function test2() {
                         "Error": false,
                         "Message": "Success",
                         "Content": [{
+                            "id": useridparsed.Content.user.id,
                             "phone": "654654654",
                             "user": "Manolo",
                             "password": "edfd50a85db1fe977d2ad4efa006c6f2",

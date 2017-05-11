@@ -1619,7 +1619,7 @@ function test28() {
                               }]
                             })
                             .after(function(err,res,body) {
-                              dbController.closeDBConnection();
+                              test29();
                             })
                             .toss();
                   })
@@ -1631,8 +1631,88 @@ function test28() {
   .toss();
 }
 
-
-
+function test29() {
+  dbController.clearDB();
+  initializeSamples2();
+  frisby.create('Insert a product with admin authentification')
+        .waits(200)
+        .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+        .post('http://localhost:3000/api/products', {
+           "user_id": 1,
+           "title": "Pen drive",
+           "description": "0GB",
+           "category": "electrodomestics",
+           "min_price": 1,
+           "max_price": 2,
+           "wants_categories": "electrodomestics"
+        })
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+           "Error": false,
+           "Message": "A new product was inserted in the database"
+        })
+        .after(function(err, res, body) {
+          var parsedBody = JSON.parse(body);
+           frisby.create('Get product after creating a new product and see that the post also returned a good id value')
+                 .waits(100)
+                 .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                 .get('http://localhost:3000/api/products')
+                 .expectStatus(200)
+                 .expectHeaderContains('content-type', 'application/json')
+                 .expectJSON({
+                    "Error": false,
+                    "Message": "Success",
+                    "Content": [{
+                      "id": parsedBody.Content.product.id,
+                      "user_id": 1,
+                      "title": "Pen drive",
+                      "description": "0GB",
+                      "category": "electrodomestics",
+                      "min_price": 1,
+                      "max_price": 2
+                    }]
+                 })
+                 .after(function(err, res, body) {
+                    var prod = JSON.parse(body);
+                    frisby.create('Product wants category of product after creating a new product')
+                          .waits(100)
+                          .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                          .get('http://localhost:3000/api/productwantscategory/' + prod.Content[0].id)
+                          .expectStatus(200)
+                          .expectHeaderContains('content-type', 'application/json')
+                          .expectJSON({
+                             "Error": false,
+                             "Message": "Success",
+                             "Content": [{
+                             "category": "electrodomestics"
+                             }]
+                          })
+                          .after(function(err, res, body) {
+                             frisby.create('User quantity of products after creating a new product')
+                                   .waits(100)
+                                   .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                                   .get('http://localhost:3000/api/users')
+                                   .expectStatus(200)
+                                   .expectHeaderContains('content-type', 'application/json')
+                                   .expectJSON({
+                                      "Error": false,
+                                      "Message": "Success",
+                                      "Content": [{
+                                      "products": 1
+                                      }]
+                                   })
+                                   .after(function(err, res, body) {
+                                      dbController.closeDBConnection();
+                                   })
+                                   .toss();
+                           })
+                           .toss();
+                   })
+                  .toss();
+           })
+           .toss();
+}
 
 
 test1();
