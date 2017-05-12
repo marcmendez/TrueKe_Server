@@ -32,6 +32,9 @@ REST.prototype.connectMysql = function() {
             console.log("There was an error with the connection and It will be stopped. Error: " + err);
             self.stop(err);
         } else {
+            connection.on('error', function (err){
+                 connection.connect();
+            });
             self.configureExpress(connection);
         }
     });

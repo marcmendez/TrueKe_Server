@@ -1050,7 +1050,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 var table = ["match", "product_id1", "product_id2", "wants", req.body.product_id1, req.body.product_id2, req.body.wants];
                 query = mysql.format(query, table);
                 connection.query(query, function(err, rows) {
-                    console.log(rows);
                     if (err) {
                         console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                         res.json({
@@ -1590,7 +1589,6 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                                     "Message": "Error executing MySQL query"
                                                  });
                                              } else {
-                                                console.log("exelent");
                                                 if(rows[0].paid === 2){
                                                     firebase.database().ref("/" + req.params.chat_id).once('value').then(function(snapshot){
                                                         snapshot.forEach(function(childSnapshot) {
