@@ -1347,7 +1347,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
             } else {
                 if (token === ADMIN_TOKEN || (typeof rows[0] != "undefined" && token === md5(rows[0].user_id + MAGIC_PHRASE))) {
                     var query = "INSERT INTO ??(??,??) VALUES (?,?)";
-                    var table = ["product_has_images", "image_md5", "product_id", req.body.image_md5, req.body.product_id];
+                    var table = ["product_has_images", "image_md5", "product_id", req.body.image_md5, req.params.id];
                     query = mysql.format(query, table);
                     connection.query(query, function(err, rows) {
                         if (err) {

@@ -919,7 +919,6 @@ Add an image to a product.
 
 |       KEY       	|                 VALUE                 |
 |-----------------------|---------------------------------------|
-| product_id (*)    	| the id of a product |
 | image_md5 (*) 	| the image md5 |
 
 ### Response

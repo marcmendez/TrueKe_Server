@@ -150,7 +150,6 @@ function test3() {
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
                     .post('http://localhost:3000/api/products/1/images', {
-                        "product_id": 1,
                         "image_md5": "3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .expectStatus(200)
@@ -209,7 +208,6 @@ function test4() {
                 frisby.create('Add image to a product without credentials')
                     .waits(100)
                     .post('http://localhost:3000/api/products/1/images', {
-                        "product_id": 1,
                         "image_md5": "3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .expectStatus(200)
@@ -267,7 +265,6 @@ function test5() {
                     .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783")
                     .waits(100)
                     .post('http://localhost:3000/api/products/1/images', {
-                        "product_id": 1,
                         "image_md5": "3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .expectStatus(200)
@@ -328,7 +325,6 @@ function test6() {
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
                     .post('http://localhost:3000/api/products/1/images', {
-                        "product_id": 1,
                         "image_md5": "3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .expectStatus(200)
@@ -401,7 +397,6 @@ function test7() {
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
                     .post('http://localhost:3000/api/products/1/images', {
-                        "product_id": 1,
                         "image_md5": "3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .expectStatus(200)
@@ -474,7 +469,6 @@ function test8() {
                     .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
                     .waits(100)
                     .post('http://localhost:3000/api/products/1/images', {
-                        "product_id": 1,
                         "image_md5": "3100bf4c8f7cdc238d5e8483e7295a44"
                     })
                     .expectStatus(200)
