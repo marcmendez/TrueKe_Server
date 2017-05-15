@@ -63,11 +63,13 @@ function initializeSamples () {
     dbController.insertProduct(productData);
 
     var chatData = new Object();
+    chatData.id = 1;
     chatData.product_id1 = 1;
     chatData.product_id2 = 2;
     dbController.insertChat(chatData);
 
     var chatData = new Object();
+    chatData.id = 2;
     chatData.product_id1 = 2;
     chatData.product_id2 = 3;
     dbController.insertChat(chatData);
@@ -82,6 +84,7 @@ function initializeSamples () {
 function initializeSamples2 () {
 
     var chatData = new Object();
+    chatData.id = 3;
     chatData.product_id1 = 1;
     chatData.product_id2 = 3;
     dbController.insertChat(chatData);
@@ -281,7 +284,129 @@ function test9() {
             }]
         })
         .after(function(err, res, body) {
-            dbController.closeDBConnection();
+            test10();
+        })
+        .toss();
+}
+
+function test10() {
+    dbController.clearDB();
+    initializeSamples();
+    initializeSamples2();
+    frisby.create('Delete a chat with admin credentials')
+        .waits(200)
+        .addHeader("token","7e9420e418be9f2662ddbe9cb95b6783")
+        .delete('http://localhost:3000/api/chats/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Success"
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                frisby.create('Get all chats of a product')
+                    .waits(200)
+                    .addHeader("token","7e9420e418be9f2662ddbe9cb95b6783")
+                    .get('http://localhost:3000/api/chats/1')
+                    .expectStatus(200)
+                    .expectHeaderContains('content-type', 'application/json')
+                    .expectJSON({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": [{
+                            "id": 3,
+                            "product_id1": 1,
+                            "product_id2": 3,
+                        }]
+                    })
+                    .after(function(err, res, body) {
+                        test11();
+                    })
+                    .toss();
+            }
+        })
+        .toss();
+}
+
+function test11() {
+    dbController.clearDB();
+    initializeSamples();
+    initializeSamples2();
+    frisby.create('Delete a chat without credentials')
+        .waits(200)
+        .delete('http://localhost:3000/api/chats/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": true
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                frisby.create('Get all chats of a product')
+                    .waits(200)
+                    .addHeader("token","7e9420e418be9f2662ddbe9cb95b6783")
+                    .get('http://localhost:3000/api/chats/1')
+                    .expectStatus(200)
+                    .expectHeaderContains('content-type', 'application/json')
+                    .expectJSON({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": [{
+                            "id": 1,
+                            "product_id1": 1,
+                            "product_id2": 2,
+                        },{
+                            "id": 3,
+                            "product_id1": 1,
+                            "product_id2": 3,
+                        }]
+                    })
+                    .after(function(err, res, body) {
+                        test12();
+                    })
+                    .toss();
+            }
+        })
+        .toss();
+}
+
+function test12() {
+    dbController.clearDB();
+    initializeSamples();
+    initializeSamples2();
+    frisby.create('Delete a chat with user credentials')
+        .waits(200)
+        .addHeader("token","7e9420e418be9f2662ddbe9cb95b6783")
+        .delete('http://localhost:3000/api/chats/1')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+            "Error": false,
+            "Message": "Success"
+        })
+        .after(function(err, res, body) {
+            if (!err) {
+                frisby.create('Get all chats of a product')
+                    .waits(200)
+                    .addHeader("token","7e9420e418be9f2662ddbe9cb95b6783")
+                    .get('http://localhost:3000/api/chats/1')
+                    .expectStatus(200)
+                    .expectHeaderContains('content-type', 'application/json')
+                    .expectJSON({
+                        "Error": false,
+                        "Message": "Success",
+                        "Content": [{
+                            "id": 3,
+                            "product_id1": 1,
+                            "product_id2": 3,
+                        }]
+                    })
+                    .after(function(err, res, body) {
+                        dbController.closeDBConnection();
+                    })
+                    .toss();
+            }
         })
         .toss();
 }
