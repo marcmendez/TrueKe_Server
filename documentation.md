@@ -1031,6 +1031,26 @@ Gets all the chats of a given user stored in the database. It is accesible by th
 	}]
 }
 ```
+
+## DELETE /api/chats/:id
+
+Delete chat by id. It is accesible by the admin and by an user authenticated.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  |  token given during authentication    |
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Succes"
+}
+```
+
 ### Parameters
 
 |       KEY       |                 VALUE                 |

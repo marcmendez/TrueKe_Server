@@ -229,7 +229,6 @@ function test7() {
     initializeSamples();
     frisby.create('Get all chats of a without credentials')
         .waits(200)
-        
         .get('http://localhost:3000/api/chats/1')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
@@ -295,7 +294,7 @@ function test10() {
     initializeSamples2();
     frisby.create('Delete a chat with admin credentials')
         .waits(200)
-        .addHeader("token","7e9420e418be9f2662ddbe9cb95b6783")
+        .addHeader("token","f4493ed183abba6b096f3903a5fc3b64")
         .delete('http://localhost:3000/api/chats/1')
         .expectStatus(200)
         .expectHeaderContains('content-type', 'application/json')
