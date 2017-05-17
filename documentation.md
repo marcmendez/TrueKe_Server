@@ -1008,7 +1008,7 @@ Gets all the chats stored in the database. It is only accesible by the admin.
 }
 ```
 
-## GET /api/chats/:user_id
+## GET /api/chats/:product_id
 
 Gets all the chats of a given user stored in the database. It is accesible by the admin and by an user authenticated.
 
