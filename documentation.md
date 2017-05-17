@@ -228,6 +228,36 @@ If there's an error the error will turn to true and the message will tell wheter
 	"Message" : "Product deleted correctly"
    }
    ```
+   
+## PUT /products/:product_id/chats/:chat_id/pay/:payment_id
+
+The API has a fake that simulates a payment from a given product in a chat, with a valid payment method. To acces this method you must be authenticated.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| product_id (*)  | id of the product	                  |
+| chat_id (*)     | id of the chat	                  |
+| payment_id (*)  | id of the payment method	          |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+  {
+	"Error" : true,
+	"Message" : "Paid. Excel·lent"
+   }
+   ```
+
 
 # PRODUCT WANTS CATEGORY
 
@@ -1008,7 +1038,7 @@ Gets all the chats stored in the database. It is only accesible by the admin.
 }
 ```
 
-## GET /api/chats/:user_id
+## GET /api/chats/:product_id
 
 Gets all the chats of a given user stored in the database. It is accesible by the admin and by an user authenticated.
 
