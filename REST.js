@@ -1056,10 +1056,24 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             "Error": true,
                             "Message": "Error executing MySQL query"
                         });
-                    } else res.json({
+                    } else {
+
+                    	var query = "SELECT * FROM ?? WHERE (??=? AND ??=?) OR (??=? AND ??=?)"
+                    	var table = ["chat", "product_id1", req.body.product_id1, "product_id2", req.body.product_id2, "product_id2", req.body.product_id2, "product_id1", req.body.product_id1]
+                    	query = mysql.format(query,table);
+                    	connection.query(query, function(err,rows) {
+                    		console.log(rows);
+                    		if(rows.length > 0) {
+                    			console.log(rows[0].id);
+                    			firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2).push("|O.O|");
+                    		}
+                    	});
+
+                    	res.json({
                         "Error": false,
                         "Message": "Match Added !",
-                    });
+                    	});
+                    }
 
                 });
 
