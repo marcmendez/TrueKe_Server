@@ -775,11 +775,37 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         });
     });
     //  Get all the products of a given user of the db.
-    router.get("/products/:user_id", function(req, res) {
+    router.get("/products/byuser/:user_id", function(req, res) {
         var token = req.headers["token"];
         if (token === ADMIN_TOKEN || token === md5(req.params.user_id + MAGIC_PHRASE)) {
             var query = "SELECT * FROM ?? WHERE ??=?";
             var table = ["product", "user_id", req.params.user_id];
+            query = mysql.format(query, table);
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                    res.json({
+                        "Error": true,
+                        "Message": "Error executing MySQL query"
+                    });
+                } else res.json({
+                    "Error": false,
+                    "Message": "Success",
+                    "Content": rows
+                });
+            });
+        } else res.json({
+            "Error": true,
+            "Message": "Fail to access to API REST. You are not authenticated."
+        });
+    });
+
+    // Get the information of a product
+    router.get("/products/:product_id", function(req, res) {
+        var token = req.headers["token"];
+        if (token === ADMIN_TOKEN || token === md5(req.params.user_id + MAGIC_PHRASE)) {
+            var query = "SELECT * FROM ?? WHERE ??=?";
+            var table = ["product", "id", req.params.product_id];
             query = mysql.format(query, table);
             connection.query(query, function(err, rows) {
                 if (err) {
@@ -1174,9 +1200,8 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
         }
     });
 
-
     router.get("/chats/:product_id", function(req, res) {
-		var token = req.headers["token"];
+        var token = req.headers["token"];
         var query = "SELECT * FROM ?? WHERE ??=?";
         var table = ["product", "id", req.params.product_id];
         query = mysql.format(query, table);
@@ -1189,29 +1214,59 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                 });
             } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(rows[0].user_id + MAGIC_PHRASE))) {
                 var query = "SELECT * FROM ?? WHERE ??=? OR ??=?";
-            	var table = ["chat", "product_id1", req.params.product_id, "product_id2", req.params.product_id];
-            	query = mysql.format(query, table);
-            	connection.query(query, function(err, rows) {
-                	if (err) {
-                    	console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
-                    	res.json({
-                        	"Error": true,
-                        	"Message": "Error executing the query"
-                    	});
-                	} else {
-                    	res.json({
-                      	  	"Error": false,
-                       		"Message": "Success",
-                        	"Content": rows
-                    	});
-                	}
-            	});
+                var table = ["chat", "product_id1", req.params.product_id, "product_id2", req.params.product_id];
+                query = mysql.format(query, table);
+                connection.query(query, function(err, rows) {
+                    if (err) {
+                        console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                        res.json({
+                            "Error": true,
+                            "Message": "Error executing the query"
+                        });
+                    } else {
+                        res.json({
+                            "Error": false,
+                            "Message": "Success",
+                            "Content": rows
+                        });
+                    }
+                });
             } else res.json({
                 "Error": true,
                 "Message": "Fail to access to API REST. You are not authenticated."
             });
         });
     });
+
+    router.get("/chats/byuser/:user_id", function(req, res) {
+        var token = req.headers["token"];
+        var query = "SELECT ?? as my_product, ??, ??, ?? FROM user u INNER JOIN product p ON u.id = p.user_id INNER JOIN chat c ON p.id = c.product_id1 OR p.id = c.product_id2 WHERE ??=?;"
+        var table = ["p.id", "p.title", "c.product_id1", "c.product_id2", "u.id", req.params.user_id];
+        query = mysql.format(query, table);
+        connection.query(query, function(err, rows) {
+            if (err) {
+                console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
+                res.json({
+                    "Error": true,
+                    "Message": "Error executing MySQL query"
+                });
+            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(req.params.user_id + MAGIC_PHRASE)))
+                
+                res.json({
+                    "Error": false,
+                    "Message": "Succes",
+                    "Content": rows
+                });
+
+            else 
+                res.json({
+                "Error": true,
+                "Message": "Fail to access to API REST. You are not authenticated."
+                });
+
+        });
+    });
+                
 
     router.delete("/chats/:id", function(req, res) {
         var token = req.headers["token"];

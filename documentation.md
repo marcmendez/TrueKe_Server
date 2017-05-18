@@ -85,7 +85,7 @@ The API returns the set of products stored in the database. This functionality i
 }
 ```
 
-## GET /api/products/:user_id
+## GET /api/products/byuser/:user_id
 
 The API returns the set of products stored in the database of a given user. This functionality is only available for autheticated users or admin. In case of accesing to the method with an specific user, it must be the same as the one in the parameter user_id.
 
@@ -124,6 +124,41 @@ If there's an error the error will turn to true and the message will tell wheter
                       "min_price": 1,
                       "max_price": 2}, ... 
 		     ]
+}
+```
+
+## GET /api/products/:product_id
+
+The API returns the  products stored in the database with a given id. This functionality is only available for autheticated users or admin. In case of accesing to the method with an specific user, it must be the same as the one in the parameter user_id.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  | token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| product_id (*)     | id of the current user                |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+{
+	"Error" : false,
+	"Message" : Success,
+	"Content" : {"id": 3,
+		      "user_id": 1,
+                      "title": "Llapis pala",
+                      "description": "Pel pou de ASW del baqua",
+                      "category": "Uranus",
+                      "min_price": 1,
+                      "max_price": 2}
+		     
 }
 ```
 
@@ -1040,13 +1075,19 @@ Gets all the chats stored in the database. It is only accesible by the admin.
 
 ## GET /api/chats/:product_id
 
-Gets all the chats of a given user stored in the database. It is accesible by the admin and by an user authenticated.
+Gets all the chats of a given product stored in the database. It is accesible by the admin and by an user authenticated.
 
 ### Headers
 
 |       KEY       |                 VALUE                 |
 |-----------------|---------------------------------------|
 | token	 	  |  token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| product_id (*)          | product id | 
 
 ### Response
 
@@ -1061,6 +1102,35 @@ Gets all the chats of a given user stored in the database. It is accesible by th
 	}]
 }
 ```
+
+## GET /api/chats/byuser/:user_id
+
+Gets all the chats of a given user stored in the database. It is accesible by the admin and by an user authenticated.
+
+### Headers
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| token	 	  	  |  token given during authentication    |
+
+### Parameters
+
+|       KEY       |                 VALUE                 |
+|-----------------|---------------------------------------|
+| user_id (*)          | user id | 
+
+### Response
+
+```
+{
+	"Error": false,
+	"Message": "Succes"
+	"Content": [{
+	    "id": 1,
+	    "product_id1": 1,
+	    "product_id2": 2
+	}]
+}
 
 ## DELETE /api/chats/:id
 

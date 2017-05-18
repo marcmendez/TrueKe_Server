@@ -226,7 +226,7 @@ function test5() {
   initializeSamples();
 	frisby.create('Get products of a user with no credentials')
 	    .waits(200)
-	    .get('http://localhost:3000/api/products/1')
+	    .get('http://localhost:3000/api/products/byuser/1')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
@@ -247,7 +247,7 @@ function test6() {
 	frisby.create('Get products of a user false credentials')
 	    .waits(200)
       .addHeader("token", "socuntokenmoltfals")
-	    .get('http://localhost:3000/api/products/1')
+	    .get('http://localhost:3000/api/products/byuser/1')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
@@ -268,7 +268,7 @@ function test7() {
 	frisby.create('Get products of a user different credentials')
 	    .waits(200)
       .addHeader("token", "988a86b7ae2b7dcfcb38de0ff12dcf93")
-	    .get('http://localhost:3000/api/products/1')
+	    .get('http://localhost:3000/api/products/byuser1')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
@@ -289,7 +289,7 @@ function test8() {
 	frisby.create('Get products of a user with user credentials')
 	    .waits(200)
       .addHeader("token", "7e9420e418be9f2662ddbe9cb95b6783" )
-	    .get('http://localhost:3000/api/products/1')
+	    .get('http://localhost:3000/api/products/byuser/1')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
@@ -319,7 +319,7 @@ function test9() {
 	frisby.create('Get products of a user with admin credentials')
 	    .waits(200)
       .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
-	    .get('http://localhost:3000/api/products/1')
+	    .get('http://localhost:3000/api/products/byuser/1')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
@@ -350,7 +350,7 @@ function test10() {
 	frisby.create('Get products of a user that does not exists')
 	    .waits(200)
       .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
-	    .get('http://localhost:3000/api/products/2')
+	    .get('http://localhost:3000/api/products/byuser/2')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
