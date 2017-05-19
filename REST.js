@@ -802,31 +802,26 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
 
     // Get the information of a product
     router.get("/products/:product_id", function(req, res) {
-        var token = req.headers["token"];
         
         var query = "SELECT * FROM ?? WHERE ??=?";
         var table = ["product", "id", req.params.product_id];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
-                console.log(rows);        
+                     
                 if (err) {
                     console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
                     res.json({
                         "Error": true,
                         "Message": "Error executing MySQL query"
                     });
-                } else if (rows.length == 0 || (token === ADMIN_TOKEN || token === md5(rows[0].user_id + MAGIC_PHRASE)))
+                } else
                     res.json({
                         "Error": false,
                         "Message": "Success",
                         "Content": rows
                     });
-                else 
-                    res.json({
-                    "Error": true,
-                    "Message": "Fail to access to API REST. You are not authenticated."
-                    });
-            });
+        });
+               
     });
 
     function insertProductWantsCategory(insertedId, categories, aux, callback) {
