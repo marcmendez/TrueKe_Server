@@ -1248,7 +1248,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Error": true,
                     "Message": "Error executing MySQL query"
                 });
-            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(req.params.user_id + MAGIC_PHRASE)))
+            } else if (token == ADMIN_TOKEN || token == md5(req.params.user_id + MAGIC_PHRASE))
                 
                 res.json({
                     "Error": false,
