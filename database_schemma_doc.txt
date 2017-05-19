@@ -1,0 +1,157 @@
++------------------------+
+| Tables_in_restful_api  |
++------------------------+
+| category               |
+| chat                   |
+| image                  |
+| match                  |
+| payment_method         |
+| product                |
+| product_has_images     |
+| product_wants_category |
+| report                 |
+| shipment_method        |
+| trueke                 |
+| user                   |
++------------------------+
+
+// CATEGORY TABLE
+
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| category | varchar(50) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+// CHAT TABLE
+
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| id          | int(70) | NO   | PRI | NULL    | auto_increment |
+| product_id1 | int(70) | YES  | MUL | NULL    |                |
+| product_id2 | int(70) | YES  | MUL | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+
+product_id1 i product_id2 foreign keys de la taula `product`.
+
+// IMAGE TABLE
+
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| md5       | char(32)     | NO   | PRI | NULL    |       |
+| imagePath | varchar(250) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+
+// MATCH TABLE
+
+// PAYMENT_METHOD TABLE
+
++------------+--------------------------------------------------------------------------------+------+-----+---------+----------------+
+| Field      | Type                                                                           | Null | Key | Default | Extra          |
++------------+--------------------------------------------------------------------------------+------+-----+---------+----------------+
+| id         | int(70)                                                                        | NO   | PRI | NULL    | auto_increment |
+| user_id    | int(70)                                                                        | NO   | MUL | NULL    |                |
+| type       | enum('Visa/4B/Euro6000','MasterCard/4B/Euro6000','American Express','Maestro') | YES  |     | NULL    |                |
+| number     | varchar(20)                                                                    | NO   |     | NULL    |                |
+| expireDate | date                                                                           | NO   |     | NULL    |                |
+| name       | varchar(50)                                                                    | NO   |     | NULL    |                |
+| country    | varchar(50)                                                                    | NO   |     | NULL    |                |
+| province   | varchar(50)                                                                    | NO   |     | NULL    |                |
+| city       | varchar(50)                                                                    | NO   |     | NULL    |                |
+| postalCode | varchar(50)                                                                    | NO   |     | NULL    |                |
+| address    | varchar(70)                                                                    | NO   |     | NULL    |                |
+| phone      | varchar(20)                                                                    | NO   |     | NULL    |                |
++------------+--------------------------------------------------------------------------------+------+-----+---------+----------------+
+
+user_id foreign key de la taula `user`.
+
+// PRODUCT TABLE
+
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| id          | int(70)     | NO   | PRI | NULL    | auto_increment |
+| user_id     | int(70)     | NO   | MUL | NULL    |                |
+| title       | varchar(50) | NO   |     | NULL    |                |
+| description | text        | YES  |     | NULL    |                |
+| category    | varchar(50) | NO   | MUL | NULL    |                |
+| min_price   | int(30)     | NO   |     | NULL    |                |
+| max_price   | int(30)     | NO   |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+
+user_id foreign key de la taula `user` i category foreign key de la taula `category`.
+
+// PRODUCT_HAS_IMAGES TABLE
+
++------------+----------+------+-----+---------+-------+
+| Field      | Type     | Null | Key | Default | Extra |
++------------+----------+------+-----+---------+-------+
+| image_md5  | char(32) | NO   | PRI | NULL    |       |
+| product_id | int(70)  | NO   | PRI | NULL    |       |
++------------+----------+------+-----+---------+-------+
+
+// PRODUCT_WANTS_CATEGORY
+
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| product_id | int(70)     | NO   | PRI | NULL    |       |
+| category   | varchar(50) | NO   | PRI | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+// REPORT TABLE
+
++------------+---------+------+-----+---------+-------+
+| Field      | Type    | Null | Key | Default | Extra |
++------------+---------+------+-----+---------+-------+
+| user_id    | int(70) | NO   | PRI | NULL    |       |
+| product_id | int(70) | NO   | PRI | NULL    |       |
++------------+---------+------+-----+---------+-------+
+
+// SHIPMENT_METHOD TABLE
+
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int(70)     | NO   | PRI | NULL    | auto_increment |
+| user_id    | int(70)     | NO   | MUL | NULL    |                |
+| country    | varchar(50) | NO   |     | NULL    |                |
+| province   | varchar(50) | NO   |     | NULL    |                |
+| city       | varchar(50) | NO   |     | NULL    |                |
+| postalCode | varchar(50) | NO   |     | NULL    |                |
+| address    | varchar(70) | NO   |     | NULL    |                |
+| name       | varchar(50) | NO   |     | NULL    |                |
+| idCard     | varchar(20) | NO   |     | NULL    |                |
+| phone      | varchar(20) | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+
+user_id foreign key de la taula `user`.
+
+// TRUEKE TABLE
+
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| chat_id | int(70) | NO   | PRI | NULL    |       |
+| paid    | int(2)  | YES  |     | 0       |       |
++---------+---------+------+-----+---------+-------+
+
+// USER TABLE
+
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | int(70)      | NO   | PRI | NULL    | auto_increment |
+| phone         | varchar(20)  | NO   | UNI | NULL    |                |
+| user          | varchar(20)  | NO   |     | NULL    |                |
+| password      | varchar(50)  | NO   |     | NULL    |                |
+| email         | varchar(50)  | NO   | UNI | NULL    |                |
+| birthDate     | date         | NO   |     | NULL    |                |
+| products      | int(10)      | YES  |     | 0       |                |
+| truekes       | int(10)      | YES  |     | 0       |                |
+| imagePath     | varchar(140) | YES  |     |         |                |
+| ratingsNumber | int(10)      | YES  |     | 0       |                |
+| ratingsValue  | float(2,1)   | YES  |     | 0.0     |                |
++---------------+--------------+------+-----+---------+----------------+
