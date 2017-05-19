@@ -854,7 +854,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Error": true,
                         "Message": "Error executing MySQL query"
                     });
-                } else {
+                } else if (typeof req.body.wants_categories != 'undefined') {
                     var categories = req.body.wants_categories.split("-");
                     insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
                         if (err) {
@@ -874,6 +874,17 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                 product: {id: insertedId}
                             }
                         });
+                    });
+                }
+                else {
+                    res.json({
+                        "Error": false,
+                        "Message": "A new product was inserted in the database",
+                        "Content": {
+                            product: {
+                                id: insertedId
+                            }
+                        }
                     });
                 }
             });
