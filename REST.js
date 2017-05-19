@@ -1097,10 +1097,15 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     	var table = ["chat", "product_id1", req.body.product_id1, "product_id2", req.body.product_id2, "product_id2", req.body.product_id2, "product_id1", req.body.product_id1]
                     	query = mysql.format(query,table);
                     	connection.query(query, function(err,rows) {
-                    		console.log(rows);
+                    		
                     		if(rows.length > 0) {
-                    			console.log(rows[0].id);
-                    			firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2).push("|O.O|");
+                    			var json = {
+                                    "message" : "Se ha abierto un nuevo chat.",
+                                    "fromUserId" : req.body.product_id1,
+                                    "date" : new Date().getTime(),
+                                    "read" : false
+                                }
+                    			firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2).push(json );
                     		}
                     	});
 
@@ -1259,7 +1264,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     "Error": true,
                     "Message": "Error executing MySQL query"
                 });
-            } else if (token == ADMIN_TOKEN || (typeof(rows[0]) != 'undefined' && token == md5(req.params.user_id + MAGIC_PHRASE)))
+            } else if (token == ADMIN_TOKEN || token == md5(req.params.user_id + MAGIC_PHRASE))
                 
                 res.json({
                     "Error": false,

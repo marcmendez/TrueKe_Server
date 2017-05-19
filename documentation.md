@@ -1131,6 +1131,7 @@ Gets all the chats of a given user stored in the database. It is accesible by th
 	    "product_id2": 2
 	}]
 }
+```
 
 ## DELETE /api/chats/:id
 
