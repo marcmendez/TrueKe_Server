@@ -1089,9 +1089,10 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     		
                     		if(rows.length > 0) {
                     			var json = {
-                                    "message" : "elquevulgisentrecometes",
+                                    "message" : "Se ha abierto un nuevo chat.",
                                     "fromUserId" : req.body.product_id1,
-                                    "date" : new Date().getTime()
+                                    "date" : new Date().getTime(),
+                                    "read" : false
                                 }
                     			firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2).push(json );
                     		}
