@@ -854,7 +854,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Error": true,
                         "Message": "Error executing MySQL query"
                     });
-                } else if (typeof req.body.wants_categories != 'undefined') {
+                } else if (typeof req.body.wants_categories != 'undefined' && req.body.wants_categories != null) {
                     var categories = req.body.wants_categories.split("-");
                     insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
                         if (err) {

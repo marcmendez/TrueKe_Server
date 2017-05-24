@@ -268,7 +268,7 @@ function test7() {
 	frisby.create('Get products of a user different credentials')
 	    .waits(200)
       .addHeader("token", "988a86b7ae2b7dcfcb38de0ff12dcf93")
-	    .get('http://localhost:3000/api/products/byuser1')
+	    .get('http://localhost:3000/api/products/byuser/1')
 	    .expectStatus(200)
 	    .expectHeaderContains('content-type', 'application/json')
 	    .expectJSON({
