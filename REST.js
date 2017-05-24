@@ -871,7 +871,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             "Error": false,
                             "Message": "A new product was inserted in the database",
                             "Content": {
-                                product: {id: insertId}
+                                product: {id: insertedId}
                             }
                         });
                     });
@@ -882,7 +882,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Message": "A new product was inserted in the database",
                         "Content": {
                             product: {
-                                id: insertedId
+                                id: rows.insertId
                             }
                         }
                     });
