@@ -25,7 +25,7 @@ REST.prototype.connectMysql = function() {
         password: 'pes03',
         database: 'restful_api',
         dateStrings: 'date',
-        debug: false
+        debug: DEBUG
     });
     pool.getConnection(function(err, connection) {
         if (err) {
