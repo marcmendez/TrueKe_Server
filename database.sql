@@ -104,14 +104,14 @@ CREATE TABLE IF NOT EXISTS `restful_api`.`category` (
 ) ENGINE = InnoDB;
 
 -- Initial values
-INSERT INTO `category`(`category`) VALUES ('Vehículos');
-INSERT INTO `category`(`category`) VALUES ('Electrónico');
-INSERT INTO `category`(`category`) VALUES ('Deporte y ocio');
-INSERT INTO `category`(`category`) VALUES ('Hogar y electrodomésticos');
-INSERT INTO `category`(`category`) VALUES ('Consolas y videojuegos');
-INSERT INTO `category`(`category`) VALUES ('Libros, películas o música');
-INSERT INTO `category`(`category`) VALUES ('Moda y accesorios');
-INSERT INTO `category`(`category`) VALUES ('Otros');
+INSERT INTO `category`(`category`) VALUES ('vehículos');
+INSERT INTO `category`(`category`) VALUES ('electrónico');
+INSERT INTO `category`(`category`) VALUES ('deporte y ocio');
+INSERT INTO `category`(`category`) VALUES ('hogar y electrodomésticos');
+INSERT INTO `category`(`category`) VALUES ('consolas y videojuegos');
+INSERT INTO `category`(`category`) VALUES ('libros, películas o música');
+INSERT INTO `category`(`category`) VALUES ('moda y accesorios');
+INSERT INTO `category`(`category`) VALUES ('otros');
 
 -- Example of insert (category)
 -- INSERT INTO `category`(`category`) VALUES ('electrodomestics');
