@@ -855,7 +855,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Message": "Error executing MySQL query"
                     });
                 } else {
-                    var categories = req.body.wants_categories.split("-");
+                    var categories = req.body.wants_categories ? req.body.wants_categories.split("-") : [];
                     insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
                         if (err) {
                             console.log("DB DEBUG INFO. THE ERROR WAS: " + err);
