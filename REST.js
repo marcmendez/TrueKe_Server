@@ -854,7 +854,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                         "Error": true,
                         "Message": "Error executing MySQL query"
                     });
-                } else if (typeof req.body.wants_categories != 'undefined' && req.body.wants_categories != null) {
+                } else {
                     var categories = req.body.wants_categories.split("-");
                     insertProductWantsCategory(rows.insertId, categories, 0, function(err, insertedId) {
                         if (err) {
@@ -871,19 +871,11 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                             "Error": false,
                             "Message": "A new product was inserted in the database",
                             "Content": {
-                                product: {id: insertedId}
+                                product: {
+                                    id: insertedId
+                                }
                             }
                         });
-                    });
-                }
-                else {
-                    var query = "DELETE FROM ?? WHERE ??=?";
-                    var table = ["product", "id", insertedId];
-                    query = mysql.format(query, table);
-                    connection.query(query, function() {});
-                    res.json({
-                        "Error": true,
-                        "Message": "No wants categories defined."
                     });
                 }
             });
