@@ -818,7 +818,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                     res.json({
                         "Error": false,
                         "Message": "Success",
-                        "Content": rows
+                        "Content": rows[0]
                     });
         });
                
