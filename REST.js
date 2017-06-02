@@ -1242,7 +1242,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
     router.get("/chats/byuser/:user_id", function(req, res) {
         var token = req.headers["token"];
         var query = "SELECT ?? as my_product, ??, ??, ??,?? as chat_id FROM user u INNER JOIN product p ON u.id = p.user_id INNER JOIN chat c ON p.id = c.product_id1 OR p.id = c.product_id2 WHERE ??=?;"
-        var table = ["p.id", "p.title", "c.product_id1", "c.product_id2", "u.id", "c.id", req.params.user_id];
+        var table = ["p.id", "p.title", "c.product_id1", "c.product_id2", "c.id", "u.id", req.params.user_id];
         query = mysql.format(query, table);
         connection.query(query, function(err, rows) {
             if (err) {
