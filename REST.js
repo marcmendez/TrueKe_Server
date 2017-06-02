@@ -1096,7 +1096,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                     "date" : new Date().getTime(),
                                     "read" : false
                                 }
-                    			firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2).push(json );
+                    			firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2 + "_" + rows[0].id).push(json);
                     		}
                     	});
 
@@ -1714,7 +1714,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                                  });
                                              } else {
                                                 if(rows[0].paid === 2){
-                                                    firebase.database().ref("/" + req.params.chat_id).once('value').then(function(snapshot){
+                                                    firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2 + "_" + rows[0].id).once('value').then(function(snapshot){
                                                         snapshot.forEach(function(childSnapshot) {
                                                             var message = childSnapshot.val();
                                                             if (message.status == 3) {
