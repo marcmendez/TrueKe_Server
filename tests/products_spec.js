@@ -1703,7 +1703,7 @@ function test29() {
                                       }]
                                    })
                                    .after(function(err, res, body) {
-                                      dbController.closeDBConnection();
+                                      test30();
                                    })
                                    .toss();
                            })
@@ -1714,5 +1714,54 @@ function test29() {
            .toss();
 }
 
+function test30() {
+  dbController.clearDB();
+  initializeSamples();
+  frisby.create('Vote a product')
+      .waits(200)
+      .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+      .post('http://localhost:3000/api/products/1/vote', {
+        "value": 4.3
+      })
+      .expectStatus(200)
+      .expectHeaderContains('content-type', 'application/json')
+      .expectJSON({
+          "Error": false
+      })
+      .after(function(err, res, body) {
+          if (!err) {
+            frisby.create('Get user by phone with admin credentials')
+                .waits(100)
+                .addHeader("token", "f4493ed183abba6b096f3903a5fc3b64")
+                .get('http://localhost:3000/api/users/byemail/manolito@gmail.com')
+                .expectStatus(200)
+                .expectHeaderContains('content-type', 'application/json')
+                .expectJSON({
+                    "Error": false,
+                    "Message": "Success",
+                    "Content": [{
+                        "id": 1,
+                        "phone": "654654654",
+                        "user": "Pouman",
+                        "password": "passapalabra",
+                        "email": "manolito@gmail.com",
+                        "birthDate": "1990-01-01",
+                        "products": 1,
+                        "truekes": 2,
+                        "imagePath": '',
+                        "ratingsNumber": 1,
+                        "ratingsValue": 4.3
+                    }]
+                })
+                .after(function(err, res, body) {
+                    if (!err) {
+                        dbController.closeDBConnection();
+                    }
+                })
+                .toss();
+          }
+      })
+      .toss();
+}
 
 test1();

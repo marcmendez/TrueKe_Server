@@ -294,6 +294,27 @@ If there's an error the error will turn to true and the message will tell wheter
    ```
 
 
+## POST /products/:product_id/vote
+
+Update the user rating of the given product.
+
+### Body
+
+|       KEY       	|                 VALUE                 |
+|-----------------------|---------------------------------------|
+| value (*)     	| rating value                |
+
+### Response
+
+If there's an error the error will turn to true and the message will tell wheter if it is due to a bad execution of an SQL query or because of a bad authentification.
+
+```
+   {
+	"Error" : false,
+	"Message" : "Success"
+   }
+```
+
 # PRODUCT WANTS CATEGORY
 
 The API is capable of storing the wishes of a product and returning them, this functionality only offers gets, as the inserts and the deletes are done in the product insertion and removal.
