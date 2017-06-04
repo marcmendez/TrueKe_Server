@@ -1760,7 +1760,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                                 if(rows[0].paid === 2){
 
                                                         var query = "SELECT * FROM ?? WHERE ??=?";
-                                                        var table = ["chat", "chat_id", req.params.chat_id];
+                                                        var table = ["chat", "id", req.params.chat_id];
                                                         query = mysql.format(query, table);
                                                         connection.query(query, function(err, rows) {
 
