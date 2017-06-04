@@ -1757,10 +1757,13 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                                                  });
                                              } else {
                                                 if(rows[0].paid === 2){
+                                                    console.log("¡paid == 2!");
+                                                    console.log("/" + rows[0].product_id1 + "_" + rows[0].product_id2 + "_" + rows[0].id);
                                                     firebase.database().ref("/" + rows[0].product_id1 + "_" + rows[0].product_id2 + "_" + rows[0].id).once('value').then(function(snapshot){
                                                         snapshot.forEach(function(childSnapshot) {
                                                             var message = childSnapshot.val();
                                                             if (message.status == 3) {
+                                                                console.log("status = 3");
                                                                 message.status = 4;
                                                                 console.log(message);
                                                                 childSnapshot.ref.set(message);
