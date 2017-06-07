@@ -1181,8 +1181,9 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, md5) {
                    var query = "SELECT * " +
                                "FROM product p " +
                                "WHERE p.user_id<>" + rows[0].user_id + " AND (" +
-                               "(" + rows[0].min_price + " <= p.min_price AND p.min_price <=" + rows[0].max_price + ") OR " +
-                               "(" + rows[0].min_price + " <= p.max_price AND p.max_price <=" + rows[0].max_price + ")) AND ";
+                               "(" + rows[0].min_price + " >= p.min_price AND p.max_price >=" + rows[0].min_price + ") OR " +
+                               "(" + rows[0].max_price + " >= p.min_price AND p.max_price >=" + rows[0].max_price + ") OR " +
+                               "(" + rows[0].min_price + " <= p.min_price AND p.min_price <=" + rows[0].max_price + ")) AND ";
 
                    for (i = 0; i < rows.length; ++i) {
                        if (i == 0) query = query + "(p.category=" + "'" + rows[i].desired_category + "'";
