@@ -2,7 +2,7 @@
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `restful_api` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+CREATE SCHEMA IF NOT EXISTS `restful_api` CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `restful_api`;
 -- -----------------------------------------------------
 -- Table `restful_api`.`user`
